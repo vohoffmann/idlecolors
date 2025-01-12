@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Translations Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Translations
+  m_TableCollectionNameGuidString: 48c9d2f6222608948a6a21d0b8d7ef03
+  m_Entries:
+  - m_Id: 1979633987584
+    m_Key: button_continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4302674423808
+    m_Key: button_new_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6415353737216
+    m_Key: button_exit_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14518803591168
+    m_Key: label_all_max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22988802060288
+    m_Key: button_unlock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8351420849942528
+    m_Key: musicVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8353126253948928
+    m_Key: soundVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17589075133505536
+    m_Key: speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17589148789678080
+    m_Key: capacity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17589613313040384
+    m_Key: unloadspeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18420383780794368
+    m_Key: New Entry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18420390139359232
+    m_Key: lightVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19554035017281536
+    m_Key: game_saved
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2575871392571195416
+  references:
+    version: 2
+    RefIds:
+    - rid: 2575871392571195416
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1731943653181

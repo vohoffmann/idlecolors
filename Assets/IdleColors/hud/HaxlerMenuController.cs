@@ -1,0 +1,79 @@
+﻿using IdleColors.camera;
+using IdleColors.Globals;
+using IdleColors.room_mixing.haxler;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace IdleColors.hud
+{
+    public class HaxlerMenuController : MonoBehaviour
+    {
+        private HaxlerController _haxlerScript;
+
+        [SerializeField] private GameObject _speedButtonCanvas;
+        private Button _speedButton;
+        [SerializeField] private Text _speedButtonText;
+        [SerializeField] private TextMeshProUGUI _statusText;
+
+        [SerializeField] private GameObject _noMoreUpdatesLabelText;
+
+        public void SetHaxler(HaxlerController haxlerScript)
+        {
+            _haxlerScript = haxlerScript;
+            _noMoreUpdatesLabelText.SetActive(false);
+
+            if (!_speedButton)
+            {
+                _speedButton = _speedButtonText.GetComponent<Button>();
+            }
+
+            UpdateButtonText();
+
+            gameObject.SetActive(true);
+        }
+
+        private void UpdateButtonText()
+        {
+            if (_haxlerScript.GetSpeedLevel() < GLOB.HAXLER_SPEED_MAX)
+            {
+                _speedButtonCanvas.SetActive(true);
+                var from = 19 - _haxlerScript.GetSpeedLevel();
+                var to = 19 - (_haxlerScript.GetSpeedLevel() + 1);
+                
+                _statusText.text = $"{from} -> {to} seconds";
+                _speedButtonText.text = "" + _haxlerScript.costFactor * _haxlerScript.GetSpeedLevel() *
+                    GLOB.HAXLER_SPEED_BASE_PRICE;
+            }
+            else
+            {
+                _speedButtonCanvas.SetActive(false);
+                _noMoreUpdatesLabelText.SetActive(true);
+            }
+        }
+        
+        public void UpgradeSpeed()
+        {
+            _haxlerScript.UpgradeSpeed();
+            UpdateButtonText();
+        }
+
+        private void Update()
+        {
+            if (_haxlerScript == null)
+            {
+                return;
+            }
+
+            _speedButton.interactable = GameManager.Instance.GetCoins() >= _haxlerScript.costFactor *
+                _haxlerScript.GetSpeedLevel() * GLOB.HAXLER_SPEED_BASE_PRICE;
+        }
+
+        public void Close()
+        {
+            _haxlerScript = null;
+            CameraController.Instance.UnsetLockedTarget();
+            gameObject.SetActive(false);
+        }
+    }
+}
