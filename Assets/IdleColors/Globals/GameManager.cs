@@ -142,13 +142,11 @@ namespace IdleColors.Globals
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            Log("focus changed : " + hasFocus);
-            if (ReadyToSave)
+            if (ReadyToSave && !hasFocus)
             {
                 SaveGameData();
+                Log("Gaxmedate saved");
             }
-
-            Log("Gamedate saved");
         }
 
         [RuntimeInitializeOnLoadMethod]
