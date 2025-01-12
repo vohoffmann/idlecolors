@@ -18,10 +18,11 @@ namespace IdleColors.hud
         [SerializeField] private Slider lightSlider;
         [SerializeField] private AudioMixer mixer;
         [SerializeField] private GameObject _saveHint;
-        
+
         private bool _status;
         private readonly string musicVolume = "music_volume";
         private readonly string sfxVolume = "sfx_volume";
+        private readonly string lightIntensity = "lightIntensity";
 
         private void Start()
         {
@@ -50,6 +51,13 @@ namespace IdleColors.hud
             else
             {
                 mixer.SetFloat(sfxVolume, -20f);
+            }
+
+            if (PlayerPrefs.HasKey(lightIntensity))
+            {
+                var lightSliderValue = PlayerPrefs.GetFloat(lightIntensity);
+                lightSlider.value = lightSliderValue;
+                CameraController.Instance.SetLightIntensity(lightSliderValue);
             }
         }
 
@@ -81,6 +89,8 @@ namespace IdleColors.hud
         private void OnLightSliderChanged(float value)
         {
             CameraController.Instance.SetLightIntensity(value);
+            PlayerPrefs.SetFloat(lightIntensity, value);
+            PlayerPrefs.Save();
         }
 
         public void ContinueGame()
@@ -93,13 +103,6 @@ namespace IdleColors.hud
         {
             _saveHint.SetActive(true);
             GameManager.Instance.SaveGameData();
-            // if (Application.platform == RuntimePlatform.Android)
-            // {
-            //     var activity =
-            //         new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>(
-            //             "currentActivity");
-            //     activity.Call<bool>("moveTaskToBack", true);
-            // }
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
 #else
