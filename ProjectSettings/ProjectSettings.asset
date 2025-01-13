@@ -848,10 +848,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: baa13fe5-7c26-4cf6-af0c-efc95060bf25
+  cloudProjectId: 9f6c2baa-c87f-42a6-9a6f-43a818d4bb41
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: IdleColors
+  projectName: idle-game-color
   organizationId: vohoff
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
