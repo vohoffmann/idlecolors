@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using IdleColors.ads;
+using IdleColors.hud;
 using IdleColors.hud.coin;
 using IdleColors.room_collect.collector;
 using IdleColors.room_mixing.haxler;
@@ -6,11 +8,12 @@ using IdleColors.room_mixing.mixer;
 using IdleColors.room_mixing.puffer;
 using IdleColors.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
 namespace IdleColors.Globals
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener
     {
         public static GameManager Instance;
 
@@ -21,6 +24,10 @@ namespace IdleColors.Globals
         public Text coinsText;
         private readonly int _coinMultiplier = 5;
         public bool ReadyToSave { private set; get; }
+        public const string REWARDED_ANDROID = "Rewarded_Android";
+        private readonly string GAMEID = "5774375";
+        public bool AdsInitialized { private set; get; }
+        public bool AdsRewardedLoaded { private set; get; }
         public int coins;
 
         #endregion
@@ -121,6 +128,8 @@ namespace IdleColors.Globals
             }
 
             coinsText.text = "" + coins;
+
+            InitializeAds();
         }
 
         private void Start()
@@ -147,17 +156,21 @@ namespace IdleColors.Globals
                 SaveGameData();
                 Log("Gamedate saved");
             }
+
+            if (!AdsInitialized)
+            {
+                InitializeAds();
+            }
         }
 
         [RuntimeInitializeOnLoadMethod]
         private static void OnRuntimeMethodLoad()
         {
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                Debug.developerConsoleVisible = false;
-                // UnityEngine.XR.XRSettings.eyeTextureResolutionScale = 0.8f; // 80% der nativen Auflösung
-            }
-            else
+            // if (Application.platform == RuntimePlatform.Android)
+            // {
+            //     Debug.developerConsoleVisible = false;
+            // }
+            if (Application.platform == RuntimePlatform.WindowsPlayer)
             {
                 Screen.SetResolution(1280, 720, false);
                 Application.runInBackground = true;
@@ -384,5 +397,49 @@ namespace IdleColors.Globals
         {
             return Colors.GetValueOrDefault(colorIndex, Color.white);
         }
+
+        #region ADS
+
+        public void InitializeAds()
+        {
+            if (!Advertisement.isInitialized && Advertisement.isSupported)
+            {
+                // TODO : test aus für live
+                // ACHTUNG 2. parameter ist TEST = JA
+                Advertisement.Initialize(GAMEID, true, this);
+            }
+        }
+
+        public void OnInitializationComplete()
+        {
+            Debug.Log("Unity Ads initialization complete.");
+            AdsInitialized = true;
+            LoadRewardedAd();
+        }
+
+        public void OnInitializationFailed(UnityAdsInitializationError error, string message)
+        {
+            Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
+            AdsInitialized = false;
+        }
+
+        private void LoadRewardedAd()
+        {
+            // IMPORTANT! Only load content AFTER initialization 
+            Advertisement.Load(REWARDED_ANDROID, this);
+        }
+
+        public void OnUnityAdsAdLoaded(string adUnitId)
+        {
+            Debug.Log("Ad Loaded: " + adUnitId);
+            AdsRewardedLoaded = true;
+        }
+
+        public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
+        {
+            Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
+        }
+
+        #endregion
     }
 }

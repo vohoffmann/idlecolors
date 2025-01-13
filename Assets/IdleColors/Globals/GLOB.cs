@@ -4,6 +4,9 @@ namespace IdleColors.Globals
 {
     public class GLOB : MonoBehaviour
     {
+        /// <summary>
+        /// UPGRADES
+        /// </summary>
         public const int PUFFER_LEVEL_MAX = 20;
         public const int PUFFER_CAPACITY_BASE_PRICE = 250;
 

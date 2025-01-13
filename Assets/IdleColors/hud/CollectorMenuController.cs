@@ -3,12 +3,12 @@ using IdleColors.Globals;
 using IdleColors.room_collect.collector;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
 namespace IdleColors.hud
 {
-    public class CollectorMenuController : MonoBehaviour
+    public class CollectorMenuController : MonoBehaviour, IUnityAdsShowListener
     {
         #region members
 
@@ -108,16 +108,16 @@ namespace IdleColors.hud
                 _capButtonCanvas.SetActive(false);
                 _unloadSpeedButtonCanvas.SetActive(false);
 
-                if (Application.platform == RuntimePlatform.Android)
-                {
-                    _unlockbyadsbutton.gameObject.SetActive(true);
-                    _unlockbyadstext.gameObject.SetActive(true);
-                }
-                else
-                {
-                    _unlockbyadsbutton.gameObject.SetActive(false);
-                    _unlockbyadstext.gameObject.SetActive(false);
-                }
+                // if (Application.platform == RuntimePlatform.Android)
+                // {
+                _unlockbyadsbutton.gameObject.SetActive(true);
+                _unlockbyadstext.gameObject.SetActive(true);
+                // }
+                // else
+                // {
+                //     _unlockbyadsbutton.gameObject.SetActive(false);
+                //     _unlockbyadstext.gameObject.SetActive(false);
+                // }
             }
             else
             {
@@ -137,7 +137,7 @@ namespace IdleColors.hud
             UpdateButtonText();
         }
 
-        public void ActivateCollector()
+        public void UnlockCollector()
         {
             if (_collectorScript == null)
             {
@@ -227,6 +227,51 @@ namespace IdleColors.hud
             _collectorScript = null;
             CameraController.Instance.UnsetLockedTarget();
             gameObject.SetActive(false);
+        }
+
+        public void ActivateByAds()
+        {
+            if (!GameManager.Instance.AdsInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            {
+                GameManager.Instance.InitializeAds();
+                return;
+            }
+
+            Time.timeScale = 0;
+
+            Advertisement.Show(GameManager.REWARDED_ANDROID, this);
+        }
+
+
+        public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
+        {
+            Time.timeScale = 1;
+
+            if (showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+            {
+                Debug.Log("Unity Ads Rewarded Ad Completed");
+                
+                UnlockCollector();
+                
+                Debug.Log("collector unlocked");
+            }
+        }
+
+        public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
+        {
+            Time.timeScale = 1;
+
+            Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
+        }
+
+        public void OnUnityAdsShowStart(string placementId)
+        {
+            Debug.Log("Unity Ads Rewarded Ad Started");
+        }
+
+        public void OnUnityAdsShowClick(string placementId)
+        {
+            Debug.Log("Unity Ads Rewarded Ad Clicked");
         }
     }
 }
