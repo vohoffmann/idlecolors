@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using IdleColors.ads;
-using IdleColors.hud;
 using IdleColors.hud.coin;
 using IdleColors.room_collect.collector;
 using IdleColors.room_mixing.haxler;
@@ -183,7 +181,7 @@ namespace IdleColors.Globals
         {
             if (type == LogType.Exception)
                 // Handle the exception here
-                GameManager.LogError("Exception: " + condition + "\n" + stackTrace);
+                LogError("Exception: " + condition + "\n" + stackTrace);
         }
 
         public void AddCoins(int pCoins)
