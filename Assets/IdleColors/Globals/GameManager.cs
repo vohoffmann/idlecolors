@@ -400,11 +400,18 @@ namespace IdleColors.Globals
 
         public void InitializeAds()
         {
-            if (!Advertisement.isInitialized && Advertisement.isSupported)
+            if (Application.isEditor || Application.platform.Equals(RuntimePlatform.Android))
             {
-                // TODO : test aus für live
-                // ACHTUNG 2. parameter ist TEST = JA
-                Advertisement.Initialize(GAMEID, true, this);
+                if (!Advertisement.isInitialized && Advertisement.isSupported)
+                {
+                    // TODO : test aus für live
+                    // ACHTUNG 2. parameter ist TEST = JA
+                    Advertisement.Initialize(GAMEID, true, this);
+                }
+            }
+            else
+            {
+                Log("Ads only for android or editor(test)");
             }
         }
 

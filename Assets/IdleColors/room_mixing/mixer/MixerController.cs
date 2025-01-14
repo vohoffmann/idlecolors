@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using IdleColors.Globals;
 using IdleColors.helper;
 using IdleColors.room_mixing.pipeball;
 using UnityEngine;
@@ -103,6 +103,7 @@ namespace IdleColors.room_mixing.mixer
         {
             _emptiing = true;
             _mixerRotator.enabled = false;
+            EventManager.SetBoxPosition.Invoke();
             StartCoroutine(nameof(RemoveMinerals));
         }
 

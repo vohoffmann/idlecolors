@@ -27,7 +27,7 @@ namespace IdleColors.room_mixing.haxler
         private bool crushing;
         private bool pufferFull;
         public SO_Int _minerals;
-        private  Stopwatch stopwatch = new();
+        // private  Stopwatch stopwatch = new();
 
         private void Awake()
         {
@@ -87,7 +87,7 @@ namespace IdleColors.room_mixing.haxler
 
             if (!crushing)
             {
-                stopwatch.Restart();
+                // stopwatch.Restart();
                 startTime = Time.time;
                 setStatus(true);
             }
@@ -99,11 +99,11 @@ namespace IdleColors.room_mixing.haxler
             // wenn slider 'voll' material auswerfen und crushingmode deaktivieren
             if (Math.Abs(sliderValue - 100) < .2f)
             {
-                stopwatch.Stop();
+                // stopwatch.Stop();
 
-                GameManager.Log(
-                    $"Die Entleerung bie unloadSpeed : {_speedLevel.value} hat {stopwatch.ElapsedMilliseconds / 1000} Sekunden gedauert.");
-                stopwatch.Reset();
+                // GameManager.Log(
+                //     $"Die Entleerung bie unloadSpeed : {_speedLevel.value} hat {stopwatch.ElapsedMilliseconds / 1000} Sekunden gedauert.");
+                // stopwatch.Reset();
                 setStatus(false);
 
                 _minerals.value--;

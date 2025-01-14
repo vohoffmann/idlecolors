@@ -251,8 +251,6 @@ namespace IdleColors.hud
                 Debug.Log("Unity Ads Rewarded Ad Completed");
 
                 UnlockCollector();
-
-                Debug.Log("collector unlocked");
             }
         }
 
