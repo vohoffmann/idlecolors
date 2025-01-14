@@ -1,29 +1,52 @@
-﻿using Unity.AI.Navigation;
-using UnityEditor;
-using UnityEditor.Build;
-using UnityEditor.Build.Reporting;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace IdleColors.Editor
+public class RemoveComponentsEditor : EditorWindow
 {
-    public class RemoveNavmeshModifier : IProcessSceneWithReport
+    private string componentTypeName = "";
+
+    [MenuItem("Tools/Remove Components of Type")]
+    public static void ShowWindow()
     {
-        public int callbackOrder { get; }
+        GetWindow<RemoveComponentsEditor>("Remove Components");
+    }
 
-        public void OnProcessScene(Scene scene, BuildReport report)
+    private void OnGUI()
+    {
+        GUILayout.Label("Remove Components by Type", EditorStyles.boldLabel);
+
+        componentTypeName = EditorGUILayout.TextField("Component Type Name", componentTypeName);
+
+        if (GUILayout.Button("Remove Components"))
         {
-            if (report != null && report.summary.options.HasFlag(BuildOptions.Development))
-            {
-                return;
-            }
+            RemoveComponents();
+        }
+    }
 
-            var objectsToDelete = Component.FindObjectsByType<NavMeshModifier>(FindObjectsSortMode.None);
+    private void RemoveComponents()
+    {
+        if (string.IsNullOrEmpty(componentTypeName))
+        {
+            Debug.LogError("Please enter a valid component type name.");
+            return;
+        }
 
-            for (var i = objectsToDelete.Length - 1; i >= 0; i--)
+        // Suche alle GameObjects in der Szene
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+        int removedCount = 0;
+
+        foreach (GameObject obj in allObjects)
+        {
+            Component component = obj.GetComponent(componentTypeName);
+
+            while (component != null)
             {
-                Object.DestroyImmediate(objectsToDelete[i]);
+                Undo.DestroyObjectImmediate(component); // Sicherer Entfernen-Befehl mit Undo-Unterstützung
+                removedCount++;
+                component = obj.GetComponent(componentTypeName); // Prüfen, ob weitere vorhanden sind
             }
         }
+
+        Debug.Log($"Removed {removedCount} components of type '{componentTypeName}'.");
     }
 }
