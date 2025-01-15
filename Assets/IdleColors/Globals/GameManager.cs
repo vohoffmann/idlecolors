@@ -17,7 +17,7 @@ namespace IdleColors.Globals
 
         #region members
 
-        public GameObject kisteBp;
+        public GameObject cupBp;
 
         public Text coinsText;
         private readonly int _coinMultiplier = 5;

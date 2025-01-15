@@ -125,7 +125,7 @@ namespace IdleColors.room_storage
             var storageRoom = GameObject.Find("storage_room");
 
             var kiste = Instantiate(
-                GameManager.Instance.kisteBp,
+                GameManager.Instance.cupBp,
                 storageRoom.transform);
 
             kiste.transform.position = new Vector3(11.16f, -30.70f, -32.50f);

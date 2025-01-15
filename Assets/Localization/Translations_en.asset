@@ -69,6 +69,10 @@ MonoBehaviour:
       u can close this window'
     m_Metadata:
       m_Items: []
+  - m_Id: 21141767673966592
+    m_Localized: next song
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

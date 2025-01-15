@@ -69,6 +69,10 @@ MonoBehaviour:
       Fenster kann geschlossen werden'
     m_Metadata:
       m_Items: []
+  - m_Id: 21141767673966592
+    m_Localized: "N\xE4chster Titel"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

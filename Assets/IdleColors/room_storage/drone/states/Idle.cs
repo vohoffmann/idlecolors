@@ -27,7 +27,7 @@ namespace IdleColors.room_storage.drone.states
                     var cup = Owner.cupsToLift.Peek();
 
                     // check if cup is not pushed by another already ...
-                    if (cup.transform.position.x < 6.8f)
+                    if (cup.transform.position.x < 6.7f)
                     {
                         throw new MissingReferenceException("cup was moved by another already");
                     }

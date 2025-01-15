@@ -89,6 +89,7 @@ namespace IdleColors.camera
 
             haxlerMenu.gameObject.SetActive(false);
             collectorMenu.gameObject.SetActive(false);
+            pufferMenu.gameObject.SetActive(false);
             droneMenu.SetActive(false);
 
             setTarget(rooms[_currentSelection]);

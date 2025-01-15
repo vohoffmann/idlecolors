@@ -67,6 +67,10 @@ MonoBehaviour:
     m_Key: game_saved
     m_Metadata:
       m_Items: []
+  - m_Id: 21141767673966592
+    m_Key: next-song
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using IdleColors.camera;
 using IdleColors.Globals;
 using UnityEditor;
@@ -18,11 +20,20 @@ namespace IdleColors.hud
         [SerializeField] private Slider lightSlider;
         [SerializeField] private AudioMixer mixer;
         [SerializeField] private GameObject _saveHint;
+        [SerializeField] private AudioClip[] _songs;
+        [SerializeField] private AudioSource _audioSource;
+
 
         private bool _status;
         private readonly string musicVolume = "music_volume";
         private readonly string sfxVolume = "sfx_volume";
         private readonly string lightIntensity = "lightIntensity";
+        private int _playListIdx = 0;
+
+        // private void Awake()
+        // {
+        //     _audioSource = GetComponent<AudioSource>();
+        // }
 
         private void Start()
         {
@@ -61,6 +72,48 @@ namespace IdleColors.hud
             }
         }
 
+        private void OnEnable()
+        {
+            if (_audioSource != null && _songs.Length != 0)
+            {
+                _audioSource.clip = _songs[_playListIdx];
+                _audioSource.Play();
+                StartCoroutine(WaitForAudioToEnd());
+            }
+        }
+
+        private IEnumerator WaitForAudioToEnd()
+        {
+            while (_audioSource.isPlaying)
+            {
+                yield return null;
+            }
+
+            _playListIdx++;
+            if (_playListIdx >= _songs.Length)
+            {
+                _playListIdx = 0;
+            }
+            
+            _audioSource.clip = _songs[_playListIdx];
+            _audioSource.Play();
+
+        }
+
+        public void PlayNextSong()
+        {
+            _audioSource.Stop();
+            
+            _playListIdx++;
+            if (_playListIdx >= _songs.Length)
+            {
+                _playListIdx = 0;
+            }
+            
+            _audioSource.clip = _songs[_playListIdx];
+            _audioSource.Play();
+        }
+        
         public void OnMouseUp()
         {
             BgButton.SetActive(!BgButton.activeSelf);

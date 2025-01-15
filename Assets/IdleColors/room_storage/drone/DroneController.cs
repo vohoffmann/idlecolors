@@ -37,10 +37,10 @@ namespace IdleColors.room_storage.drone
             ChangeState(new Idle(this));
             var storageRoom = GameObject.Find("storage_room");
 
-            var kiste = Instantiate(
-                GameManager.Instance.kisteBp,
+            var cupInstance = Instantiate(
+                GameManager.Instance.cupBp,
                 storageRoom.transform);
-            kiste.transform.position = new Vector3(11.16f, -30.70f, -32.50f);
+            cupInstance.transform.position = new Vector3(11.16f, -30.70f, -32.50f);
         }
 
         private void OnEnable()
