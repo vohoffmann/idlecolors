@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IdleColors.Globals;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace IdleColors.Editor
@@ -77,7 +78,7 @@ namespace IdleColors.Editor
                 if (_config == null) FetchConfig();
 
                 if (!_config.Enabled || Application.isPlaying || BuildPipeline.isBuildingPlayer || EditorApplication.isCompiling) continue;
-                if (!UnityEditorInternal.InternalEditorUtility.isApplicationActive) continue;
+                if (!InternalEditorUtility.isApplicationActive) continue;
 
                 EditorSceneManager.SaveOpenScenes();
                 if (_config.Logging) GameManager.Log($"Auto-saved at {DateTime.Now:h:mm:ss tt}");

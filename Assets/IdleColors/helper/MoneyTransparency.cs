@@ -1,6 +1,6 @@
+using IdleColors.Globals;
 using UnityEngine;
 using UnityEngine.UI;
-using IdleColors.Globals;
 
 namespace IdleColors.helper
 {

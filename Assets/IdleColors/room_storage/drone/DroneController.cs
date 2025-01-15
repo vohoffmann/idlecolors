@@ -9,23 +9,24 @@ namespace IdleColors.room_storage.drone
 {
     public class DroneController : StateMachine, IPointerClickHandler
     {
-        public readonly Queue<GameObject> boxesToLift = new();
+        public readonly Queue<GameObject> cupsToLift = new();
         [SerializeField] private Animator _animator;
-        [SerializeField] private GameObject _kiste;
         [SerializeField] private GameObject _droneBody;
         [SerializeField] private GameObject[] _destinationPositions;
         [SerializeField] private GameObject _droneMenu;
         [SerializeField] private GameObject[] _dronePropeller;
+        [SerializeField] private float _droneSpeed = 5f;
+        private Color _color;
         public AudioSource audioSource;
         public Vector3 targetPos;
+        public GameObject cup;
         public Vector3 destinationPufferPos;
-        private readonly float _smoothTime = 1f;
         private Vector3 _velocity = Vector3.zero;
         public Vector3 idlePosition;
         private float accelerationFactor = 0f;
         private float _propellerSpeed = 800f;
         public const string STATE_IDLE = "Idle";
-        public const string STATE_MOVETOBOX = "MoveToBox";
+        public const string STATE_MOVETOCUP = "MoveToBox";
         public const string STATE_LIFTBOX = "LiftBox";
         public const string STATE_MOVETODESTINATION = "MoveToDestination";
         public const string STATE_UNLOADING = "Unloading";
@@ -34,18 +35,24 @@ namespace IdleColors.room_storage.drone
         private void Start()
         {
             ChangeState(new Idle(this));
+            var storageRoom = GameObject.Find("storage_room");
+
+            var kiste = Instantiate(
+                GameManager.Instance.kisteBp,
+                storageRoom.transform);
+            kiste.transform.position = new Vector3(11.16f, -30.70f, -32.50f);
         }
 
         private void OnEnable()
         {
-            EventManager.BoxStored += HandleStoredBoxes;
+            EventManager.CupStored += HandleStoredBoxes;
             _droneMenu.SetActive(false);
             audioSource.volume = 0;
         }
 
         private void OnDisable()
         {
-            EventManager.BoxStored -= HandleStoredBoxes;
+            EventManager.CupStored -= HandleStoredBoxes;
         }
 
         private void OnBecameVisible()
@@ -74,10 +81,10 @@ namespace IdleColors.room_storage.drone
 
             if (_currentState is not Idle && distance > .01f)
             {
-                accelerationFactor = Mathf.Clamp01(accelerationFactor + Time.deltaTime / _smoothTime);
+                accelerationFactor = Mathf.Clamp01(accelerationFactor + Time.deltaTime / _droneSpeed);
 
                 transform.position =
-                    Vector3.SmoothDamp(transform.position, targetPos, ref _velocity, _smoothTime / accelerationFactor);
+                    Vector3.SmoothDamp(transform.position, targetPos, ref _velocity, _droneSpeed / accelerationFactor);
 
                 var factor = ((distance / 50f) * accelerationFactor);
                 audioSource.pitch = 1f + factor;
@@ -101,26 +108,26 @@ namespace IdleColors.room_storage.drone
 
         private void HandleStoredBoxes(GameObject box)
         {
-            boxesToLift.Enqueue(box);
-            box.GetComponent<KisteController>().enabled = false;
+            cupsToLift.Enqueue(box);
         }
 
         public void SetKisteColor(int colorIndex)
         {
-            var color = GameManager.Instance.GetColorForIndex(colorIndex);
-            _kiste.GetComponent<Renderer>().material.color = color;
+            _color = GameManager.Instance.GetColorForIndex(colorIndex);
         }
 
         public void SetDroneColor(int colorIndex)
         {
             _droneBody.GetComponent<Renderer>().material.color =
-                colorIndex == 0 ? Color.white : _kiste.GetComponent<Renderer>().material.color;
+                colorIndex == 0 ? Color.white : _color;
         }
 
         // called by animation event ( drone -> liftbox )
         public void OnLiftBoxAnimationEnd()
         {
             ChangeState(new MoveToDestination(this));
+            cup.GetComponent<Rigidbody>().mass = .5f;
+            cup.GetComponent<CupController>().cupLid.GetComponent<Renderer>().material.color = Color.white;
         }
 
         // called by animation event ( drone -> unloading)
@@ -128,11 +135,12 @@ namespace IdleColors.room_storage.drone
         {
             SetDroneColor(0);
 
-            if (boxesToLift.Count > 0)
-            {
-                ChangeState(new MoveToBox(this));
-                return;
-            }
+            // TODO : check if this is good or should we think about it again ...
+            // if (boxesToLift.Count > 0)
+            // {
+            //     ChangeState(new MoveToBox(this));
+            //     return;
+            // }
 
             ChangeState(new MoveToIdlePosition(this));
         }

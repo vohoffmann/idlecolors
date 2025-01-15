@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace IdleColors.room_storage.drone.states
 {
     public class Idle : State
@@ -17,9 +19,27 @@ namespace IdleColors.room_storage.drone.states
 
         public override void Update()
         {
-            if (Owner.boxesToLift.Count > 0)
+            if (Owner.cupsToLift.Count > 0)
             {
-                Owner.ChangeState(new MoveToBox(Owner));
+                // if the cup is already destroyed than remove from queue
+                try
+                {
+                    var cup = Owner.cupsToLift.Peek();
+
+                    // check if cup is not pushed by another already ...
+                    if (cup.transform.position.x < 6.8f)
+                    {
+                        throw new MissingReferenceException("cup was moved by another already");
+                    }
+                    
+                    Owner.ChangeState(new MoveToCup(Owner));
+                }
+                catch (MissingReferenceException e)
+                {
+                    // Debug.Log(e.Message);
+                    
+                    Owner.cupsToLift.Dequeue();
+                }
             }
         }
     }

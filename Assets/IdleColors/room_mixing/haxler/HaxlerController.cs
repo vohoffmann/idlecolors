@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using IdleColors.camera;
 using IdleColors.Globals;
 using IdleColors.ScriptableObjects;
