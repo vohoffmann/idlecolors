@@ -47,6 +47,7 @@ namespace IdleColors.room_collect.collector
         [SerializeField] private HaxlerController haxlerController;
         [SerializeField] private MineralController mineralController;
         [SerializeField] private Slider slider;
+        [SerializeField] private GameObject _bodyCam;
 
 
         private void Awake()
@@ -376,6 +377,11 @@ namespace IdleColors.room_collect.collector
                 _audioSource.PlayOneShot(
                     _clickClips[Random.Range(0, _clickClips.Length)]);
             }
+        }
+        
+        public void SetBodyCam(bool value)
+        {
+            _bodyCam.SetActive(value);
         }
     }
 }

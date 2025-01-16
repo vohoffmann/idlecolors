@@ -15,6 +15,7 @@ namespace IdleColors.camera
         [SerializeField] private HaxlerMenuController haxlerMenu;
         [SerializeField] private PufferMenuController pufferMenu;
         [SerializeField] private GameObject droneMenu;
+        [SerializeField] private GameObject _bodyCamView;
         private Light _light;
 
         public static CameraController Instance;
@@ -32,6 +33,7 @@ namespace IdleColors.camera
         {
             Instance = this;
             _light = _camera.GetComponentInChildren<Light>();
+            _bodyCamView.SetActive(false);
         }
 
         private void Start()
@@ -43,7 +45,10 @@ namespace IdleColors.camera
 
         public void SetLockedTarget(CollectorController collectorScript)
         {
+            UnsetLockedTarget();
             _lockedTarget = collectorScript.gameObject;
+            collectorScript.SetBodyCam(true);
+            _bodyCamView.SetActive(true);
 
             haxlerMenu.gameObject.SetActive(false);
             pufferMenu.gameObject.SetActive(false);
@@ -54,6 +59,7 @@ namespace IdleColors.camera
 
         public void SetLockedTarget(HaxlerController haxlerScript)
         {
+            UnsetLockedTarget();
             _lockedTarget = haxlerScript.gameObject;
 
             collectorMenu.gameObject.SetActive(false);
@@ -65,6 +71,7 @@ namespace IdleColors.camera
 
         public void SetLockedTarget(DroneController droneScript)
         {
+            UnsetLockedTarget();
             _lockedTarget = droneScript.gameObject;
 
             collectorMenu.gameObject.SetActive(false);
@@ -74,6 +81,7 @@ namespace IdleColors.camera
 
         public void SetLockedTarget(PufferController pufferScript)
         {
+            UnsetLockedTarget();
             _lockedTarget = pufferScript.gameObject;
 
             collectorMenu.gameObject.SetActive(false);
@@ -85,7 +93,15 @@ namespace IdleColors.camera
 
         public void UnsetLockedTarget()
         {
+            var script = _lockedTarget ? _lockedTarget.GetComponent<CollectorController>() : null;
+
+            if (script != null)
+            {
+                script.SetBodyCam(false);
+            }
+
             _lockedTarget = null;
+            _bodyCamView.SetActive(false);
 
             haxlerMenu.gameObject.SetActive(false);
             collectorMenu.gameObject.SetActive(false);
