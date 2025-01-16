@@ -14,7 +14,8 @@ namespace IdleColors.room_storage
         private float _targetZPos;
         private bool used; // damit nicht die position korrigiert wird, wenn sie schon unterwegs ist 
         private bool _needUpdate = true;
-        [SerializeField] public GameObject cupLid;
+        [SerializeField] private GameObject _cupLid;
+        private bool _empty = false;
 
         private void OnEnable()
         {
@@ -46,7 +47,7 @@ namespace IdleColors.room_storage
                 _targetZPos = 6 + (1 - _colorIndex) * 3;
 
                 var otherColor = GameManager.Instance.GetColorForIndex(_colorIndex);
-                cupLid.GetComponent<Renderer>().material.color = otherColor;
+                _cupLid.GetComponent<Renderer>().material.color = otherColor;
 
                 if (otherColor.r > 0)
                     _coins += 5;
@@ -80,6 +81,11 @@ namespace IdleColors.room_storage
                     Destroy(gameObject);
                 }
 
+                if (_empty)
+                {
+                    transform.Translate(-1 * Time.deltaTime, 0, 0);
+                }
+                
                 return;
             }
 
@@ -118,6 +124,13 @@ namespace IdleColors.room_storage
                 _needUpdate = false;
                 EventManager.CupStored?.Invoke(gameObject);
             }
+        }
+
+        public void Dispose()
+        {
+            GetComponent<Rigidbody>().mass = .5f;
+            _cupLid.GetComponent<Renderer>().material.color = Color.white;
+            _empty = true;
         }
 
         private void InstantiatNewBox()

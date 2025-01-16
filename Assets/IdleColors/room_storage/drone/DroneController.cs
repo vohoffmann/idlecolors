@@ -126,8 +126,7 @@ namespace IdleColors.room_storage.drone
         public void OnLiftBoxAnimationEnd()
         {
             ChangeState(new MoveToDestination(this));
-            cup.GetComponent<Rigidbody>().mass = .5f;
-            cup.GetComponent<CupController>().cupLid.GetComponent<Renderer>().material.color = Color.white;
+            cup.GetComponent<CupController>().Dispose();
         }
 
         // called by animation event ( drone -> unloading)

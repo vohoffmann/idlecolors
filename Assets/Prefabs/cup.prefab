@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _colorIndex: 0
-  cupLid: {fileID: 615601558031278812}
+  _cupLid: {fileID: 615601558031278812}
 --- !u!33 &5140969103555655836
 MeshFilter:
   m_ObjectHideFlags: 0
