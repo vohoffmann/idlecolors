@@ -38,8 +38,8 @@ namespace IdleColors.hud
             if (_haxlerScript.GetSpeedLevel() < GLOB.HAXLER_SPEED_MAX)
             {
                 _speedButtonCanvas.SetActive(true);
-                var from = 19 - _haxlerScript.GetSpeedLevel();
-                var to = 19 - (_haxlerScript.GetSpeedLevel() + 1);
+                var from = 20 - _haxlerScript.GetSpeedLevel();
+                var to = 20 - (_haxlerScript.GetSpeedLevel() + 1);
                 
                 _statusText.text = $"{from} -> {to} seconds";
                 _speedButtonText.text = "" + _haxlerScript.costFactor * _haxlerScript.GetSpeedLevel() *

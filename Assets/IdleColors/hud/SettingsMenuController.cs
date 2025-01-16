@@ -114,7 +114,7 @@ namespace IdleColors.hud
             _audioSource.Play();
         }
         
-        public void OnMouseUp()
+        public void OnMouseDown()
         {
             BgButton.SetActive(!BgButton.activeSelf);
             if (GameManager.Instance.ReadyToSave)
@@ -124,7 +124,7 @@ namespace IdleColors.hud
                 _status = !_status;
             }
         }
-
+        
         private void OnMusicSliderChanged(float value)
         {
             PlayerPrefs.SetFloat(musicVolume, value);

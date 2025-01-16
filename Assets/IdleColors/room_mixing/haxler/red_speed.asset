@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587171b2a7e54c2f8b792bd9fe77467c, type: 3}
   m_Name: red_speed
   m_EditorClassIdentifier: 
-  value: 0
+  value: 19

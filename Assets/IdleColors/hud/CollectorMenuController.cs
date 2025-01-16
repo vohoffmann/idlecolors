@@ -108,7 +108,8 @@ namespace IdleColors.hud
                 _capButtonCanvas.SetActive(false);
                 _unloadSpeedButtonCanvas.SetActive(false);
 
-                if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor)
+                if (Application.platform == RuntimePlatform.Android ||
+                    Application.platform == RuntimePlatform.WindowsEditor)
                 {
                     _unlockbyadsbutton.gameObject.SetActive(true);
                     _unlockbyadstext.gameObject.SetActive(true);
@@ -137,15 +138,18 @@ namespace IdleColors.hud
             UpdateButtonText();
         }
 
-        public void UnlockCollector()
+        public void UnlockCollector(bool subCoins = true)
         {
             if (_collectorScript == null)
             {
                 return;
             }
 
-            GameManager.Instance.SubCoins(GLOB.COLLECTOR_UNLOCK *
-                                          _collectorScript.costFactor);
+            if (subCoins)
+            {
+                GameManager.Instance.SubCoins(GLOB.COLLECTOR_UNLOCK *
+                                              _collectorScript.costFactor);
+            }
 
             _collectorScript.Unlock();
             AktivateUpdateView();
@@ -229,7 +233,7 @@ namespace IdleColors.hud
             gameObject.SetActive(false);
         }
 
-        public void ActivateByAds()
+        public void ShowAdsToActivate()
         {
             if (!GameManager.Instance.AdsInitialized || !GameManager.Instance.AdsRewardedLoaded)
             {
@@ -250,7 +254,8 @@ namespace IdleColors.hud
             {
                 Debug.Log("Unity Ads Rewarded Ad Completed");
 
-                UnlockCollector();
+                // TODO : mit deligate arbeiten ... den ganzen Ads mumpist auslagern und generisch machen, damit das für alles mögliche verwendet werden kann
+                UnlockCollector(false);
             }
         }
 
