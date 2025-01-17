@@ -15,6 +15,12 @@ namespace IdleColors.room_storage.drone.states
             // GameManager.Log("Entering State : " + this);
 
             _cup = Owner.cupsToLift.Dequeue();
+            if(!_cup)
+            {
+                Debug.Log("MoveToCup State ... cup was deleted already ... ");
+                Owner.ChangeState(new MoveToIdlePosition(Owner));
+                return;
+            }
             _cup.GetComponent<Rigidbody>().mass = 1000f;
             Owner.cup = _cup;
             

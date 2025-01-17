@@ -20,6 +20,11 @@ namespace IdleColors.room_storage.drone.states
                 try
                 {
                     var cup = Owner.cupsToLift.Peek();
+                    
+                    if(!cup)
+                    {
+                        throw new MissingReferenceException("cup was deleted already ");
+                    }
 
                     // check if cup is not pushed by another already ...
                     if (cup.transform.position.x < 6.7f)
@@ -32,7 +37,7 @@ namespace IdleColors.room_storage.drone.states
                 }
                 catch (MissingReferenceException e)
                 {
-                    // Debug.Log(e.Message);
+                    Debug.Log(e.Message);
                     
                     Owner.cupsToLift.Dequeue();
                 }
