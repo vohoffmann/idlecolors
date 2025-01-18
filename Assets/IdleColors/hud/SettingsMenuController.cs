@@ -25,15 +25,18 @@ namespace IdleColors.hud
 
 
         private bool _status;
-        private readonly string musicVolume = "music_volume";
+        public const string musicVolume = "music_volume";
         private readonly string sfxVolume = "sfx_volume";
         private readonly string lightIntensity = "lightIntensity";
         private int _playListIdx = 0;
 
-        // private void Awake()
-        // {
-        //     _audioSource = GetComponent<AudioSource>();
-        // }
+        private void Awake()
+        {
+            if (_audioSource != null && _songs.Length != 0)
+            {
+                StartCoroutine(WaitForAudioToEnd());
+            }
+        }
 
         private void Start()
         {
@@ -53,7 +56,6 @@ namespace IdleColors.hud
                 mixer.SetFloat(musicVolume, -40f);
             }
 
-
             if (PlayerPrefs.HasKey(sfxVolume))
             {
                 soundSlider.value = PlayerPrefs.GetFloat(sfxVolume);
@@ -72,16 +74,6 @@ namespace IdleColors.hud
             }
         }
 
-        private void OnEnable()
-        {
-            if (_audioSource != null && _songs.Length != 0)
-            {
-                _audioSource.clip = _songs[_playListIdx];
-                _audioSource.Play();
-                StartCoroutine(WaitForAudioToEnd());
-            }
-        }
-
         private IEnumerator WaitForAudioToEnd()
         {
             while (_audioSource.isPlaying)
@@ -89,31 +81,31 @@ namespace IdleColors.hud
                 yield return null;
             }
 
+            _audioSource.clip = _songs[_playListIdx];
+            _audioSource.Play();
+
             _playListIdx++;
             if (_playListIdx >= _songs.Length)
             {
                 _playListIdx = 0;
             }
-            
-            _audioSource.clip = _songs[_playListIdx];
-            _audioSource.Play();
 
         }
 
         public void PlayNextSong()
         {
             _audioSource.Stop();
-            
+
             _playListIdx++;
             if (_playListIdx >= _songs.Length)
             {
                 _playListIdx = 0;
             }
-            
+
             _audioSource.clip = _songs[_playListIdx];
             _audioSource.Play();
         }
-        
+
         public void OnMouseDown()
         {
             BgButton.SetActive(!BgButton.activeSelf);
@@ -124,7 +116,7 @@ namespace IdleColors.hud
                 _status = !_status;
             }
         }
-        
+
         private void OnMusicSliderChanged(float value)
         {
             PlayerPrefs.SetFloat(musicVolume, value);

@@ -17,6 +17,7 @@ namespace IdleColors.hud
         [SerializeField] private TextMeshProUGUI _statusText;
 
         [SerializeField] private GameObject _noMoreUpdatesLabelText;
+        [SerializeField] private TextMeshProUGUI _speedInfoText;
 
         public void SetHaxler(HaxlerController haxlerScript)
         {
@@ -40,7 +41,7 @@ namespace IdleColors.hud
                 _speedButtonCanvas.SetActive(true);
                 var from = 20 - _haxlerScript.GetSpeedLevel();
                 var to = 20 - (_haxlerScript.GetSpeedLevel() + 1);
-                
+
                 _statusText.text = $"{from} -> {to} seconds";
                 _speedButtonText.text = "" + _haxlerScript.costFactor * _haxlerScript.GetSpeedLevel() *
                     GLOB.HAXLER_SPEED_BASE_PRICE;
@@ -49,9 +50,10 @@ namespace IdleColors.hud
             {
                 _speedButtonCanvas.SetActive(false);
                 _noMoreUpdatesLabelText.SetActive(true);
+                _speedInfoText.text = "" + (20 - _haxlerScript.GetSpeedLevel()) + " sec";
             }
         }
-        
+
         public void UpgradeSpeed()
         {
             _haxlerScript.UpgradeSpeed();

@@ -224,8 +224,7 @@ namespace IdleColors.hud
                 _noMoreUpdatesButtonText.SetActive(true);
                 _speedStatusText.text = _collectorScript.GetSpeedLevel().ToString();
                 _capycityInfoText.text = _collectorScript.GetCapacity().ToString();
-                _unloadspeedInfoText.text = "" + Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100;
-                ;
+                _unloadspeedInfoText.text = "" + Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100 + " sec";
             }
         }
 

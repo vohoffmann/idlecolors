@@ -4,6 +4,7 @@ using IdleColors.room_mixing.haxler;
 using IdleColors.room_mixing.puffer;
 using IdleColors.room_storage.drone;
 using UnityEngine;
+using UnityEngine.Audio;
 using Vector3 = UnityEngine.Vector3;
 
 namespace IdleColors.camera
