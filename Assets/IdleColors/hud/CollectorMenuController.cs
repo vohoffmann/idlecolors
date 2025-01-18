@@ -10,11 +10,12 @@ namespace IdleColors.hud
 {
     public class CollectorMenuController : MonoBehaviour, IUnityAdsShowListener
     {
-        #region members
-
         private CollectorController _collectorScript;
 
         [SerializeField] private GameObject _noMoreUpdatesButtonText;
+        [SerializeField] private TextMeshProUGUI _speedStatusText;
+        [SerializeField] private TextMeshProUGUI _capycityInfoText;
+        [SerializeField] private TextMeshProUGUI _unloadspeedInfoText;
 
         [SerializeField] private GameObject _activateButtonCanvas;
         private Button activateButton;
@@ -25,7 +26,7 @@ namespace IdleColors.hud
         [SerializeField] private GameObject _speedButtonCanvas;
         private Button speedButton;
         [SerializeField] private Text _speedButtonText;
-        [SerializeField] private TextMeshProUGUI _speedStatusText;
+        [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
 
 
         [SerializeField] private GameObject _capButtonCanvas;
@@ -37,11 +38,6 @@ namespace IdleColors.hud
         private Button unloadSpeedButton;
         [SerializeField] private Text _unloadSpeedButtonText;
         [SerializeField] private TextMeshProUGUI _unloadSpeedStatusText;
-
-
-        private string _gameId;
-
-        #endregion
 
         // update the buttons visibility regarding the coins
         private void Update()
@@ -197,8 +193,8 @@ namespace IdleColors.hud
                 _speedButtonText.text = "" + _collectorScript.costFactor *
                     _collectorScript.GetSpeedLevel() *
                     GLOB.COLLECTOR_SPEED_BASE_PRICE;
-                _speedStatusText.text = "" + (_collectorScript.GetSpeedLevel() - 1) + " -> " +
-                                        (_collectorScript.GetSpeedLevel());
+                _speedUpdateInfoText.text = "" + (_collectorScript.GetSpeedLevel() - 1) + " -> " +
+                                            (_collectorScript.GetSpeedLevel());
                 buttons = true;
             }
             else
@@ -223,7 +219,14 @@ namespace IdleColors.hud
                 _unloadSpeedButtonCanvas.SetActive(false);
             }
 
-            if (!buttons) _noMoreUpdatesButtonText.SetActive(true);
+            if (!buttons)
+            {
+                _noMoreUpdatesButtonText.SetActive(true);
+                _speedStatusText.text = _collectorScript.GetSpeedLevel().ToString();
+                _capycityInfoText.text = _collectorScript.GetCapacity().ToString();
+                _unloadspeedInfoText.text = "" + Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100;
+                ;
+            }
         }
 
         public void Close()

@@ -32,6 +32,7 @@ namespace IdleColors.room_collect.collector
         private GameObject _target;
         private NavMeshAgent _agent;
         private AudioSource _audioSource;
+        [SerializeField] private GameObject _collectorTrail;
         [SerializeField] private GameObject _innerCube;
         [SerializeField] private GameObject _dustFinSpawnPosition;
         [SerializeField] private GameObject _beltToSpace;
@@ -84,6 +85,8 @@ namespace IdleColors.room_collect.collector
 
         void Update()
         {
+            _collectorTrail.gameObject.transform.localScale = Vector3.one;
+            _collectorTrail.gameObject.transform.position = new Vector3(transform.position.x, 1, transform.position.z);
             if (!_unlocked.value)
             {
                 return;
@@ -378,7 +381,7 @@ namespace IdleColors.room_collect.collector
                     _clickClips[Random.Range(0, _clickClips.Length)]);
             }
         }
-        
+
         public void SetBodyCam(bool value)
         {
             _bodyCam.SetActive(value);
