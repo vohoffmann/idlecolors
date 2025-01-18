@@ -97,8 +97,14 @@ namespace IdleColors.room_mixing.puffer
         private void SetIndicatorPosition()
         {
             var indicatorPosition = _amountIndicator.transform.position;
+        
+            var newY = _amountIndicator_Y + _minerals.value * _pufferFillIndicatorStep;
+            if (newY > -11.62f) // 
+            {
+                newY = -11.64f;
+            }
             _amountIndicator.transform.position = new Vector3(indicatorPosition.x,
-                _amountIndicator_Y + _minerals.value * _pufferFillIndicatorStep,
+                newY,
                 indicatorPosition.z);
 
             // GameManager.Log("_amountIndicator_Y : " + _amountIndicator_Y);
