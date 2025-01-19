@@ -7,7 +7,7 @@ namespace IdleColors.room_storage
     public class CupController : MonoBehaviour
     {
         private int _amount;
-        private int _coins;
+        // private int _coins;
         public int _colorIndex;
         private bool _loadingPositionReached;
         private bool _readyToStore;
@@ -49,21 +49,21 @@ namespace IdleColors.room_storage
                 var otherColor = GameManager.Instance.GetColorForIndex(_colorIndex);
                 _cupLid.GetComponent<Renderer>().material.color = otherColor;
 
-                if (otherColor.r > 0)
-                    _coins += 5;
-                if (otherColor.g > 0)
-                    _coins += 10;
-                if (otherColor.b > 0)
-                    _coins += 20;
+                // if (otherColor.r > 0)
+                //     _coins += 5;
+                // if (otherColor.g > 0)
+                //     _coins += 10;
+                // if (otherColor.b > 0)
+                //     _coins += 20;
             }
 
             _amount++;
             if (_amount == 5)
             {
-                GameManager.Instance.AddCoins(_coins);
+                // GameManager.Instance.AddCoins(_coins);
 
                 _amount = 0;
-                _coins = 0;
+                // _coins = 0;
 
                 InstantiatNewBox();
                 _readyToStore = true;

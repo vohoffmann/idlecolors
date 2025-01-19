@@ -43,12 +43,13 @@ namespace IdleColors.room_collect.collector
         [SerializeField] private SO_Int _unloadSpeed;
         [SerializeField] private AudioClip[] _clickClips;
         [SerializeField] private AudioClip[] _updateClips;
-        [SerializeField] private AudioClip _dropMineral;
+        // [SerializeField] private AudioClip _dropMineral;
         [SerializeField] private AudioClip _takeMineral;
         [SerializeField] private HaxlerController haxlerController;
         [SerializeField] private MineralController mineralController;
         [SerializeField] private Slider slider;
         [SerializeField] private GameObject _bodyCam;
+        [SerializeField] private ParticleSystem _coinPartikel;
 
 
         private void Awake()
@@ -235,13 +236,14 @@ namespace IdleColors.room_collect.collector
                 }
 
                 _collectedMinerals--;
-                GameManager.Instance.AddCoins(1);
+                GameManager.Instance.AddCoins(1 * costFactor);
+                // _audioSource.PlayOneShot(_dropMineral);
+                _coinPartikel.Play();
 
                 Instantiate(_collectedMineralBP,
                     _dustFinSpawnPosition.transform.position,
                     _dustFinSpawnPosition.transform.rotation);
 
-                _audioSource.PlayOneShot(_dropMineral);
 
                 if (_collectedMinerals == 0)
                 {

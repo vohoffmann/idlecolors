@@ -54,7 +54,7 @@ namespace IdleColors.room_mixing.puffer
         private void OnBecameVisible()
         {
             _audioSource.volume = 1;
-            SetDisplay();
+            // SetDisplay();
         }
 
         private void OnBecameInvisible()
@@ -91,7 +91,7 @@ namespace IdleColors.room_mixing.puffer
             haxlerControler.SetPufferFilled(_minerals.value >= _pufferMaxValue);
 
             SetIndicatorPosition();
-            GameManager.Instance.AddCoins(1);
+            // GameManager.Instance.AddCoins(1);
         }
 
         private void SetIndicatorPosition()

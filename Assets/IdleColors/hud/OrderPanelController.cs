@@ -4,6 +4,7 @@ using IdleColors.room_mixing.mixer;
 using IdleColors.room_mixing.puffer;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace IdleColors.hud
@@ -30,10 +31,13 @@ namespace IdleColors.hud
         [SerializeField] private TextMeshProUGUI _whiteAvailableOrdersText;
         [SerializeField] private GameObject _orderQueuePanel;
         [SerializeField] private Sprite _sprite;
+        [SerializeField] private ParticleSystem _particleSystem;
 
+        // 1    2    3    4    5     6     7
+        // 5   10   30   20   40    50    70
+        private int[] _coinValues = new[] { 0, 5, 10, 30, 20, 40, 50, 70 };
         private int _red, _green, _blue;
         private readonly Queue<int> _orders = new();
-
         private const int APO = 24;
 
         private void Start()
@@ -43,7 +47,16 @@ namespace IdleColors.hud
 
         public void Order(int color)
         {
+            GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
+            var transformPosition = clickedButton.transform.position;
+            _particleSystem.transform.position =
+                new Vector3(transformPosition.x - 1, transformPosition.y - 1, transformPosition.z);
+            _particleSystem.Play();
+
+
             _orders.Enqueue(color);
+            GameManager.Instance.AddCoins(_coinValues[color]);
+            Debug.Log(_coinValues[color]);
 
             if (_orders.Count > 0 || _mixer._mixing)
             {
@@ -60,7 +73,6 @@ namespace IdleColors.hud
                 var rgb = GameManager.RGB.GetValueOrDefault(color);
                 newImage.color = new Color(rgb[0] ? 1 : 0, rgb[1] ? 1 : 0,
                     rgb[2] ? 1 : 0);
-
             }
 
             // update button visibility

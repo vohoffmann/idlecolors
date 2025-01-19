@@ -7,7 +7,7 @@ namespace IdleColors.Globals
         /// <summary>
         /// UPGRADES
         /// </summary>
-        public const int PUFFER_LEVEL_MAX = 20;
+        public const int PUFFER_LEVEL_MAX = 10;
         public const int PUFFER_CAPACITY_BASE_PRICE = 250;
 
         public const int HAXLER_SPEED_MAX = 19;

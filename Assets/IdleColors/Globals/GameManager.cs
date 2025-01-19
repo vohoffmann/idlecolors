@@ -27,6 +27,7 @@ namespace IdleColors.Globals
         public bool AdsInitialized { private set; get; }
         public bool AdsRewardedLoaded { private set; get; }
         public int coins;
+        [SerializeField] private AudioSource _coinAudioSource;
 
         #endregion
 
@@ -186,9 +187,17 @@ namespace IdleColors.Globals
 
         public void AddCoins(int pCoins)
         {
-            coins += pCoins * _coinMultiplier;
+            if (pCoins > 0)
+            {
+                coins += pCoins * _coinMultiplier;
+                _coinController.TriggerScaling();
+                if (!_coinAudioSource.isPlaying)
+                {
+                    _coinAudioSource.Play();
+                }
+            }
+
             coinsText.text = "" + coins;
-            _coinController.TriggerScaling();
         }
 
         public void SubCoins(int pCoins)
@@ -268,13 +277,13 @@ namespace IdleColors.Globals
                 so_haxlerSpeedGreen.value = 1;
                 so_haxlerSpeedBlue.value = 1;
 
-                so_pufferMineralsRed.value = 24;
-                so_pufferMineralsGreen.value = 24;
-                so_pufferMineralsBlue.value = 24;
+                so_pufferMineralsRed.value = 72;
+                so_pufferMineralsGreen.value = 72;
+                so_pufferMineralsBlue.value = 72;
 
-                so_pufferLevelRed.value = 1;
-                so_pufferLevelGreen.value = 1;
-                so_pufferLevelBlue.value = 1;
+                so_pufferLevelRed.value = 3;
+                so_pufferLevelGreen.value = 3;
+                so_pufferLevelBlue.value = 3;
             }
 
             TakeNewValues();
