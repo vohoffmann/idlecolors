@@ -12,8 +12,6 @@ namespace IdleColors.room_storage.drone.states
 
         public override void Enter()
         {
-            // GameManager.Log("Entering State : " + this);
-
             _cup = Owner.cupsToLift.Dequeue();
             if(!_cup)
             {

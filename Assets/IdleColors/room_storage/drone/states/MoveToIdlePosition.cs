@@ -37,7 +37,7 @@ namespace IdleColors.room_storage.drone.states
                 }
                 catch (MissingReferenceException e)
                 {
-                    Debug.Log(e.Message);
+                    Debug.Log("MoveToIdlePosition State : " + e.Message);
                     
                     Owner.cupsToLift.Dequeue();
                 }

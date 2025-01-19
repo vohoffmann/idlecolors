@@ -53,10 +53,8 @@ namespace IdleColors.hud
                 new Vector3(transformPosition.x - 1, transformPosition.y - 1, transformPosition.z);
             _particleSystem.Play();
 
-
             _orders.Enqueue(color);
             GameManager.Instance.AddCoins(_coinValues[color]);
-            Debug.Log(_coinValues[color]);
 
             if (_orders.Count > 0 || _mixer._mixing)
             {

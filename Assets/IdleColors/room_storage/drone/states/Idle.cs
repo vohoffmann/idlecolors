@@ -35,13 +35,13 @@ namespace IdleColors.room_storage.drone.states
                     {
                         throw new MissingReferenceException("cup was moved by another already");
                     }
-                    
+
                     Owner.ChangeState(new MoveToCup(Owner));
                 }
                 catch (MissingReferenceException e)
                 {
-                    Debug.Log(e.Message);
-                    
+                    Debug.Log("Idle State : " + e.Message);
+
                     Owner.cupsToLift.Dequeue();
                 }
             }
