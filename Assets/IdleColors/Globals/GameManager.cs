@@ -216,7 +216,7 @@ namespace IdleColors.Globals
         {
             if (!Application.isEditor)
             {
-                coins = 0;
+                coins = 100;
 
                 so_unlockedRed.value = true;
                 so_capacityRed.value = 1;
@@ -309,7 +309,7 @@ namespace IdleColors.Globals
 
         public void LoadGameData()
         {
-            coins = PlayerPrefs.GetInt("coins", 0);
+            coins = PlayerPrefs.GetInt("coins", 100);
 
             so_unlockedRed.value = true;
             so_capacityRed.value = PlayerPrefs.GetInt("so_capacityRed", 1);
