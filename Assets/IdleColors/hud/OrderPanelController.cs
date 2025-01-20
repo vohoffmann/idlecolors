@@ -35,7 +35,7 @@ namespace IdleColors.hud
 
         // 1    2    3    4    5     6     7
         // 5   10   30   20   40    50    70
-        public static readonly int[] CoinValues = new[] { 0, 5, 10, 30, 20, 40, 50, 70 };
+        public static readonly int[] CoinValues = { 0, 10, 20, 30, 40, 60, 70, 100 };
 
         private int _red, _green, _blue;
         private readonly Queue<int> _orders = new();

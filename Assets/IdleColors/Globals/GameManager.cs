@@ -4,7 +4,6 @@ using IdleColors.room_collect.collector;
 using IdleColors.room_mixing.haxler;
 using IdleColors.room_mixing.mixer;
 using IdleColors.room_mixing.puffer;
-using IdleColors.room_storage.drone;
 using IdleColors.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -97,10 +96,10 @@ namespace IdleColors.Globals
             { 1, new bool[] { true, false, false } }, // red
             { 2, new bool[] { false, true, false } }, // green
             { 3, new bool[] { false, false, true } }, // blue
-            { 4, new bool[] { true, true, false } },
-            { 5, new bool[] { true, false, true } },
-            { 6, new bool[] { false, true, true } },
-            { 7, new bool[] { true, true, true } },
+            { 4, new bool[] { true, true, false } }, // yellow
+            { 5, new bool[] { true, false, true } }, // magenta
+            { 6, new bool[] { false, true, true } }, // cyan
+            { 7, new bool[] { true, true, true } } // white
         };
 
         private readonly Dictionary<int, Color> Colors = new()
@@ -221,7 +220,7 @@ namespace IdleColors.Globals
         {
             if (!Application.isEditor)
             {
-                coins = 100;
+                coins = 200;
 
                 so_unlockedRed.value = true;
                 so_capacityRed.value = 1;
@@ -259,7 +258,7 @@ namespace IdleColors.Globals
             else
             {
                 // diese werte im editor verwenden ...
-                coins = 50000;
+                coins = 200;
 
                 so_unlockedRed.value = true;
                 so_capacityRed.value = 3;
@@ -318,7 +317,7 @@ namespace IdleColors.Globals
 
         public void LoadGameData()
         {
-            coins = PlayerPrefs.GetInt("coins", 100);
+            coins = PlayerPrefs.GetInt("coins", 200);
 
             so_unlockedRed.value = true;
             so_capacityRed.value = PlayerPrefs.GetInt("so_capacityRed", 1);
