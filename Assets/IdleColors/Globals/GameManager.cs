@@ -4,6 +4,7 @@ using IdleColors.room_collect.collector;
 using IdleColors.room_mixing.haxler;
 using IdleColors.room_mixing.mixer;
 using IdleColors.room_mixing.puffer;
+using IdleColors.room_storage.drone;
 using IdleColors.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -63,6 +64,8 @@ namespace IdleColors.Globals
         public SO_Int so_pufferLevelRed;
         public SO_Int so_pufferLevelGreen;
         public SO_Int so_pufferLevelBlue;
+
+        public SO_Int so_DroneSpeed;
 
         #endregion
 
@@ -195,6 +198,8 @@ namespace IdleColors.Globals
                 {
                     _coinAudioSource.Play();
                 }
+
+                EventManager.CoinsAdded.Invoke();
             }
 
             coinsText.text = "" + coins;
@@ -248,6 +253,8 @@ namespace IdleColors.Globals
                 so_pufferLevelRed.value = 1;
                 so_pufferLevelGreen.value = 1;
                 so_pufferLevelBlue.value = 1;
+
+                so_DroneSpeed.value = 1;
             }
             else
             {
@@ -284,6 +291,8 @@ namespace IdleColors.Globals
                 so_pufferLevelRed.value = 3;
                 so_pufferLevelGreen.value = 3;
                 so_pufferLevelBlue.value = 3;
+
+                so_DroneSpeed.value = 1;
             }
 
             TakeNewValues();
@@ -342,6 +351,8 @@ namespace IdleColors.Globals
             so_pufferLevelGreen.value = PlayerPrefs.GetInt("so_pufferLevelGreen", 1);
             so_pufferLevelBlue.value = PlayerPrefs.GetInt("so_pufferLevelBlue", 1);
 
+            so_DroneSpeed.value = PlayerPrefs.GetInt("so_DroneSpeed", 1);
+
             TakeNewValues();
         }
 
@@ -378,6 +389,8 @@ namespace IdleColors.Globals
             PlayerPrefs.SetInt("so_pufferLevelRed", so_pufferLevelRed.value);
             PlayerPrefs.SetInt("so_pufferLevelGreen", so_pufferLevelGreen.value);
             PlayerPrefs.SetInt("so_pufferLevelBlue", so_pufferLevelBlue.value);
+
+            PlayerPrefs.SetInt("so_DroneSpeed", so_DroneSpeed.value);
 
             PlayerPrefs.Save();
         }

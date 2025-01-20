@@ -24,7 +24,7 @@ namespace IdleColors.room_mixing.puffer
         private float _amountIndicator_Y;
         private float _pufferFillIndicatorStep;
         private int _pufferMaxValue;
-        public int costFactor;
+        public float costFactor;
         private AudioSource _audioSource;
         [SerializeField] private AudioClip _upgradeSound;
         [SerializeField] private AudioClip _dropInSound;
@@ -97,19 +97,16 @@ namespace IdleColors.room_mixing.puffer
         private void SetIndicatorPosition()
         {
             var indicatorPosition = _amountIndicator.transform.position;
-        
+
             var newY = _amountIndicator_Y + _minerals.value * _pufferFillIndicatorStep;
             if (newY > -11.62f) // 
             {
                 newY = -11.64f;
             }
+
             _amountIndicator.transform.position = new Vector3(indicatorPosition.x,
                 newY,
                 indicatorPosition.z);
-
-            // GameManager.Log("_amountIndicator_Y : " + _amountIndicator_Y);
-            // GameManager.Log("_minerals.value : " + _minerals.value);
-            // GameManager.Log("_pufferFillIndicatorStep : " + _pufferFillIndicatorStep);
         }
 
         public void OrderMinerals(int amount)
@@ -155,7 +152,8 @@ namespace IdleColors.room_mixing.puffer
 
         public void UpgradeCapacity()
         {
-            GameManager.Instance.SubCoins(costFactor * GLOB.PUFFER_CAPACITY_BASE_PRICE * _level.value);
+            GameManager.Instance.SubCoins(
+                Mathf.RoundToInt(GLOB.PUFFER_CAPACITY_BASE_PRICE * Mathf.Pow(costFactor, GetLevel() - 1)));
             _level.value += 1;
             haxlerControler.SetPufferFilled(false);
             _audioSource.PlayOneShot(_upgradeSound);

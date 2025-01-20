@@ -2,6 +2,7 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+/[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
@@ -14,8 +15,6 @@
 /IdleColors_BurstDebugInformation_DoNotShip/
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/
 /Assets/AddressableAssetsData/
-
-/[Ll]ibrary/*
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

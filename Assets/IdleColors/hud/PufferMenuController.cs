@@ -42,8 +42,12 @@ namespace IdleColors.hud
                 var from = _pufferScript.GetLevel() * 24;
                 var to = (_pufferScript.GetLevel() + 1) * 24;
                 _statusText.text = $"{from} -> {to}";
-                _capacityText.text = "" + _pufferScript.costFactor * _pufferScript.GetLevel() *
-                    GLOB.PUFFER_CAPACITY_BASE_PRICE;
+                // _capacityText.text = "" + _pufferScript.costFactor * _pufferScript.GetLevel() *
+                //     GLOB.PUFFER_CAPACITY_BASE_PRICE;
+
+                _capacityText.text = "" + Mathf.RoundToInt(GLOB.PUFFER_CAPACITY_BASE_PRICE *
+                                                           Mathf.Pow(_pufferScript.costFactor,
+                                                               _pufferScript.GetLevel() - 1));
             }
             else
             {
@@ -61,8 +65,10 @@ namespace IdleColors.hud
                 return;
             }
 
-            _capacityButton.interactable = GameManager.Instance.GetCoins() >= _pufferScript.costFactor *
-                _pufferScript.GetLevel() * GLOB.PUFFER_CAPACITY_BASE_PRICE;
+            _capacityButton.interactable = GameManager.Instance.GetCoins() >= Mathf.RoundToInt(
+                GLOB.PUFFER_CAPACITY_BASE_PRICE *
+                Mathf.Pow(_pufferScript.costFactor,
+                    _pufferScript.GetLevel() - 1));
         }
 
         public void UpgradeCapacity()

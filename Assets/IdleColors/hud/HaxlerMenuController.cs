@@ -43,8 +43,11 @@ namespace IdleColors.hud
                 var to = 20 - (_haxlerScript.GetSpeedLevel() + 1);
 
                 _statusText.text = $"{from} -> {to} seconds";
-                _speedButtonText.text = "" + _haxlerScript.costFactor * _haxlerScript.GetSpeedLevel() *
-                    GLOB.HAXLER_SPEED_BASE_PRICE;
+                // _speedButtonText.text = "" + _haxlerScript.costFactor * _haxlerScript.GetSpeedLevel() *
+                // GLOB.HAXLER_SPEED_BASE_PRICE;
+                _speedButtonText.text = "" + Mathf.RoundToInt(GLOB.HAXLER_SPEED_BASE_PRICE *
+                                                              Mathf.Pow(_haxlerScript.costFactor,
+                                                                  _haxlerScript.GetSpeedLevel() - 1));
             }
             else
             {
@@ -67,8 +70,10 @@ namespace IdleColors.hud
                 return;
             }
 
-            _speedButton.interactable = GameManager.Instance.GetCoins() >= _haxlerScript.costFactor *
-                _haxlerScript.GetSpeedLevel() * GLOB.HAXLER_SPEED_BASE_PRICE;
+            _speedButton.interactable = GameManager.Instance.GetCoins() >= Mathf.RoundToInt(
+                GLOB.HAXLER_SPEED_BASE_PRICE *
+                Mathf.Pow(_haxlerScript.costFactor,
+                    _haxlerScript.GetSpeedLevel() - 1));
         }
 
         public void Close()

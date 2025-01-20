@@ -8,6 +8,7 @@ namespace IdleColors.Globals
         /// UPGRADES
         /// </summary>
         public const int PUFFER_LEVEL_MAX = 10;
+
         public const int PUFFER_CAPACITY_BASE_PRICE = 250;
 
         public const int HAXLER_SPEED_MAX = 19;
@@ -20,5 +21,8 @@ namespace IdleColors.Globals
         public const int COLLECTOR_MAX_SPEED = 8;
         public const int COLLECTOR_MAX_CAPACITY = 3;
         public const int COLLECTOR_MAX_UNLOADSPEED = 8;
+
+        public const int DRONE_SPEED_MAX = 15;
+        public const int DRONE_SPEED_BASE_PRICE = 25;
     }
 }

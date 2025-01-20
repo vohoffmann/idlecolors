@@ -34,6 +34,9 @@ namespace IdleColors.hud
         {
             if (_audioSource != null && _songs.Length != 0)
             {
+                _audioSource.clip = _songs[_playListIdx];
+                _audioSource.Play();
+
                 StartCoroutine(WaitForAudioToEnd());
             }
         }
@@ -81,8 +84,8 @@ namespace IdleColors.hud
                 yield return null;
             }
 
-            _audioSource.clip = _songs[_playListIdx];
-            _audioSource.Play();
+            Debug.Log("Audio End ... try to play next song");
+
 
             _playListIdx++;
             if (_playListIdx >= _songs.Length)
@@ -90,6 +93,8 @@ namespace IdleColors.hud
                 _playListIdx = 0;
             }
 
+            _audioSource.clip = _songs[_playListIdx];
+            _audioSource.Play();
         }
 
         public void PlayNextSong()

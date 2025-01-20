@@ -1,22 +1,43 @@
+using System;
 using System.Collections.Generic;
 using IdleColors.camera;
 using IdleColors.Globals;
+using IdleColors.hud;
 using IdleColors.room_storage.drone.states;
+using IdleColors.ScriptableObjects;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace IdleColors.room_storage.drone
 {
     public class DroneController : StateMachine, IPointerClickHandler
     {
+        #region members
+
         public readonly Queue<GameObject> cupsToLift = new();
         [SerializeField] private Animator _animator;
         [SerializeField] private GameObject _droneBody;
         [SerializeField] private GameObject[] _destinationPositions;
         [SerializeField] private GameObject _droneMenu;
+
         [SerializeField] private GameObject[] _dronePropeller;
-        [SerializeField] private float _droneSpeed = 5f;
+
+        [SerializeField] private SO_Int _droneSpeed;
+        [SerializeField] private ParticleSystem _coinPartikel;
+
+        [SerializeField] private GameObject _noMoreUpdatesButtonText;
+        [SerializeField] private TextMeshProUGUI _speedStatusText;
+
+        [SerializeField] private GameObject _speedButtonCanvas;
+
+        private Button _speedButton;
+        [SerializeField] private Text _speedButtonText;
+        [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
+        [SerializeField] private AudioSource _updateSound;
         private Color _color;
+        private int _colorIndex;
         public AudioSource audioSource;
         public Vector3 targetPos;
         public GameObject cup;
@@ -32,6 +53,16 @@ namespace IdleColors.room_storage.drone
         public const string STATE_UNLOADING = "Unloading";
         public const string STATE_MOVETOIDLEPOSITION = "MoveToIdlePosition";
 
+        #endregion
+
+        private void Awake()
+        {
+            if (_speedButton == null)
+            {
+                _speedButton = _speedButtonText.GetComponent<Button>();
+            }
+        }
+
         private void Start()
         {
             ChangeState(new Idle(this));
@@ -42,17 +73,19 @@ namespace IdleColors.room_storage.drone
                 storageRoom.transform);
             cupInstance.transform.position = new Vector3(11.16f, -30.70f, -32.50f);
         }
-
+        
         private void OnEnable()
         {
             EventManager.CupStored += HandleStoredBoxes;
             _droneMenu.SetActive(false);
             audioSource.volume = 0;
+            EventManager.CoinsAdded += updateMenuView;
         }
 
         private void OnDisable()
         {
             EventManager.CupStored -= HandleStoredBoxes;
+            EventManager.CoinsAdded -= updateMenuView;
         }
 
         private void OnBecameVisible()
@@ -81,11 +114,14 @@ namespace IdleColors.room_storage.drone
 
             if (_currentState is not Idle && distance > .01f)
             {
-                accelerationFactor = Mathf.Clamp01(accelerationFactor + Time.deltaTime / _droneSpeed);
+                accelerationFactor =
+                    Mathf.Clamp01(accelerationFactor + Time.deltaTime / (2 - (_droneSpeed.value * .1f)));
 
                 transform.position =
-                    Vector3.SmoothDamp(transform.position, targetPos, ref _velocity, _droneSpeed / accelerationFactor);
-
+                    Vector3.SmoothDamp(transform.position,
+                        targetPos,
+                        ref _velocity,
+                        (2 - (_droneSpeed.value * .1f)) / accelerationFactor);
                 var factor = ((distance / 50f) * accelerationFactor);
                 audioSource.pitch = 1f + factor;
                 _propellerSpeed = 800f + factor * 1000;
@@ -132,20 +168,15 @@ namespace IdleColors.room_storage.drone
         // called by animation event ( drone -> unloading)
         public void OnUnloadingAnimationEnd()
         {
+            GameManager.Instance.AddCoins(OrderPanelController.CoinValues[_colorIndex]);
+            _coinPartikel.Play();
             SetDroneColor(0);
-
-            // TODO : check if this is good or should we think about it again ...
-            // if (boxesToLift.Count > 0)
-            // {
-            //     ChangeState(new MoveToBox(this));
-            //     return;
-            // }
-
             ChangeState(new MoveToIdlePosition(this));
         }
 
         public void DetermineTargetPosition(int colorIndex)
         {
+            _colorIndex = colorIndex;
             destinationPufferPos = _destinationPositions[colorIndex - 1].transform.position;
         }
 
@@ -153,6 +184,42 @@ namespace IdleColors.room_storage.drone
         {
             CameraController.Instance.SetLockedTarget(this);
             _droneMenu.SetActive(true);
+
+            updateMenuView();
+        }
+
+        private void updateMenuView()
+        {
+            if (_droneSpeed.value < GLOB.DRONE_SPEED_MAX)
+            {
+                _speedButtonCanvas.SetActive(true);
+
+                _speedUpdateInfoText.text = $"{_droneSpeed.value} -> {_droneSpeed.value + 1}";
+
+                var upgradeCost = Mathf.RoundToInt(GLOB.DRONE_SPEED_BASE_PRICE * Mathf.Pow(1.5f, _droneSpeed.value - 1));
+                _speedButtonText.text =
+                    "" + upgradeCost;
+                _speedButton.interactable = GameManager.Instance.GetCoins() >=
+                    upgradeCost;
+            }
+            else
+            {
+                _speedButtonCanvas.SetActive(false);
+                _noMoreUpdatesButtonText.SetActive(true);
+                _speedStatusText.text = "" + _droneSpeed.value;
+            }
+        }
+
+        public void UpdateSpeed()
+        {
+            if (_droneSpeed.value < GLOB.DRONE_SPEED_MAX)
+            {
+                GameManager.Instance.SubCoins(
+                    Mathf.RoundToInt(GLOB.DRONE_SPEED_BASE_PRICE * Mathf.Pow(1.5f, _droneSpeed.value - 1)));
+                _droneSpeed.value += 1;
+                _updateSound.Play();
+                updateMenuView();
+            }
         }
 
         public void HideMenu()

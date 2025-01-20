@@ -20,7 +20,7 @@ namespace IdleColors.room_mixing.haxler
         [SerializeField] private GameObject chrushedMineralBP;
         private AudioSource _audioSource;
         private MoveHaxlerHammer[] hammerScripts;
-        public int costFactor;
+        public float costFactor;
         private float sliderValue;
         private float startTime;
         private bool crushing;
@@ -155,7 +155,9 @@ namespace IdleColors.room_mixing.haxler
 
         public void UpgradeSpeed()
         {
-            GameManager.Instance.SubCoins(costFactor * GLOB.HAXLER_SPEED_BASE_PRICE * _speedLevel.value);
+            
+            GameManager.Instance.SubCoins(Mathf.RoundToInt(GLOB.HAXLER_SPEED_BASE_PRICE * Mathf.Pow(costFactor, _speedLevel.value - 1)));
+            // GameManager.Instance.SubCoins(costFactor * GLOB.HAXLER_SPEED_BASE_PRICE * _speedLevel.value);
             _speedLevel.value += 1;
 
             _audioSource.PlayOneShot(_upgradeSound);

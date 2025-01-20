@@ -24,6 +24,9 @@ namespace IdleColors.room_storage.drone.states
             
             Owner.targetPos = _cup.transform.position;
             Owner.targetPos.y += 3.85f;
+            
+            // Vector3 direction = Owner.targetPos - Owner.transform.position;
+            // Owner.transform.rotation = Quaternion.LookRotation(direction);
 
             var colorIndex = _cup.GetComponent<CupController>()._colorIndex;
             Owner.DetermineTargetPosition(colorIndex);
