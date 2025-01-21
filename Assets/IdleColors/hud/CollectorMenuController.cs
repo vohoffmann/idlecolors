@@ -1,3 +1,4 @@
+using System;
 using IdleColors.camera;
 using IdleColors.Globals;
 using IdleColors.room_collect.collector;
@@ -39,37 +40,9 @@ namespace IdleColors.hud
         [SerializeField] private Text _unloadSpeedButtonText;
         [SerializeField] private TextMeshProUGUI _unloadSpeedStatusText;
 
-        // update the buttons visibility regarding the coins
-        private void Update()
-        {
-            if (_collectorScript == null)
-            {
-                return;
-            }
-
-            // unlock
-            var coins = GameManager.Instance.GetCoins();
-
-            var costFactor = _collectorScript.costFactor;
-            if (!_collectorScript.IsUnlocked())
-            {
-                activateButton.interactable = coins >= GLOB.COLLECTOR_UNLOCK * costFactor;
-            }
-            // upgrades
-            else
-            {
-                speedButton.interactable = coins >= costFactor * _collectorScript.GetSpeedLevel() *
-                    GLOB.COLLECTOR_SPEED_BASE_PRICE;
-
-                capButton.interactable = coins >= costFactor * _collectorScript.GetCapacity() *
-                    GLOB.COLLECTOR_CAPACITY_BASE_PRICE;
-                unloadSpeedButton.interactable = coins >= costFactor * _collectorScript.GetUnloadSpeed() *
-                    GLOB.COLLECTOR_UNLOADSPEED_BASE_PRICE;
-            }
-        }
-
         public void SetCollector(CollectorController collectorScript)
         {
+            Debug.Log("Set Collector");
             _collectorScript = collectorScript;
             _noMoreUpdatesButtonText.SetActive(false);
 
@@ -93,45 +66,19 @@ namespace IdleColors.hud
                 unloadSpeedButton = _unloadSpeedButtonText.GetComponent<Button>();
             }
 
-            if (!_collectorScript.IsUnlocked())
-            {
-                _activateButtonText.text = "" +
-                                           GLOB.COLLECTOR_UNLOCK *
-                                           _collectorScript.costFactor;
-                _activateButtonCanvas.SetActive(true);
-
-                _speedButtonCanvas.SetActive(false);
-                _capButtonCanvas.SetActive(false);
-                _unloadSpeedButtonCanvas.SetActive(false);
-
-                if (Application.platform == RuntimePlatform.Android ||
-                    Application.platform == RuntimePlatform.WindowsEditor)
-                {
-                    _unlockbyadsbutton.gameObject.SetActive(true);
-                    _unlockbyadstext.gameObject.SetActive(true);
-                }
-                else
-                {
-                    _unlockbyadsbutton.gameObject.SetActive(false);
-                    _unlockbyadstext.gameObject.SetActive(false);
-                }
-            }
-            else
-            {
-                AktivateUpdateView();
-            }
-
             gameObject.SetActive(true);
         }
 
-        private void AktivateUpdateView()
+        private void OnEnable()
         {
-            _activateButtonCanvas.SetActive(false);
+            Debug.Log("OnEnable");
+            InvokeRepeating(nameof(UpdateButtonText), 0, .5f);
+        }
 
-            _speedButtonCanvas.SetActive(true);
-            _capButtonCanvas.SetActive(true);
-            _unloadSpeedButtonCanvas.SetActive(true);
-            UpdateButtonText();
+        private void OnDisable()
+        {
+            Debug.Log("OnDisable");
+            CancelInvoke(nameof(UpdateButtonText));
         }
 
         public void UnlockCollector(bool subCoins = true)
@@ -143,12 +90,11 @@ namespace IdleColors.hud
 
             if (subCoins)
             {
-                GameManager.Instance.SubCoins(GLOB.COLLECTOR_UNLOCK *
-                                              _collectorScript.costFactor);
+                GameManager.Instance.SubCoins(GLOB.COLLECTOR_UNLOCK * _collectorScript.costFactor);
             }
 
             _collectorScript.Unlock();
-            AktivateUpdateView();
+            UpdateButtonText();
         }
 
         public void UpgradeSpeed()
@@ -171,60 +117,117 @@ namespace IdleColors.hud
 
         private void UpdateButtonText()
         {
+            Debug.Log("UpdateButtonText");
+            
+            if (_collectorScript == null)
+            {
+                return;
+            }
+
+            var coins = GameManager.Instance.GetCoins();
+            var costFactor = _collectorScript.costFactor;
             var buttons = false;
-            // cap
-            if (_collectorScript.GetCapacity() < GLOB.COLLECTOR_MAX_CAPACITY)
-            {
-                _capButtonText.text = "" + _collectorScript.costFactor *
-                    _collectorScript.GetCapacity() *
-                    GLOB.COLLECTOR_CAPACITY_BASE_PRICE;
-                _capacityStatusText.text =
-                    "" + _collectorScript.GetCapacity() + " -> " + (_collectorScript.GetCapacity() + 1);
-                buttons = true;
-            }
-            else
-            {
-                _capButtonCanvas.SetActive(false);
-            }
 
-            // speed
-            if (_collectorScript.GetSpeedLevel() < GLOB.COLLECTOR_MAX_SPEED)
+
+            if (!_collectorScript.IsUnlocked())
             {
-                _speedButtonText.text = "" + _collectorScript.costFactor *
-                    _collectorScript.GetSpeedLevel() *
-                    GLOB.COLLECTOR_SPEED_BASE_PRICE;
-                _speedUpdateInfoText.text = "" + (_collectorScript.GetSpeedLevel() - 1) + " -> " +
-                                            (_collectorScript.GetSpeedLevel());
-                buttons = true;
-            }
-            else
-            {
+                _activateButtonCanvas.SetActive(true);
+
                 _speedButtonCanvas.SetActive(false);
-            }
+                _capButtonCanvas.SetActive(false);
+                _unloadSpeedButtonCanvas.SetActive(false);
 
-            // unload
-            if (_collectorScript.GetUnloadSpeed() < GLOB.COLLECTOR_MAX_UNLOADSPEED)
-            {
-                _unloadSpeedButtonText.text = "" +
-                                              _collectorScript.costFactor *
-                                              _collectorScript.GetUnloadSpeed() *
-                                              GLOB.COLLECTOR_UNLOADSPEED_BASE_PRICE;
-                var from = Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100;
-                var to = Mathf.Round(19.5f / (_collectorScript.GetUnloadSpeed() + 1) * 100) / 100;
-                _unloadSpeedStatusText.text = $"{from:F2} -> {to:F2} sec";
-                buttons = true;
+                _activateButtonText.text = "" +
+                                           GLOB.COLLECTOR_UNLOCK *
+                                           _collectorScript.costFactor;
+                activateButton.interactable = coins >= GLOB.COLLECTOR_UNLOCK * costFactor;
+
+                if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                {
+                    _unlockbyadsbutton.gameObject.SetActive(true);
+                    _unlockbyadstext.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _unlockbyadsbutton.gameObject.SetActive(false);
+                    _unlockbyadstext.gameObject.SetActive(false);
+                }
             }
             else
             {
-                _unloadSpeedButtonCanvas.SetActive(false);
-            }
+                _activateButtonCanvas.SetActive(false);
 
-            if (!buttons)
-            {
-                _noMoreUpdatesButtonText.SetActive(true);
-                _speedStatusText.text = _collectorScript.GetSpeedLevel().ToString();
-                _capycityInfoText.text = _collectorScript.GetCapacity().ToString();
-                _unloadspeedInfoText.text = "" + Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100 + " sec";
+                // capacity
+                if (_collectorScript.GetCapacity() < GLOB.COLLECTOR_MAX_CAPACITY)
+                {
+                    _capButtonCanvas.SetActive(true);
+
+                    _capButtonText.text = "" + costFactor *
+                        _collectorScript.GetCapacity() *
+                        GLOB.COLLECTOR_CAPACITY_BASE_PRICE;
+                    _capacityStatusText.text =
+                        "" + _collectorScript.GetCapacity() + " -> " + (_collectorScript.GetCapacity() + 1);
+                    capButton.interactable = coins >= costFactor * _collectorScript.GetCapacity() *
+                        GLOB.COLLECTOR_CAPACITY_BASE_PRICE;
+
+                    buttons = true;
+                }
+                else
+                {
+                    _capButtonCanvas.SetActive(false);
+                }
+
+                // speed
+                if (_collectorScript.GetSpeedLevel() < GLOB.COLLECTOR_MAX_SPEED)
+                {
+                    _speedButtonCanvas.SetActive(true);
+
+                    _speedButtonText.text = "" + costFactor *
+                        _collectorScript.GetSpeedLevel() *
+                        GLOB.COLLECTOR_SPEED_BASE_PRICE;
+                    _speedUpdateInfoText.text = "" + (_collectorScript.GetSpeedLevel() - 1) + " -> " +
+                                                (_collectorScript.GetSpeedLevel());
+                    speedButton.interactable = coins >= costFactor * _collectorScript.GetSpeedLevel() *
+                        GLOB.COLLECTOR_SPEED_BASE_PRICE;
+
+                    buttons = true;
+                }
+                else
+                {
+                    _speedButtonCanvas.SetActive(false);
+                }
+
+                // unload
+                if (_collectorScript.GetUnloadSpeed() < GLOB.COLLECTOR_MAX_UNLOADSPEED)
+                {
+                    _unloadSpeedButtonCanvas.SetActive(true);
+
+                    _unloadSpeedButtonText.text = "" +
+                                                  costFactor *
+                                                  _collectorScript.GetUnloadSpeed() *
+                                                  GLOB.COLLECTOR_UNLOADSPEED_BASE_PRICE;
+                    var from = Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100;
+                    var to = Mathf.Round(19.5f / (_collectorScript.GetUnloadSpeed() + 1) * 100) / 100;
+                    _unloadSpeedStatusText.text = $"{from:F2} -> {to:F2} sec";
+                    unloadSpeedButton.interactable = coins >= costFactor * _collectorScript.GetUnloadSpeed() *
+                        GLOB.COLLECTOR_UNLOADSPEED_BASE_PRICE;
+
+                    buttons = true;
+                }
+                else
+                {
+                    _unloadSpeedButtonCanvas.SetActive(false);
+                }
+
+                // alles upgrades maximized ?
+                if (!buttons)
+                {
+                    _noMoreUpdatesButtonText.SetActive(true);
+                    _speedStatusText.text = _collectorScript.GetSpeedLevel().ToString();
+                    _capycityInfoText.text = _collectorScript.GetCapacity().ToString();
+                    _unloadspeedInfoText.text =
+                        "" + Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100 + " sec";
+                }
             }
         }
 
@@ -237,9 +240,8 @@ namespace IdleColors.hud
 
         public void ShowAdsToActivate()
         {
-            if (!GameManager.Instance.AdsInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
             {
-                GameManager.Instance.InitializeAds();
                 return;
             }
 

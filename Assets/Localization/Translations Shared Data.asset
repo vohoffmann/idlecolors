@@ -71,6 +71,10 @@ MonoBehaviour:
     m_Key: next-song
     m_Metadata:
       m_Items: []
+  - m_Id: 23138739681402880
+    m_Key: ads_unlock
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

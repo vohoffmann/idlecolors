@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using IdleColors.hud.coin;
 using IdleColors.room_collect.collector;
@@ -7,6 +8,7 @@ using IdleColors.room_mixing.puffer;
 using IdleColors.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace IdleColors.Globals
@@ -24,7 +26,6 @@ namespace IdleColors.Globals
         public bool ReadyToSave { private set; get; }
         public const string REWARDED_ANDROID = "Rewarded_Android";
         private readonly string GAMEID = "5774375";
-        public bool AdsInitialized { private set; get; }
         public bool AdsRewardedLoaded { private set; get; }
         public int coins;
         [SerializeField] private AudioSource _coinAudioSource;
@@ -130,7 +131,7 @@ namespace IdleColors.Globals
 
             coinsText.text = "" + coins;
 
-            InitializeAds();
+            InvokeRepeating(nameof(InitializeAds), 1, 5);
         }
 
         private void Start()
@@ -158,7 +159,7 @@ namespace IdleColors.Globals
                 Log("Gamedate saved");
             }
 
-            if (!AdsInitialized)
+            if (!Advertisement.isInitialized)
             {
                 InitializeAds();
             }
@@ -218,81 +219,81 @@ namespace IdleColors.Globals
 
         public void ResetValues()
         {
-            if (!Application.isEditor)
-            {
-                coins = 200;
+            // if (!Application.isEditor)
+            // {
+            coins = 200;
 
-                so_unlockedRed.value = true;
-                so_capacityRed.value = 1;
-                so_speedLevelRed.value = 2;
-                so_unloadSpeedRed.value = 1;
+            so_unlockedRed.value = true;
+            so_capacityRed.value = 1;
+            so_speedLevelRed.value = 2;
+            so_unloadSpeedRed.value = 1;
 
-                so_unlockedGreen.value = false;
-                so_capacityGreen.value = 1;
-                so_speedLevelGreen.value = 2;
-                so_unloadSpeedGreen.value = 1;
+            so_unlockedGreen.value = false;
+            so_capacityGreen.value = 1;
+            so_speedLevelGreen.value = 2;
+            so_unloadSpeedGreen.value = 1;
 
-                so_unlockedBlue.value = false;
-                so_capacityBlue.value = 1;
-                so_speedLevelBlue.value = 2;
-                so_unloadSpeedBlue.value = 1;
+            so_unlockedBlue.value = false;
+            so_capacityBlue.value = 1;
+            so_speedLevelBlue.value = 2;
+            so_unloadSpeedBlue.value = 1;
 
-                so_haxlerMineralsRed.value = 0;
-                so_haxlerMineralsGreen.value = 0;
-                so_haxlerMineralsBlue.value = 0;
+            so_haxlerMineralsRed.value = 0;
+            so_haxlerMineralsGreen.value = 0;
+            so_haxlerMineralsBlue.value = 0;
 
-                so_haxlerSpeedRed.value = 1;
-                so_haxlerSpeedGreen.value = 1;
-                so_haxlerSpeedBlue.value = 1;
+            so_haxlerSpeedRed.value = 1;
+            so_haxlerSpeedGreen.value = 1;
+            so_haxlerSpeedBlue.value = 1;
 
-                so_pufferMineralsRed.value = 0;
-                so_pufferMineralsGreen.value = 0;
-                so_pufferMineralsBlue.value = 0;
+            so_pufferMineralsRed.value = 0;
+            so_pufferMineralsGreen.value = 0;
+            so_pufferMineralsBlue.value = 0;
 
-                so_pufferLevelRed.value = 1;
-                so_pufferLevelGreen.value = 1;
-                so_pufferLevelBlue.value = 1;
+            so_pufferLevelRed.value = 1;
+            so_pufferLevelGreen.value = 1;
+            so_pufferLevelBlue.value = 1;
 
-                so_DroneSpeed.value = 1;
-            }
-            else
-            {
-                // diese werte im editor verwenden ...
-                coins = 200;
-
-                so_unlockedRed.value = true;
-                so_capacityRed.value = 3;
-                so_speedLevelRed.value = 8;
-                so_unloadSpeedRed.value = 1;
-
-                so_unlockedGreen.value = false;
-                so_capacityGreen.value = 1;
-                so_speedLevelGreen.value = 2;
-                so_unloadSpeedGreen.value = 1;
-
-                so_unlockedBlue.value = false;
-                so_capacityBlue.value = 1;
-                so_speedLevelBlue.value = 2;
-                so_unloadSpeedBlue.value = 1;
-
-                so_haxlerMineralsRed.value = 0;
-                so_haxlerMineralsGreen.value = 0;
-                so_haxlerMineralsBlue.value = 0;
-
-                so_haxlerSpeedRed.value = 1;
-                so_haxlerSpeedGreen.value = 1;
-                so_haxlerSpeedBlue.value = 1;
-
-                so_pufferMineralsRed.value = 72;
-                so_pufferMineralsGreen.value = 72;
-                so_pufferMineralsBlue.value = 72;
-
-                so_pufferLevelRed.value = 3;
-                so_pufferLevelGreen.value = 3;
-                so_pufferLevelBlue.value = 3;
-
-                so_DroneSpeed.value = 1;
-            }
+            so_DroneSpeed.value = 1;
+            // }
+            // else
+            // {
+            //     // diese werte im editor verwenden ...
+            //     coins = 200;
+            //
+            //     so_unlockedRed.value = true;
+            //     so_capacityRed.value = 3;
+            //     so_speedLevelRed.value = 8;
+            //     so_unloadSpeedRed.value = 1;
+            //
+            //     so_unlockedGreen.value = false;
+            //     so_capacityGreen.value = 1;
+            //     so_speedLevelGreen.value = 2;
+            //     so_unloadSpeedGreen.value = 1;
+            //
+            //     so_unlockedBlue.value = false;
+            //     so_capacityBlue.value = 1;
+            //     so_speedLevelBlue.value = 2;
+            //     so_unloadSpeedBlue.value = 1;
+            //
+            //     so_haxlerMineralsRed.value = 0;
+            //     so_haxlerMineralsGreen.value = 0;
+            //     so_haxlerMineralsBlue.value = 0;
+            //
+            //     so_haxlerSpeedRed.value = 1;
+            //     so_haxlerSpeedGreen.value = 1;
+            //     so_haxlerSpeedBlue.value = 1;
+            //
+            //     so_pufferMineralsRed.value = 72;
+            //     so_pufferMineralsGreen.value = 72;
+            //     so_pufferMineralsBlue.value = 72;
+            //
+            //     so_pufferLevelRed.value = 3;
+            //     so_pufferLevelGreen.value = 3;
+            //     so_pufferLevelBlue.value = 3;
+            //
+            //     so_DroneSpeed.value = 1;
+            // }
 
             TakeNewValues();
         }
@@ -421,37 +422,53 @@ namespace IdleColors.Globals
 
         public void InitializeAds()
         {
-            if (Application.isEditor || Application.platform.Equals(RuntimePlatform.Android))
+            if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                if (!Advertisement.isInitialized && Advertisement.isSupported)
+                if (Advertisement.isSupported)
                 {
-                    // TODO : test aus für live
-                    // ACHTUNG 2. parameter ist TEST = JA
-                    Advertisement.Initialize(GAMEID, true, this);
+                    if (!Advertisement.isInitialized)
+                    {
+                        // ACHTUNG 2. parameter ist TEST = JA
+                        Debug.Log("try Advertisement.Initialize ...");
+                        Advertisement.Initialize(GAMEID, false, this);
+                        return;
+                    }
+
+                    if (!AdsRewardedLoaded)
+                    {
+                        Debug.Log("try Load Rewarded Ads ...");
+                        LoadRewardedAd();
+                        return;
+                    }
+
+                    Debug.Log("Advertisement is completely initialized");
+                }
+                else
+                {
+                    Log("Ads not supported");
                 }
             }
             else
             {
-                Log("Ads only for android or editor(test)");
+                Debug.Log("not connected");
             }
         }
 
         public void OnInitializationComplete()
         {
             Debug.Log("Unity Ads initialization complete.");
-            AdsInitialized = true;
             LoadRewardedAd();
         }
 
         public void OnInitializationFailed(UnityAdsInitializationError error, string message)
         {
             Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
-            AdsInitialized = false;
         }
 
         private void LoadRewardedAd()
         {
             // IMPORTANT! Only load content AFTER initialization 
+            Debug.Log("Loading Rewarded Ad ...");
             Advertisement.Load(REWARDED_ANDROID, this);
         }
 

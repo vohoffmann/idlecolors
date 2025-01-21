@@ -73,6 +73,10 @@ MonoBehaviour:
     m_Localized: next song
     m_Metadata:
       m_Items: []
+  - m_Id: 23138739681402880
+    m_Localized: or watch short video to unlock
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
