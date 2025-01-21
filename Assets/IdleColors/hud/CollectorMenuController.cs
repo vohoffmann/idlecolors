@@ -42,7 +42,7 @@ namespace IdleColors.hud
 
         public void SetCollector(CollectorController collectorScript)
         {
-            Debug.Log("Set Collector");
+            // Debug.Log("Set Collector");
             _collectorScript = collectorScript;
             _noMoreUpdatesButtonText.SetActive(false);
 
@@ -71,13 +71,13 @@ namespace IdleColors.hud
 
         private void OnEnable()
         {
-            Debug.Log("OnEnable");
+            // Debug.Log("OnEnable");
             InvokeRepeating(nameof(UpdateButtonText), 0, .5f);
         }
 
         private void OnDisable()
         {
-            Debug.Log("OnDisable");
+            // Debug.Log("OnDisable");
             CancelInvoke(nameof(UpdateButtonText));
         }
 
@@ -117,7 +117,7 @@ namespace IdleColors.hud
 
         private void UpdateButtonText()
         {
-            Debug.Log("UpdateButtonText");
+            // Debug.Log("UpdateButtonText");
             
             if (_collectorScript == null)
             {
@@ -256,7 +256,7 @@ namespace IdleColors.hud
 
             if (showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
             {
-                Debug.Log("Unity Ads Rewarded Ad Completed");
+                // Debug.Log("Unity Ads Rewarded Ad Completed");
 
                 // TODO : mit deligate arbeiten ... den ganzen Ads mumpist auslagern und generisch machen, damit das für alles mögliche verwendet werden kann
                 UnlockCollector(false);

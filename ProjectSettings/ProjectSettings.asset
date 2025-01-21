@@ -17,7 +17,7 @@ PlayerSettings:
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
-  m_ShowUnitySplashScreen: 1
+  m_ShowUnitySplashScreen: 0
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
@@ -751,7 +751,23 @@ PlayerSettings:
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: KAMGAM_POWER_PIVOT
+    EmbeddedLinux: KAMGAM_POWER_PIVOT
+    GameCoreXboxOne: KAMGAM_POWER_PIVOT
+    LinuxHeadlessSimulation: KAMGAM_POWER_PIVOT
+    Nintendo Switch: KAMGAM_POWER_PIVOT
+    PS4: KAMGAM_POWER_PIVOT
+    PS5: KAMGAM_POWER_PIVOT
+    QNX: KAMGAM_POWER_PIVOT
+    ReservedCFE: KAMGAM_POWER_PIVOT
+    Standalone: KAMGAM_POWER_PIVOT
+    VisionOS: KAMGAM_POWER_PIVOT
+    WebGL: KAMGAM_POWER_PIVOT
+    Windows Store Apps: KAMGAM_POWER_PIVOT
+    XboxOne: KAMGAM_POWER_PIVOT
+    iPhone: KAMGAM_POWER_PIVOT
+    tvOS: KAMGAM_POWER_PIVOT
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

@@ -15,7 +15,7 @@ namespace IdleColors.room_storage.drone.states
             _cup = Owner.cupsToLift.Dequeue();
             if(!_cup)
             {
-                Debug.Log("MoveToCup State ... cup was deleted already ... ");
+                // Debug.Log("MoveToCup State ... cup was deleted already ... ");
                 Owner.ChangeState(new MoveToIdlePosition(Owner));
                 return;
             }
