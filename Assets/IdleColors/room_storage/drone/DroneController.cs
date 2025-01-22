@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using IdleColors.camera;
 using IdleColors.Globals;
@@ -31,7 +32,7 @@ namespace IdleColors.room_storage.drone
 
         [SerializeField] private GameObject _speedButtonCanvas;
 
-        [SerializeField] private Button _speedButton;
+        private Button _speedButton;
         [SerializeField] private Text _speedButtonText;
         [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
         [SerializeField] private AudioSource _updateSound;
@@ -53,6 +54,14 @@ namespace IdleColors.room_storage.drone
         public const string STATE_MOVETOIDLEPOSITION = "MoveToIdlePosition";
 
         #endregion
+
+        private void Awake()
+        {
+            if (_speedButton == null)
+            {
+                _speedButton = _speedButtonText.GetComponent<Button>();
+            }
+        }
 
         private void Start()
         {
@@ -184,7 +193,6 @@ namespace IdleColors.room_storage.drone
             if (_droneSpeed.value < GLOB.DRONE_SPEED_MAX)
             {
                 _speedButtonCanvas.SetActive(true);
-                _noMoreUpdatesButtonText.SetActive(false);
 
                 _speedUpdateInfoText.text = $"{_droneSpeed.value} -> {_droneSpeed.value + 1}";
 
