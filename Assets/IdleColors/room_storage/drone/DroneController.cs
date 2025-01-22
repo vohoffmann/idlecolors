@@ -193,6 +193,7 @@ namespace IdleColors.room_storage.drone
             if (_droneSpeed.value < GLOB.DRONE_SPEED_MAX)
             {
                 _speedButtonCanvas.SetActive(true);
+                _noMoreUpdatesButtonText.SetActive(false);
 
                 _speedUpdateInfoText.text = $"{_droneSpeed.value} -> {_droneSpeed.value + 1}";
 
