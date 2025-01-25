@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using IdleColors.hud.coin;
 using IdleColors.room_collect.collector;
@@ -8,7 +7,6 @@ using IdleColors.room_mixing.puffer;
 using IdleColors.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Advertisements;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace IdleColors.Globals
@@ -22,7 +20,7 @@ namespace IdleColors.Globals
         public GameObject cupBp;
 
         public Text coinsText;
-        private readonly int _coinMultiplier = 5;
+        private readonly int _coinMultiplier = 1;
         public bool ReadyToSave { private set; get; }
         public const string REWARDED_ANDROID = "Rewarded_Android";
         private readonly string GAMEID = "5774375";
@@ -209,7 +207,7 @@ namespace IdleColors.Globals
         {
             coins -= pCoins;
             coinsText.text = "" + coins;
-            _coinController.TriggerScaling();
+            // _coinController.TriggerScaling();
         }
 
         public int GetCoins()
