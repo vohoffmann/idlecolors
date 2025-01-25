@@ -14,7 +14,7 @@ namespace IdleColors.Globals
         public const int HAXLER_SPEED_MAX = 19;
         public const int HAXLER_SPEED_BASE_PRICE = 3;
 
-        public const int COLLECTOR_UNLOCK = 50;
+        public const int COLLECTOR_UNLOCK = 150;
         public const int COLLECTOR_CAPACITY_BASE_PRICE = 50;
         public const int COLLECTOR_SPEED_BASE_PRICE = 25;
         public const int COLLECTOR_UNLOADSPEED_BASE_PRICE = 25;
