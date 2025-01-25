@@ -236,7 +236,7 @@ namespace IdleColors.room_collect.collector
                 }
 
                 _collectedMinerals--;
-                GameManager.Instance.AddCoins(1 * costFactor);
+                GameManager.Instance.AddCoins(5);
                 // _audioSource.PlayOneShot(_dropMineral);
                 _coinPartikel.Play();
 

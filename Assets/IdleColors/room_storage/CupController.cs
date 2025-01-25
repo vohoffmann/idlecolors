@@ -60,10 +60,7 @@ namespace IdleColors.room_storage
             _amount++;
             if (_amount == 5)
             {
-                // GameManager.Instance.AddCoins(_coins);
-
                 _amount = 0;
-                // _coins = 0;
 
                 InstantiatNewBox();
                 _readyToStore = true;

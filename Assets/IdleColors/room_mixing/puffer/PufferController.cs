@@ -91,7 +91,6 @@ namespace IdleColors.room_mixing.puffer
             haxlerControler.SetPufferFilled(_minerals.value >= _pufferMaxValue);
 
             SetIndicatorPosition();
-            // GameManager.Instance.AddCoins(1);
         }
 
         private void SetIndicatorPosition()
