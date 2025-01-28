@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace IdleColors.camera
 {
+    [ExecuteAlways]
     public class PointToCam : MonoBehaviour
     {
         private Camera _cam;

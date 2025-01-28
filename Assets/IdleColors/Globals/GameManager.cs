@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using IdleColors.hud.coin;
 using IdleColors.room_collect.collector;
@@ -6,6 +7,8 @@ using IdleColors.room_mixing.mixer;
 using IdleColors.room_mixing.puffer;
 using IdleColors.ScriptableObjects;
 using UnityEngine;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
@@ -17,6 +20,7 @@ namespace IdleColors.Globals
 
         #region members
 
+        private const string PLAYERDATA = "playerdata";
         public GameObject cupBp;
 
         public Text coinsText;
@@ -26,9 +30,11 @@ namespace IdleColors.Globals
         private readonly string GAMEID = "5774375";
         public bool AdsRewardedLoaded { private set; get; }
         public int coins;
+        private static readonly string encryptionKey = "nunabeR23!987654"; // 16, 24 oder 32 Zeichen
+
 
         // index 0 is dummy !!!
-        public int[] FinalColorCounts = { 0, 0, 0, 0, 0, 0, 0, 0 };
+        public int[] FinalColorCounts = new int[8];
 
         [SerializeField] private AudioSource _coinAudioSource;
 
@@ -221,8 +227,6 @@ namespace IdleColors.Globals
 
         public void ResetValues()
         {
-            // if (!Application.isEditor)
-            // {
             coins = 200;
 
             so_unlockedRed.value = true;
@@ -257,45 +261,6 @@ namespace IdleColors.Globals
             so_pufferLevelBlue.value = 1;
 
             so_DroneSpeed.value = 1;
-            // }
-            // else
-            // {
-            //     // diese werte im editor verwenden ...
-            //     coins = 200;
-            //
-            //     so_unlockedRed.value = true;
-            //     so_capacityRed.value = 3;
-            //     so_speedLevelRed.value = 8;
-            //     so_unloadSpeedRed.value = 1;
-            //
-            //     so_unlockedGreen.value = false;
-            //     so_capacityGreen.value = 1;
-            //     so_speedLevelGreen.value = 2;
-            //     so_unloadSpeedGreen.value = 1;
-            //
-            //     so_unlockedBlue.value = false;
-            //     so_capacityBlue.value = 1;
-            //     so_speedLevelBlue.value = 2;
-            //     so_unloadSpeedBlue.value = 1;
-            //
-            //     so_haxlerMineralsRed.value = 0;
-            //     so_haxlerMineralsGreen.value = 0;
-            //     so_haxlerMineralsBlue.value = 0;
-            //
-            //     so_haxlerSpeedRed.value = 1;
-            //     so_haxlerSpeedGreen.value = 1;
-            //     so_haxlerSpeedBlue.value = 1;
-            //
-            //     so_pufferMineralsRed.value = 72;
-            //     so_pufferMineralsGreen.value = 72;
-            //     so_pufferMineralsBlue.value = 72;
-            //
-            //     so_pufferLevelRed.value = 3;
-            //     so_pufferLevelGreen.value = 3;
-            //     so_pufferLevelBlue.value = 3;
-            //
-            //     so_DroneSpeed.value = 1;
-            // }
 
             TakeNewValues();
         }
@@ -320,79 +285,136 @@ namespace IdleColors.Globals
 
         public void LoadGameData()
         {
-            coins = PlayerPrefs.GetInt("coins", 200);
+            string encryptedData = PlayerPrefs.GetString(PLAYERDATA, null);
+
+            if (string.IsNullOrEmpty(encryptedData))
+            {
+                Debug.LogWarning("Keine gespeicherten Daten gefunden. Reset der Daten ...");
+                ResetValues();
+                return;
+            }
+
+            string json = Decrypt(encryptedData, encryptionKey);
+            var data = JsonUtility.FromJson<GameData>(json);
+
+            coins = data.coins;
 
             so_unlockedRed.value = true;
-            so_capacityRed.value = PlayerPrefs.GetInt("so_capacityRed", 1);
-            so_speedLevelRed.value = PlayerPrefs.GetInt("so_speedLevelRed", 2);
-            so_unloadSpeedRed.value = PlayerPrefs.GetInt("so_unloadSpeedRed", 1);
+            so_capacityRed.value = data.so_capacityRed;
+            so_speedLevelRed.value = data.so_speedLevelRed;
+            so_unloadSpeedRed.value = data.so_unloadSpeedRed;
 
-            so_unlockedGreen.value = PlayerPrefs.GetInt("so_unlockedGreen", 0) == 1;
-            so_capacityGreen.value = PlayerPrefs.GetInt("so_capacityGreen", 1);
-            so_speedLevelGreen.value = PlayerPrefs.GetInt("so_speedLevelGreen", 2);
-            so_unloadSpeedGreen.value = PlayerPrefs.GetInt("so_unloadSpeedGreen", 1);
+            so_unlockedGreen.value = data.so_unlockedGreen == 1;
+            so_capacityGreen.value = data.so_capacityGreen;
+            so_speedLevelGreen.value = data.so_speedLevelGreen;
+            so_unloadSpeedGreen.value = data.so_unloadSpeedGreen;
 
-            so_unlockedBlue.value = PlayerPrefs.GetInt("so_unlockedBlue", 0) == 1;
-            so_capacityBlue.value = PlayerPrefs.GetInt("so_capacityBlue", 1);
-            so_speedLevelBlue.value = PlayerPrefs.GetInt("so_speedLevelBlue", 2);
-            so_unloadSpeedBlue.value = PlayerPrefs.GetInt("so_unloadSpeedBlue", 1);
+            so_unlockedBlue.value = data.so_unlockedBlue == 1;
+            so_capacityBlue.value = data.so_capacityBlue;
+            so_speedLevelBlue.value = data.so_speedLevelBlue;
+            so_unloadSpeedBlue.value = data.so_unloadSpeedBlue;
 
-            so_haxlerMineralsRed.value = PlayerPrefs.GetInt("so_haxlerMineralsRed", 0);
-            so_haxlerMineralsGreen.value = PlayerPrefs.GetInt("so_haxlerMineralsGreen", 0);
-            so_haxlerMineralsBlue.value = PlayerPrefs.GetInt("so_haxlerMineralsBlue", 0);
+            so_haxlerMineralsRed.value = data.so_haxlerMineralsRed;
+            so_haxlerMineralsGreen.value = data.so_haxlerMineralsGreen;
+            so_haxlerMineralsBlue.value = data.so_haxlerMineralsBlue;
 
-            so_haxlerSpeedRed.value = PlayerPrefs.GetInt("so_haxlerSpeedRed", 1);
-            so_haxlerSpeedGreen.value = PlayerPrefs.GetInt("so_haxlerSpeedGreen", 1);
-            so_haxlerSpeedBlue.value = PlayerPrefs.GetInt("so_haxlerSpeedBlue", 1);
+            so_haxlerSpeedRed.value = data.so_haxlerSpeedRed;
+            so_haxlerSpeedGreen.value = data.so_haxlerSpeedGreen;
+            so_haxlerSpeedBlue.value = data.so_haxlerSpeedBlue;
 
-            so_pufferMineralsRed.value = PlayerPrefs.GetInt("so_pufferMineralsRed", 0) / 4 * 4;
-            so_pufferMineralsGreen.value = PlayerPrefs.GetInt("so_pufferMineralsGreen", 0) / 4 * 4;
-            so_pufferMineralsBlue.value = PlayerPrefs.GetInt("so_pufferMineralsBlue", 0) / 4 * 4;
+            so_pufferMineralsRed.value = data.so_pufferMineralsRed;
+            so_pufferMineralsGreen.value = data.so_pufferMineralsGreen;
+            so_pufferMineralsBlue.value = data.so_pufferMineralsBlue;
 
-            so_pufferLevelRed.value = PlayerPrefs.GetInt("so_pufferLevelRed", 1);
-            so_pufferLevelGreen.value = PlayerPrefs.GetInt("so_pufferLevelGreen", 1);
-            so_pufferLevelBlue.value = PlayerPrefs.GetInt("so_pufferLevelBlue", 1);
+            so_pufferLevelRed.value = data.so_pufferLevelRed;
+            so_pufferLevelGreen.value = data.so_pufferLevelGreen;
+            so_pufferLevelBlue.value = data.so_pufferLevelBlue;
 
-            so_DroneSpeed.value = PlayerPrefs.GetInt("so_DroneSpeed", 1);
+            so_DroneSpeed.value = data.so_DroneSpeed;
+            
+            var index = 0;
+            foreach (int finalColor in data.finalColorCounts)
+            {
+                FinalColorCounts[index] = finalColor;
+                index++;
+            }
 
             TakeNewValues();
         }
 
+        private static string Encrypt(string plainText, string key)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(key);
+                aes.IV = new byte[16]; // Initialisierungsvektor mit Nullen (kann randomisiert werden)
+
+                using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                {
+                    byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+                    byte[] cipherBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
+                    return Convert.ToBase64String(cipherBytes);
+                }
+            }
+        }
+
+        private static string Decrypt(string cipherText, string key)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(key);
+                aes.IV = new byte[16]; // Initialisierungsvektor mit Nullen
+
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                {
+                    byte[] cipherBytes = Convert.FromBase64String(cipherText);
+                    byte[] plainBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
+                    return Encoding.UTF8.GetString(plainBytes);
+                }
+            }
+        }
+
         public void SaveGameData()
         {
-            PlayerPrefs.SetInt("coins", coins);
+            var data = new GameData
+            {
+                coins = coins,
+                so_speedLevelRed = so_speedLevelRed.value,
+                so_speedLevelGreen = so_speedLevelGreen.value,
+                so_speedLevelBlue = so_speedLevelBlue.value,
+                so_unloadSpeedRed = so_unloadSpeedRed.value,
+                so_unloadSpeedGreen = so_unloadSpeedGreen.value,
+                so_unloadSpeedBlue = so_unloadSpeedBlue.value,
+                so_unlockedGreen = so_unlockedGreen.value ? 1 : 0,
+                so_unlockedBlue = so_unlockedBlue.value ? 1 : 0,
+                so_capacityRed = so_capacityRed.value,
+                so_capacityGreen = so_capacityGreen.value,
+                so_capacityBlue = so_capacityBlue.value,
+                so_haxlerMineralsRed = so_haxlerMineralsRed.value,
+                so_haxlerMineralsGreen = so_haxlerMineralsGreen.value,
+                so_haxlerMineralsBlue = so_haxlerMineralsBlue.value,
+                so_haxlerSpeedRed = so_haxlerSpeedRed.value,
+                so_haxlerSpeedGreen = so_haxlerSpeedGreen.value,
+                so_haxlerSpeedBlue = so_haxlerSpeedBlue.value,
+                so_pufferMineralsRed = so_pufferMineralsRed.value,
+                so_pufferMineralsGreen = so_pufferMineralsGreen.value,
+                so_pufferMineralsBlue = so_pufferMineralsBlue.value,
+                so_pufferLevelRed = so_pufferLevelRed.value,
+                so_pufferLevelGreen = so_pufferLevelGreen.value,
+                so_pufferLevelBlue = so_pufferLevelBlue.value,
+                so_DroneSpeed = so_DroneSpeed.value,
+            };
 
-            PlayerPrefs.SetInt("so_capacityRed", so_capacityRed.value);
-            PlayerPrefs.SetInt("so_speedLevelRed", so_speedLevelRed.value);
-            PlayerPrefs.SetInt("so_unloadSpeedRed", so_unloadSpeedRed.value);
+            var index = 0;
+            foreach (int finalColor in FinalColorCounts)
+            {
+                data.finalColorCounts[index] = finalColor;
+                index++;
+            }
 
-            PlayerPrefs.SetInt("so_unlockedGreen", so_unlockedGreen.value ? 1 : 0);
-            PlayerPrefs.SetInt("so_capacityGreen", so_capacityGreen.value);
-            PlayerPrefs.SetInt("so_speedLevelGreen", so_speedLevelGreen.value);
-            PlayerPrefs.SetInt("so_unloadSpeedGreen", so_unloadSpeedGreen.value);
-
-            PlayerPrefs.SetInt("so_unlockedBlue", so_unlockedBlue.value ? 1 : 0);
-            PlayerPrefs.SetInt("so_capacityBlue", so_capacityBlue.value);
-            PlayerPrefs.SetInt("so_speedLevelBlue", so_speedLevelBlue.value);
-            PlayerPrefs.SetInt("so_unloadSpeedBlue", so_unloadSpeedBlue.value);
-
-            PlayerPrefs.SetInt("so_haxlerMineralsRed", so_haxlerMineralsRed.value);
-            PlayerPrefs.SetInt("so_haxlerMineralsGreen", so_haxlerMineralsGreen.value);
-            PlayerPrefs.SetInt("so_haxlerMineralsBlue", so_haxlerMineralsBlue.value);
-
-            PlayerPrefs.SetInt("so_haxlerSpeedRed", so_haxlerSpeedRed.value);
-            PlayerPrefs.SetInt("so_haxlerSpeedGreen", so_haxlerSpeedGreen.value);
-            PlayerPrefs.SetInt("so_haxlerSpeedBlue", so_haxlerSpeedBlue.value);
-
-            PlayerPrefs.SetInt("so_pufferMineralsRed", so_pufferMineralsRed.value);
-            PlayerPrefs.SetInt("so_pufferMineralsGreen", so_pufferMineralsGreen.value);
-            PlayerPrefs.SetInt("so_pufferMineralsBlue", so_pufferMineralsBlue.value);
-
-            PlayerPrefs.SetInt("so_pufferLevelRed", so_pufferLevelRed.value);
-            PlayerPrefs.SetInt("so_pufferLevelGreen", so_pufferLevelGreen.value);
-            PlayerPrefs.SetInt("so_pufferLevelBlue", so_pufferLevelBlue.value);
-
-            PlayerPrefs.SetInt("so_DroneSpeed", so_DroneSpeed.value);
+            string json = JsonUtility.ToJson(data);
+            string encryptedData = Encrypt(json, encryptionKey);
+            PlayerPrefs.SetString(PLAYERDATA, encryptedData);
 
             PlayerPrefs.Save();
         }
@@ -486,5 +508,44 @@ namespace IdleColors.Globals
         }
 
         #endregion
+    }
+
+    class GameData
+    {
+        public int coins;
+
+        public int so_capacityRed;
+        public int so_speedLevelRed;
+        public int so_unloadSpeedRed;
+
+        public int so_unlockedGreen;
+        public int so_capacityGreen;
+        public int so_speedLevelGreen;
+        public int so_unloadSpeedGreen;
+
+        public int so_unlockedBlue;
+        public int so_capacityBlue;
+        public int so_speedLevelBlue;
+        public int so_unloadSpeedBlue;
+
+        public int so_haxlerMineralsRed;
+        public int so_haxlerMineralsGreen;
+        public int so_haxlerMineralsBlue;
+
+        public int so_haxlerSpeedRed;
+        public int so_haxlerSpeedGreen;
+        public int so_haxlerSpeedBlue;
+
+        public int so_pufferMineralsRed;
+        public int so_pufferMineralsGreen;
+        public int so_pufferMineralsBlue;
+
+        public int so_pufferLevelRed;
+        public int so_pufferLevelGreen;
+        public int so_pufferLevelBlue;
+
+        public int so_DroneSpeed;
+
+        public int[] finalColorCounts = new int[8];
     }
 }
