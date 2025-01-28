@@ -73,7 +73,7 @@ namespace IdleColors.room_storage.drone
                 storageRoom.transform);
             cupInstance.transform.position = new Vector3(11.16f, -30.70f, -32.50f);
         }
-        
+
         private void OnEnable()
         {
             EventManager.CupStored += HandleStoredBoxes;
@@ -169,6 +169,8 @@ namespace IdleColors.room_storage.drone
         public void OnUnloadingAnimationEnd()
         {
             GameManager.Instance.AddCoins(OrderPanelController.CoinValues[_colorIndex]);
+            GameManager.Instance.FinalColorCounts[_colorIndex] += 1;
+
             _coinPartikel.Play();
             SetDroneColor(0);
             ChangeState(new MoveToIdlePosition(this));
@@ -197,11 +199,12 @@ namespace IdleColors.room_storage.drone
 
                 _speedUpdateInfoText.text = $"{_droneSpeed.value} -> {_droneSpeed.value + 1}";
 
-                var upgradeCost = Mathf.RoundToInt(GLOB.DRONE_SPEED_BASE_PRICE * Mathf.Pow(1.5f, _droneSpeed.value - 1));
+                var upgradeCost =
+                    Mathf.RoundToInt(GLOB.DRONE_SPEED_BASE_PRICE * Mathf.Pow(1.5f, _droneSpeed.value - 1));
                 _speedButtonText.text =
                     "" + upgradeCost;
                 _speedButton.interactable = GameManager.Instance.GetCoins() >=
-                    upgradeCost;
+                                            upgradeCost;
             }
             else
             {

@@ -116,7 +116,7 @@ namespace IdleColors.hud
             BgButton.SetActive(!BgButton.activeSelf);
             if (GameManager.Instance.ReadyToSave)
             {
-                Time.timeScale = _status ? 1 : 0;
+                Time.timeScale = _status ? 5 : 0;
                 menu.enabled = !_status;
                 _status = !_status;
             }

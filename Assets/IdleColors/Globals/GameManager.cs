@@ -26,6 +26,10 @@ namespace IdleColors.Globals
         private readonly string GAMEID = "5774375";
         public bool AdsRewardedLoaded { private set; get; }
         public int coins;
+
+        // index 0 is dummy !!!
+        public int[] FinalColorCounts = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
         [SerializeField] private AudioSource _coinAudioSource;
 
         #endregion
