@@ -1,54 +1,106 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using IdleColors.Globals;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-/// <summary>
-/// die klasse extrahiert alle pixel des bildes in ein array ...
-/// aus diesen werten wird dan der 'bild ersteller ) gesteuert ...
-/// </summary>
+
 public class ImageDataExtractor : MonoBehaviour
 {
-    public Texture2D inputImage; 
-    
-    private List<Vector2> pixelPositions = new List<Vector2>();
-    private List<Color> pixelColors = new List<Color>();
+    public Texture2D[] images_1;
+    public Texture2D[] images_2;
+    public Texture2D[] images_3;
 
-    void Start()
+    private int index = 0;
+
+    [SerializeField] private GameObject _cubePrefab;
+    [SerializeField] private GameObject _imageContainer;
+
+    private bool imageDeleted;
+
+    private IEnumerator InstantiateImage()
     {
-        if (inputImage == null)
+        while (_imageContainer.transform.childCount > 0)
         {
-            GameManager.Log("Kein Bild zugewiesen!");
+            foreach (Transform child in _imageContainer.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            yield return null;
+        }
+
+        GenerateNewimageRaster(selectImage());
+    }
+
+    private Texture2D selectImage()
+    {
+        var arrayLevel = 0;
+
+        if (GameManager.Instance.so_unlockedGreen.value)
+            arrayLevel++;
+        if (GameManager.Instance.so_unlockedBlue.value)
+            arrayLevel++;
+
+        Texture2D ret = null;
+        switch (arrayLevel)
+        {
+            case 0:
+                if (index == images_1.Length)
+                    index = 0;
+                ret = images_1[index];
+                break;
+            case 1:
+                if (index == images_2.Length)
+                    index = 0;
+                ret = images_2[index];
+                break;
+            case 2:
+                if (index == images_3.Length)
+                    index = 0;
+                ret = images_3[index];
+                break;
+        }
+
+        index++;
+        return ret;
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // bild löschen
+            StartCoroutine(InstantiateImage());
+        }
+    }
+
+    void GenerateNewimageRaster(Texture2D image)
+    {
+        if (image == null)
+        {
+            Debug.LogError("Image data is null");
             return;
         }
 
-        ExtractImageData(inputImage);
-        GameManager.Log($"Extrahiert: {pixelPositions.Count} Pixelpositionen und Farbwerte.");
-    }
-
-    void ExtractImageData(Texture2D image)
-    {
-        // Durchlaufe jedes Pixel im Bild
-        for (int y = 0; y < image.height; y++)
+        for (int z = 0; z < image.height; z++)
         {
             for (int x = 0; x < image.width; x++)
             {
-                // Extrahiere die Farbe des Pixels
-                Color pixelColor = image.GetPixel(x, y);
+                Color pixelColor = image.GetPixel(x, z);
+                var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
+                var parentPosition = _imageContainer.transform.position;
+                cube.transform.position = new Vector3(parentPosition.x + x * .9f,
+                    parentPosition.y + (Random.value * 30),
+                    parentPosition.z + z * .9f);
+                if (pixelColor.r != 0 || pixelColor.g != 0 || pixelColor.b != 0)
+                {
+                    pixelColor.a = .1f;
+                }
 
-                // Speichere die Pixelposition (x, y) und die Farbe
-                pixelPositions.Add(new Vector2(x, y));
-                pixelColors.Add(pixelColor);
+                cube.GetComponent<Renderer>().material.color = pixelColor;
             }
         }
-    }
-
-    public List<Vector2> GetPixelPositions()
-    {
-        return pixelPositions;
-    }
-
-    public List<Color> GetPixelColors()
-    {
-        return pixelColors;
     }
 }

@@ -30,7 +30,7 @@ namespace IdleColors.room_storage.drone.states
 
             var colorIndex = _cup.GetComponent<CupController>()._colorIndex;
             Owner.DetermineTargetPosition(colorIndex);
-            Owner.SetKisteColor(colorIndex);
+            Owner.SetCupColor(colorIndex);
             Owner.SetAnimation(DroneController.STATE_MOVETOCUP);
         }
 

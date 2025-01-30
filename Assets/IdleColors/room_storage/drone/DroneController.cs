@@ -147,7 +147,7 @@ namespace IdleColors.room_storage.drone
             cupsToLift.Enqueue(box);
         }
 
-        public void SetKisteColor(int colorIndex)
+        public void SetCupColor(int colorIndex)
         {
             _color = GameManager.Instance.GetColorForIndex(colorIndex);
         }
@@ -169,7 +169,7 @@ namespace IdleColors.room_storage.drone
         public void OnUnloadingAnimationEnd()
         {
             GameManager.Instance.AddCoins(OrderPanelController.CoinValues[_colorIndex]);
-            GameManager.Instance.FinalColorCounts[_colorIndex] += 1;
+            GameManager.Instance.FinalColorCounts[_colorIndex] += 10;
 
             _coinPartikel.Play();
             SetDroneColor(0);
