@@ -22,7 +22,6 @@ namespace IdleColors.Globals
 
         private const string PLAYERDATA = "playerdata";
         public GameObject cupBp;
-
         public Text coinsText;
         private readonly int _coinMultiplier = 1;
         public bool ReadyToSave { private set; get; }
@@ -31,7 +30,6 @@ namespace IdleColors.Globals
         public bool AdsRewardedLoaded { private set; get; }
         public int coins;
         private static readonly string encryptionKey = "nunabeR23!987654"; // 16, 24 oder 32 Zeichen
-
 
         // index 0 is dummy !!!
         public int[] FinalColorCounts = new int[8];

@@ -77,6 +77,10 @@ MonoBehaviour:
     m_Localized: or watch short video to unlock
     m_Metadata:
       m_Items: []
+  - m_Id: 27107495298375680
+    m_Localized: job
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace IdleColors.room_order
 {
-    public class ImageDataExtractor : MonoBehaviour
+    public class OrderImagePanelController : MonoBehaviour
     {
         private Texture2D[] textures;
         private bool imageDeleted;
@@ -19,11 +19,13 @@ namespace IdleColors.room_order
         [SerializeField] private RectTransform _buttonContainer;
         private int index;
 
-
         public void OrderImage()
         {
             GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
-            StartCoroutine(InstantiateImage(int.Parse(clickedButton.name)));
+
+            var idx = clickedButton.name.Substring(0, 1);
+
+            StartCoroutine(InstantiateImage(int.Parse(idx)));
             _productionOrderPanel.SetActive(false);
         }
 
@@ -37,7 +39,9 @@ namespace IdleColors.room_order
                 {
                     var newButton = Instantiate(_buttonPrefab, _buttonContainer);
                     newButton.GetComponent<Button>().onClick.AddListener(OrderImage);
-                    newButton.name = "" + index;
+
+                    // set name ... first is index for the imageArray ... 2nd is to indicate if displaying or not
+                    newButton.name = $"{index}{texture.name.Substring(0, 1)}";
                     var sp = newButton.GetComponentInChildren<UnityEngine.UI.Image>();
                     sp.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
                 }
@@ -49,7 +53,6 @@ namespace IdleColors.room_order
                 index++;
             }
         }
-
 
         private IEnumerator InstantiateImage(int index)
         {
@@ -66,7 +69,6 @@ namespace IdleColors.room_order
             GenerateNewimageRaster(textures[index]);
         }
 
-
         void GenerateNewimageRaster(Texture2D image)
         {
             for (int z = 0; z < image.height; z++)
@@ -74,16 +76,20 @@ namespace IdleColors.room_order
                 for (int x = 0; x < image.width; x++)
                 {
                     Color pixelColor = image.GetPixel(x, z);
+                    var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
+                    var parentPosition = _imageContainer.transform.position;
+                    cube.transform.position = new Vector3(
+                        parentPosition.x + x * .9f,
+                        parentPosition.y + (Random.value * 30),
+                        parentPosition.z + z * .9f);
+
+                    //  black is not transparent 
                     if (pixelColor.r != 0 || pixelColor.g != 0 || pixelColor.b != 0)
                     {
-                        var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
-                        var parentPosition = _imageContainer.transform.position;
-                        cube.transform.position = new Vector3(parentPosition.x + x * .9f,
-                            parentPosition.y + (Random.value * 30),
-                            parentPosition.z + z * .9f);
                         pixelColor.a = .1f;
-                        cube.GetComponent<Renderer>().material.color = pixelColor;
                     }
+
+                    cube.GetComponent<Renderer>().material.color = pixelColor;
                 }
             }
         }

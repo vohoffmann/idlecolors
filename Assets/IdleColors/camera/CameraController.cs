@@ -15,6 +15,7 @@ namespace IdleColors.camera
         [SerializeField] private HaxlerMenuController haxlerMenu;
         [SerializeField] private PufferMenuController pufferMenu;
         [SerializeField] private GameObject droneMenu;
+        [SerializeField] private GameObject _orderImagePanel;
         [SerializeField] private GameObject _bodyCamView;
         private Light _light;
 
@@ -124,6 +125,22 @@ namespace IdleColors.camera
             if (_lockedTarget) UnsetLockedTarget();
 
             MoveCam(true);
+        }
+
+        public void ShowOrderImagePanel()
+        {
+            if (_lockedTarget) UnsetLockedTarget();
+
+            // set to last ( oder) room
+            _currentSelection = rooms.Length - 1;
+
+            setTarget(rooms[_currentSelection]);
+
+            _isMoving = true;
+
+            _orderImagePanel.SetActive(true);
+            
+            // TODO: close button on orderimagepanel 
         }
 
         // true = down
