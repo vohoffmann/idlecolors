@@ -1,105 +1,90 @@
 ﻿using System;
 using System.Collections;
-using IdleColors.Globals;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 
-public class ImageDataExtractor : MonoBehaviour
+namespace IdleColors.room_order
 {
-    public Texture2D[] images_1;
-    public Texture2D[] images_2;
-    public Texture2D[] images_3;
-
-    private int index = 0;
-
-    [SerializeField] private GameObject _cubePrefab;
-    [SerializeField] private GameObject _imageContainer;
-
-    private bool imageDeleted;
-
-    private IEnumerator InstantiateImage()
+    public class ImageDataExtractor : MonoBehaviour
     {
-        while (_imageContainer.transform.childCount > 0)
+        private Texture2D[] textures;
+        private bool imageDeleted;
+        [SerializeField] private GameObject _cubePrefab;
+        [SerializeField] private GameObject _imageContainer;
+        [SerializeField] private GameObject _productionOrderPanel;
+        [SerializeField] private GameObject _buttonPrefab;
+        [SerializeField] private RectTransform _buttonContainer;
+        private int index;
+
+
+        public void OrderImage()
         {
-            foreach (Transform child in _imageContainer.transform)
+            GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
+            StartCoroutine(InstantiateImage(int.Parse(clickedButton.name)));
+            _productionOrderPanel.SetActive(false);
+        }
+
+        private void Awake()
+        {
+            textures = Resources.LoadAll<Texture2D>("ProductionModels");
+            index = 0;
+            foreach (Texture2D texture in textures)
             {
-                Destroy(child.gameObject);
-            }
-
-            yield return null;
-        }
-
-        GenerateNewimageRaster(selectImage());
-    }
-
-    private Texture2D selectImage()
-    {
-        var arrayLevel = 0;
-
-        if (GameManager.Instance.so_unlockedGreen.value)
-            arrayLevel++;
-        if (GameManager.Instance.so_unlockedBlue.value)
-            arrayLevel++;
-
-        Texture2D ret = null;
-        switch (arrayLevel)
-        {
-            case 0:
-                if (index == images_1.Length)
-                    index = 0;
-                ret = images_1[index];
-                break;
-            case 1:
-                if (index == images_2.Length)
-                    index = 0;
-                ret = images_2[index];
-                break;
-            case 2:
-                if (index == images_3.Length)
-                    index = 0;
-                ret = images_3[index];
-                break;
-        }
-
-        index++;
-        return ret;
-    }
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // bild löschen
-            StartCoroutine(InstantiateImage());
-        }
-    }
-
-    void GenerateNewimageRaster(Texture2D image)
-    {
-        if (image == null)
-        {
-            Debug.LogError("Image data is null");
-            return;
-        }
-
-        for (int z = 0; z < image.height; z++)
-        {
-            for (int x = 0; x < image.width; x++)
-            {
-                Color pixelColor = image.GetPixel(x, z);
-                var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
-                var parentPosition = _imageContainer.transform.position;
-                cube.transform.position = new Vector3(parentPosition.x + x * .9f,
-                    parentPosition.y + (Random.value * 30),
-                    parentPosition.z + z * .9f);
-                if (pixelColor.r != 0 || pixelColor.g != 0 || pixelColor.b != 0)
+                try
                 {
-                    pixelColor.a = .1f;
+                    var newButton = Instantiate(_buttonPrefab, _buttonContainer);
+                    newButton.GetComponent<Button>().onClick.AddListener(OrderImage);
+                    newButton.name = "" + index;
+                    var sp = newButton.GetComponentInChildren<UnityEngine.UI.Image>();
+                    sp.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
                 }
 
-                cube.GetComponent<Renderer>().material.color = pixelColor;
+                index++;
+            }
+        }
+
+
+        private IEnumerator InstantiateImage(int index)
+        {
+            while (_imageContainer.transform.childCount > 0)
+            {
+                foreach (Transform child in _imageContainer.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+
+                yield return null;
+            }
+
+            GenerateNewimageRaster(textures[index]);
+        }
+
+
+        void GenerateNewimageRaster(Texture2D image)
+        {
+            for (int z = 0; z < image.height; z++)
+            {
+                for (int x = 0; x < image.width; x++)
+                {
+                    Color pixelColor = image.GetPixel(x, z);
+                    if (pixelColor.r != 0 || pixelColor.g != 0 || pixelColor.b != 0)
+                    {
+                        var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
+                        var parentPosition = _imageContainer.transform.position;
+                        cube.transform.position = new Vector3(parentPosition.x + x * .9f,
+                            parentPosition.y + (Random.value * 30),
+                            parentPosition.z + z * .9f);
+                        pixelColor.a = .1f;
+                        cube.GetComponent<Renderer>().material.color = pixelColor;
+                    }
+                }
             }
         }
     }

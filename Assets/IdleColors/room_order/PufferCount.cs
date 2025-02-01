@@ -1,21 +1,23 @@
-using System;
 using IdleColors.Globals;
 using TMPro;
 using UnityEngine;
 
-public class PufferCount : MonoBehaviour
+namespace IdleColors.room_order
 {
-    public int colorIndex;
-    private TextMeshProUGUI count;
-
-    private void Awake()
+    public class PufferCount : MonoBehaviour
     {
-        count = GetComponentInParent<TextMeshProUGUI>();
-    }
+        public int colorIndex;
+        private TextMeshProUGUI count;
 
-    // Update is called once per frame
-    void Update()
-    {
-        count.text = "" + GameManager.Instance.FinalColorCounts[colorIndex];
+        private void Awake()
+        {
+            count = GetComponentInParent<TextMeshProUGUI>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            count.text = "" + GameManager.Instance.FinalColorCounts[colorIndex];
+        }
     }
 }
