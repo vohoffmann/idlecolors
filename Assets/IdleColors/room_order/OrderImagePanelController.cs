@@ -29,8 +29,13 @@ namespace IdleColors.room_order
             var idx = clickedButton.name.Split("#")[0];
 
             StartCoroutine(InstantiateImage(int.Parse(idx)));
-            _productionOrderPanel.SetActive(false);
+            ClosePanel();
             GameManager.Instance.ImageOrderInProcess = true;
+        }
+        
+        public void ClosePanel()
+        {
+            _productionOrderPanel.SetActive(false);
         }
 
         private void Awake()
