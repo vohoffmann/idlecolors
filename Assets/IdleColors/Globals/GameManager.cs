@@ -28,6 +28,8 @@ namespace IdleColors.Globals
         public const string REWARDED_ANDROID = "Rewarded_Android";
         private readonly string GAMEID = "5774375";
         public bool AdsRewardedLoaded { private set; get; }
+        [SerializeField] public bool ImageOrderInProcess;
+
         public int coins;
         private static readonly string encryptionKey = "nunabeR23!987654"; // 16, 24 oder 32 Zeichen
 
@@ -100,16 +102,16 @@ namespace IdleColors.Globals
         public static readonly Dictionary<int, bool[]> RGB = new()
         {
             //               R      G      B
-            { 1, new bool[] { true, false, false } }, // red
-            { 2, new bool[] { false, true, false } }, // green
-            { 3, new bool[] { false, false, true } }, // blue
-            { 4, new bool[] { true, true, false } }, // yellow
-            { 5, new bool[] { true, false, true } }, // magenta
-            { 6, new bool[] { false, true, true } }, // cyan
-            { 7, new bool[] { true, true, true } } // white
+            { 1, new[] { true, false, false } }, // red
+            { 2, new[] { false, true, false } }, // green
+            { 3, new[] { false, false, true } }, // blue
+            { 4, new[] { true, true, false } }, // yellow
+            { 5, new[] { true, false, true } }, // magenta
+            { 6, new[] { false, true, true } }, // cyan
+            { 7, new[] { true, true, true } } // white
         };
 
-        private readonly Dictionary<int, Color> Colors = new()
+        private readonly Dictionary<int, Color> Idx2Color = new()
         {
             //               R      G      B
             { 1, Color.red },
@@ -119,6 +121,18 @@ namespace IdleColors.Globals
             { 5, Color.magenta },
             { 6, Color.cyan },
             { 7, Color.white },
+        };
+
+        private readonly Dictionary<Color, int> Color2Idx = new()
+        {
+            //               R      G      B
+            { new Color(1, 0, 0, 1), 0 },
+            { new Color(0, 1, 0, 1), 1 },
+            { new Color(0, 0, 1, 1), 2 },
+            { new Color(1, 1, 0, 1), 3 },
+            { new Color(1, 0, 1, 1), 4 },
+            { new Color(0, 1, 1, 1), 5 },
+            { new Color(1, 1, 1, 1), 6 }
         };
 
         #endregion
@@ -329,7 +343,7 @@ namespace IdleColors.Globals
             so_pufferLevelBlue.value = data.so_pufferLevelBlue;
 
             so_DroneSpeed.value = data.so_DroneSpeed;
-            
+
             var index = 0;
             foreach (int finalColor in data.finalColorCounts)
             {
@@ -437,7 +451,12 @@ namespace IdleColors.Globals
 
         public Color GetColorForIndex(int colorIndex)
         {
-            return Colors.GetValueOrDefault(colorIndex, Color.white);
+            return Idx2Color.GetValueOrDefault(colorIndex, Color.white);
+        }
+
+        public int GetIndexForColor(Color color)
+        {
+            return Color2Idx.GetValueOrDefault(color, 0);
         }
 
         #region ADS

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using IdleColors.Globals;
+using IdleColors.room_order.constructor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,22 +19,24 @@ namespace IdleColors.room_order
         [SerializeField] private GameObject _productionOrderPanel;
         [SerializeField] private GameObject _buttonPrefab;
         [SerializeField] private RectTransform _buttonContainer;
-        private int index;
+        [SerializeField] private GameObject[] _pufferPositions;
+        private int buttonIndex;
 
         public void OrderImage()
         {
             GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
 
-            var idx = clickedButton.name.Substring(0, 1);
+            var idx = clickedButton.name.Split("#")[0];
 
             StartCoroutine(InstantiateImage(int.Parse(idx)));
             _productionOrderPanel.SetActive(false);
+            GameManager.Instance.ImageOrderInProcess = true;
         }
 
         private void Awake()
         {
             textures = Resources.LoadAll<Texture2D>("ProductionModels");
-            index = 0;
+            buttonIndex = 0;
             foreach (Texture2D texture in textures)
             {
                 try
@@ -41,7 +45,7 @@ namespace IdleColors.room_order
                     newButton.GetComponent<Button>().onClick.AddListener(OrderImage);
 
                     // set name ... first is index for the imageArray ... 2nd is to indicate if displaying or not
-                    newButton.name = $"{index}{texture.name.Substring(0, 1)}";
+                    newButton.name = $"{buttonIndex}#{texture.name.Substring(0, 1)}";
                     var sp = newButton.GetComponentInChildren<UnityEngine.UI.Image>();
                     sp.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
                 }
@@ -50,7 +54,7 @@ namespace IdleColors.room_order
                     Debug.LogError(e);
                 }
 
-                index++;
+                buttonIndex++;
             }
         }
 
@@ -76,20 +80,29 @@ namespace IdleColors.room_order
                 for (int x = 0; x < image.width; x++)
                 {
                     Color pixelColor = image.GetPixel(x, z);
-                    var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
-                    var parentPosition = _imageContainer.transform.position;
-                    cube.transform.position = new Vector3(
-                        parentPosition.x + x * .9f,
-                        parentPosition.y + (Random.value * 30),
-                        parentPosition.z + z * .9f);
-
-                    //  black is not transparent 
                     if (pixelColor.r != 0 || pixelColor.g != 0 || pixelColor.b != 0)
                     {
-                        pixelColor.a = .1f;
-                    }
+                        var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
+                        var parentPosition = _imageContainer.transform.position;
+                        cube.transform.position = new Vector3(
+                            parentPosition.x + x,
+                            parentPosition.y + Random.value * 20,
+                            parentPosition.z + z);
 
-                    cube.GetComponent<Renderer>().material.color = pixelColor;
+                        var colorIndex = GameManager.Instance.GetIndexForColor(pixelColor);
+                        
+                        TargetMetaData infos = new TargetMetaData
+                        {
+                            pufferPosition = _pufferPositions[colorIndex].transform.position,
+                            cubePosition = cube.transform.position,
+                            colorIndex = colorIndex
+                        };
+
+                        ConstructorController.instance.targets.Add(infos);
+
+                        pixelColor.a = 0;
+                        cube.GetComponent<Renderer>().material.color = pixelColor;
+                    }
                 }
             }
         }

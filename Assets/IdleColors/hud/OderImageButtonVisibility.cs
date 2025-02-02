@@ -13,7 +13,7 @@ namespace IdleColors.hud
 
             foreach (Transform button in transform)
             {
-                var idxString = button.name.Substring(1, 1);
+                var idxString = button.name.Split("#")[1];
                 var idx = int.Parse(idxString);
 
                 button.gameObject.SetActive(visibilityLevel >= idx);

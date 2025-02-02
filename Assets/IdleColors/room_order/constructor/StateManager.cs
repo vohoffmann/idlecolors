@@ -1,9 +1,9 @@
-﻿using IdleColors.room_storage.drone.states;
+﻿using IdleColors.room_order.constructor.states;
 using UnityEngine;
 
-namespace IdleColors.room_storage.drone
+namespace IdleColors.room_order.constructor
 {
-    public abstract class StateMachine : MonoBehaviour
+    public abstract class StateManager : MonoBehaviour
     {
         protected State _currentState;
 
