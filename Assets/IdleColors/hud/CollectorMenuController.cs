@@ -18,6 +18,8 @@ namespace IdleColors.hud
         [SerializeField] private TextMeshProUGUI _capycityInfoText;
         [SerializeField] private TextMeshProUGUI _unloadspeedInfoText;
 
+        [SerializeField] private GameObject _greenFirst;
+
         [SerializeField] private GameObject _activateButtonCanvas;
         private Button activateButton;
         [SerializeField] private Text _activateButtonText;
@@ -118,7 +120,7 @@ namespace IdleColors.hud
         private void UpdateButtonText()
         {
             // Debug.Log("UpdateButtonText");
-            
+
             if (_collectorScript == null)
             {
                 return;
@@ -128,29 +130,42 @@ namespace IdleColors.hud
             var costFactor = _collectorScript.costFactor;
             var buttons = false;
 
+            _greenFirst.SetActive(false);
 
             if (!_collectorScript.IsUnlocked())
             {
-                _activateButtonCanvas.SetActive(true);
-
-                _speedButtonCanvas.SetActive(false);
-                _capButtonCanvas.SetActive(false);
-                _unloadSpeedButtonCanvas.SetActive(false);
-
-                _activateButtonText.text = "" +
-                                           GLOB.COLLECTOR_UNLOCK *
-                                           _collectorScript.costFactor;
-                activateButton.interactable = coins >= GLOB.COLLECTOR_UNLOCK * costFactor;
-
-                if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                if (_collectorScript.name.Contains("blue") && !GameManager.Instance.so_unlockedGreen.value)
                 {
-                    _unlockbyadsbutton.gameObject.SetActive(true);
-                    _unlockbyadstext.gameObject.SetActive(true);
+                    _greenFirst.SetActive(true);
+
+                    _activateButtonCanvas.SetActive(false);
+                    _speedButtonCanvas.SetActive(false);
+                    _capButtonCanvas.SetActive(false);
+                    _unloadSpeedButtonCanvas.SetActive(false);
                 }
                 else
                 {
-                    _unlockbyadsbutton.gameObject.SetActive(false);
-                    _unlockbyadstext.gameObject.SetActive(false);
+                    _activateButtonCanvas.SetActive(true);
+
+                    _speedButtonCanvas.SetActive(false);
+                    _capButtonCanvas.SetActive(false);
+                    _unloadSpeedButtonCanvas.SetActive(false);
+
+                    _activateButtonText.text = "" +
+                                               GLOB.COLLECTOR_UNLOCK *
+                                               _collectorScript.costFactor;
+                    activateButton.interactable = coins >= GLOB.COLLECTOR_UNLOCK * costFactor;
+
+                    if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                    {
+                        _unlockbyadsbutton.gameObject.SetActive(true);
+                        _unlockbyadstext.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        _unlockbyadsbutton.gameObject.SetActive(false);
+                        _unlockbyadstext.gameObject.SetActive(false);
+                    }
                 }
             }
             else

@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14518803591168
-    m_Localized: 'alles maximiert   '
+    m_Localized: "Der gr\xFCne Sammler muss zuerst frei geschaltet werden"
     m_Metadata:
       m_Items: []
   - m_Id: 22988802060288
