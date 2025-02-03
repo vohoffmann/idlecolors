@@ -25,14 +25,12 @@ namespace IdleColors.room_order
         public void OrderImage()
         {
             GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
-
             var idx = clickedButton.name.Split("#")[0];
-
             StartCoroutine(InstantiateImage(int.Parse(idx)));
             ClosePanel();
             GameManager.Instance.ImageOrderInProcess = true;
         }
-        
+
         public void ClosePanel()
         {
             _productionOrderPanel.SetActive(false);
@@ -69,7 +67,8 @@ namespace IdleColors.room_order
             {
                 foreach (Transform child in _imageContainer.transform)
                 {
-                    Destroy(child.gameObject);
+                    child.gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
+                    // Destroy(child.gameObject);
                 }
 
                 yield return null;
@@ -95,7 +94,7 @@ namespace IdleColors.room_order
                             parentPosition.z + z);
 
                         var colorIndex = GameManager.Instance.GetIndexForColor(pixelColor);
-                        
+
                         TargetMetaData infos = new TargetMetaData
                         {
                             pufferPosition = _pufferPositions[colorIndex].transform.position,
@@ -105,11 +104,13 @@ namespace IdleColors.room_order
 
                         ConstructorController.instance.targets.Add(infos);
 
-                        pixelColor.a = 0;
+                        pixelColor.a = .005f;
                         cube.GetComponent<Renderer>().material.color = pixelColor;
                     }
                 }
             }
+
+            ConstructorController.instance.StartCounter();
         }
     }
 }

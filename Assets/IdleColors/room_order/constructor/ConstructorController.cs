@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using IdleColors.room_order.constructor.states;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace IdleColors.room_order.constructor
         public Vector3 target;
         public Vector3 cubeTarget;
         public int targetIndex;
+        public bool holdConstructor = true;
 
         private void Awake()
         {
@@ -37,6 +39,17 @@ namespace IdleColors.room_order.constructor
                 new Vector3(_armZ.transform.position.x, _armZ.transform.position.y, transform.position.z);
 
             _currentState?.Update();
+        }
+
+        public void StartCounter()
+        {
+            StartCoroutine(CountDown());
+        }
+
+        private IEnumerator CountDown()
+        {
+            yield return new WaitForSeconds(5f);
+            holdConstructor = false;
         }
     }
 }

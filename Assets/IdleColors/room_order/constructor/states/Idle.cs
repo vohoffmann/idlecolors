@@ -17,6 +17,9 @@ namespace IdleColors.room_order.constructor.states
         {
             ReachLocation();
 
+            if (Owner.holdConstructor) 
+                return;
+            
             if (Owner.targets.Count != 0)
             {
                 for (var i = 0; i < Owner.targets.Count; i++)

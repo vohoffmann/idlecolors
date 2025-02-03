@@ -9,7 +9,14 @@ namespace IdleColors.room_order
             var color = GetComponent<Renderer>().material.color;
             color.a = 1;
             GetComponent<Renderer>().material.color = color;
-            // GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
+        }
+
+        private void FixedUpdate()
+        {
+            if (transform.localPosition.y < -30)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

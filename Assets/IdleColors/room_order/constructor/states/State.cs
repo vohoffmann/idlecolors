@@ -19,6 +19,12 @@ namespace IdleColors.room_order.constructor.states
         {
         }
 
+        public virtual void Exit()
+        {
+        }
+        
+        
+
         protected bool ReachLocation()
         {
             var deltaX = Owner.target.x - Owner.transform.position.x;
