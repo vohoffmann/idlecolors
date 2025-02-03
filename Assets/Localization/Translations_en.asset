@@ -81,6 +81,10 @@ MonoBehaviour:
     m_Localized: job
     m_Metadata:
       m_Items: []
+  - m_Id: 27691837896695808
+    m_Localized: all maximized
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
