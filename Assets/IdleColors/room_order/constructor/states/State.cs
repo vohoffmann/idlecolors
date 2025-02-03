@@ -5,6 +5,8 @@ namespace IdleColors.room_order.constructor.states
     public abstract class State
     {
         protected readonly ConstructorController Owner;
+        private float accelerationFactor = 0f;
+        private Vector3 _velocity = Vector3.zero;
 
         protected State(ConstructorController owner)
         {
@@ -22,27 +24,26 @@ namespace IdleColors.room_order.constructor.states
         public virtual void Exit()
         {
         }
-        
-        
+
 
         protected bool ReachLocation()
         {
-            var deltaX = Owner.target.x - Owner.transform.position.x;
-            var deltaZ = Owner.target.z - Owner.transform.position.z;
+            var distance = Vector3.Distance(Owner.target, Owner.transform.position);
 
-
-            if (Mathf.Abs(deltaX) > 0.1 || Mathf.Abs(deltaZ) > 0.1)
+            if (distance > .01f)
             {
-                var deltaSpeed = Owner.Speed * Time.deltaTime;
-                var newPosition = Owner.transform.position;
+                accelerationFactor =
+                    Mathf.Clamp01(accelerationFactor + Time.deltaTime / (2 - Owner.Speed * .1f));
 
-                if (Mathf.Abs(deltaX) > 0.1) newPosition.x += deltaX < 0 ? -deltaSpeed : deltaSpeed;
-
-                if (Mathf.Abs(deltaZ) > 0.1) newPosition.z += deltaZ < 0 ? -deltaSpeed : deltaSpeed;
-
-                Owner.transform.position = newPosition;
+                Owner.transform.position =
+                    Vector3.SmoothDamp(Owner.transform.position,
+                        Owner.target,
+                        ref _velocity,
+                        (2 - Owner.Speed * .1f) / accelerationFactor);
                 return false;
             }
+
+            accelerationFactor = 0f;
 
             return true;
         }

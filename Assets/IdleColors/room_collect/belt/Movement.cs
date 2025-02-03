@@ -6,6 +6,7 @@ namespace IdleColors.room_collect.belt
     {
         private Rigidbody _body;
         private Vector3 _pos;
+        public float Speed;
 
         public void Awake()
         {
@@ -17,7 +18,7 @@ namespace IdleColors.room_collect.belt
         {
             if (_body != null)
             {
-                Vector3 movement = -transform.forward * 3 * Time.fixedDeltaTime;
+                Vector3 movement = -transform.forward * Speed * Time.fixedDeltaTime;
                 transform.position = _pos - movement;
                 _body.MovePosition(_pos);
             }

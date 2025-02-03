@@ -27745,7 +27745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5002fd7b8cdc4c8886a620baa2d064b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
+  Speed: 19
   idlePosition: {fileID: 600675234}
   _kopf: {fileID: 1365200966}
   _armX: {fileID: 986779521}
@@ -52523,6 +52523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 5
 --- !u!1 &1561481332
 GameObject:
   m_ObjectHideFlags: 0
@@ -54747,6 +54748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 0
 --- !u!54 &1645837372
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -62411,7 +62413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292275607370157878}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7986897, z: -0, w: 0.6017431}
+  m_LocalRotation: {x: -0, y: -0.98974675, z: -0, w: -0.14283313}
   m_LocalPosition: {x: 0, y: 11.056, z: 0}
   m_LocalScale: {x: 3.234237, y: 3.234237, z: 3.234237}
   m_ConstrainProportionsScale: 0
@@ -62807,6 +62809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 5
 --- !u!54 &1404909838934172702
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -65134,7 +65137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2535572284328072433}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.66014105, y: -0.2534044, z: 0.66014105, w: -0.2534044}
+  m_LocalRotation: {x: 0.32101983, y: -0.6300368, z: 0.32101983, w: -0.6300368}
   m_LocalPosition: {x: 0.025390625, y: 0.00071878434, z: -0.000029296874}
   m_LocalScale: {x: 0.74499995, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
@@ -65582,7 +65585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7536323757714041921}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3535534, y: 0.61237246, z: 0.3535534, w: 0.61237246}
+  m_LocalRotation: {x: 0.18301277, y: -0.6830127, z: 0.18301277, w: -0.6830127}
   m_LocalPosition: {x: 0.01762329, y: 0.00071878434, z: -0.000029296874}
   m_LocalScale: {x: 1.6507133, y: 0.74605995, z: 1}
   m_ConstrainProportionsScale: 0
@@ -66618,6 +66621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &4662600659229566671
 GameObject:
   m_ObjectHideFlags: 0
@@ -66799,6 +66803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &4662600659781342809
 GameObject:
   m_ObjectHideFlags: 0
@@ -67083,11 +67088,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4662600660577545394}
+  - component: {fileID: 4662600660577545397}
   - component: {fileID: 4662600660577545393}
   - component: {fileID: 4662600660577545392}
   - component: {fileID: 4662600660577545399}
   - component: {fileID: 4662600660577545398}
-  - component: {fileID: 4662600660577545397}
   m_Layer: 0
   m_Name: belt-floor
   m_TagString: Untagged
@@ -67107,6 +67112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!54 &4662600660577545398
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -69891,6 +69897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &6554511058855973496
 GameObject:
   m_ObjectHideFlags: 0
@@ -69924,6 +69931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!54 &6554511058855973498
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -70120,6 +70128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &6554511060199008405
 GameObject:
   m_ObjectHideFlags: 0
@@ -70129,11 +70138,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6554511060199008403}
+  - component: {fileID: 6554511060199008404}
   - component: {fileID: 6554511060199008400}
   - component: {fileID: 6554511060199008401}
   - component: {fileID: 6554511060199008406}
   - component: {fileID: 6554511060199008407}
-  - component: {fileID: 6554511060199008404}
   m_Layer: 0
   m_Name: seite_1
   m_TagString: Untagged
@@ -77444,7 +77453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5932773777584245962}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5930297, y: -0.38511798, z: 0.5930297, w: -0.38511798}
+  m_LocalRotation: {x: 0.44499674, y: 0.5495252, z: 0.44499674, w: 0.5495252}
   m_LocalPosition: {x: 0.010987548, y: 0.00071878434, z: -0.000029296874}
   m_LocalScale: {x: 0.70621, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -77881,11 +77890,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9214628437670966528}
+  - component: {fileID: 9214628437670966535}
   - component: {fileID: 9214628437670966531}
   - component: {fileID: 9214628437670966530}
   - component: {fileID: 9214628437670966533}
   - component: {fileID: 9214628437670966532}
-  - component: {fileID: 9214628437670966535}
   m_Layer: 0
   m_Name: seite_2
   m_TagString: Untagged
@@ -77905,6 +77914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!33 &9214628438488366968
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -77985,6 +77995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &9214628438488366973
 GameObject:
   m_ObjectHideFlags: 0
@@ -78114,6 +78125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9b7fcfc6e8fe4b9f05218fba95908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!1 &9214628439010185195
 GameObject:
   m_ObjectHideFlags: 0

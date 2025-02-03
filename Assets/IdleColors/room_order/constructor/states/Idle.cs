@@ -1,4 +1,5 @@
 ﻿using IdleColors.Globals;
+using UnityEngine;
 
 namespace IdleColors.room_order.constructor.states
 {
@@ -10,7 +11,8 @@ namespace IdleColors.room_order.constructor.states
 
         public override void Enter()
         {
-            Owner.target = Owner.idlePosition.transform.position;
+            var pos = Owner.idlePosition.transform.position;
+            Owner.target = new Vector3(pos.x, -29.8f, pos.z);
         }
 
         public override void Update()

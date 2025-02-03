@@ -67,8 +67,7 @@ namespace IdleColors.room_order
             {
                 foreach (Transform child in _imageContainer.transform)
                 {
-                    child.gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
-                    // Destroy(child.gameObject);
+                    child.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionZ;
                 }
 
                 yield return null;
@@ -95,16 +94,22 @@ namespace IdleColors.room_order
 
                         var colorIndex = GameManager.Instance.GetIndexForColor(pixelColor);
 
+                        var tmpPufferPos = _pufferPositions[colorIndex].transform.position;
+                        var tmpCubePos = cube.transform.position;
+
+                        var pufferTargetPos = new Vector3(tmpPufferPos.x, -29.8f, tmpPufferPos.z);
+                        var cupeTargetPos = new Vector3(tmpCubePos.x, -29.8f, tmpCubePos.z);
+
                         TargetMetaData infos = new TargetMetaData
                         {
-                            pufferPosition = _pufferPositions[colorIndex].transform.position,
-                            cubePosition = cube.transform.position,
+                            pufferPosition = pufferTargetPos,
+                            cubePosition = cupeTargetPos,
                             colorIndex = colorIndex
                         };
 
                         ConstructorController.instance.targets.Add(infos);
 
-                        pixelColor.a = .005f;
+                        pixelColor.a = .01f;
                         cube.GetComponent<Renderer>().material.color = pixelColor;
                     }
                 }

@@ -48,7 +48,7 @@ namespace IdleColors.room_order.constructor
 
         private IEnumerator CountDown()
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(3f);
             holdConstructor = false;
         }
     }
