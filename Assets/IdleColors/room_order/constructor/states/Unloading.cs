@@ -19,7 +19,7 @@ namespace IdleColors.room_order.constructor.states
         public override void Update()
         {
             var kopfPosition = Owner._kopf.transform.position;
-            if (down && Owner._kopf.transform.localPosition.y > -11.5f)
+            if (down && Owner._kopf.transform.localPosition.y > -10.5f)
             {
                 Owner._kopf.transform.position = new Vector3(kopfPosition.x,
                     kopfPosition.y - Time.deltaTime * Owner.Speed, kopfPosition.z);
