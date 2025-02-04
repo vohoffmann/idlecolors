@@ -42,7 +42,9 @@ namespace IdleColors.room_collect.collector
         [SerializeField] private SO_Int _speedLevel;
         [SerializeField] private SO_Int _unloadSpeed;
         [SerializeField] private AudioClip[] _clickClips;
+
         [SerializeField] private AudioClip[] _updateClips;
+
         // [SerializeField] private AudioClip _dropMineral;
         [SerializeField] private AudioClip _takeMineral;
         [SerializeField] private HaxlerController haxlerController;
@@ -236,7 +238,11 @@ namespace IdleColors.room_collect.collector
                 }
 
                 _collectedMinerals--;
-                GameManager.Instance.AddCoins(5);
+                var coinTextPos = new Vector3(
+                    _coinPartikel.transform.position.x,
+                    _coinPartikel.transform.position.y + 2,
+                    _coinPartikel.transform.position.z);
+                GameManager.Instance.AddCoins(5, coinTextPos);
                 // _audioSource.PlayOneShot(_dropMineral);
                 _coinPartikel.Play();
 

@@ -32,6 +32,7 @@ namespace IdleColors.hud
         [SerializeField] private GameObject _orderQueuePanel;
         [SerializeField] private Sprite _sprite;
         [SerializeField] private ParticleSystem _particleSystem;
+        [SerializeField] private GameObject _floatingCoinTextPosition;
 
         // 1    2    3    4    5     6     7
         // 5   10   30   20   40    50    70
@@ -50,12 +51,14 @@ namespace IdleColors.hud
         {
             GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
             var transformPosition = clickedButton.transform.position;
-            _particleSystem.transform.position =
-                new Vector3(transformPosition.x - 1, transformPosition.y - 1, transformPosition.z);
+
+            var buttonPos = new Vector3(transformPosition.x - 1, transformPosition.y - 1, transformPosition.z);
+            _particleSystem.transform.position = buttonPos;
             _particleSystem.Play();
 
+            GameManager.Instance.AddCoins(CoinValues[color], transformPosition);
+
             _orders.Enqueue(color);
-            GameManager.Instance.AddCoins(CoinValues[color]);
 
             if (_orders.Count > 0 || _mixer._mixing)
             {

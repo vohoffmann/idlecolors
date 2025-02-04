@@ -167,7 +167,8 @@ namespace IdleColors.room_storage.drone
         // called by animation event ( drone -> unloading)
         public void OnUnloadingAnimationEnd()
         {
-            GameManager.Instance.AddCoins(OrderPanelController.CoinValues[_colorIndex]);
+            var coinTextPos = new Vector3(destinationPufferPos.x, destinationPufferPos.y, destinationPufferPos.z - 3);
+            GameManager.Instance.AddCoins(OrderPanelController.CoinValues[_colorIndex], coinTextPos);
             GameManager.Instance.FinalColorCounts[_colorIndex] += 10;
 
             _coinPartikel.Play();

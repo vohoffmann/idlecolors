@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using IdleColors.Globals;
+using IdleColors.hud;
 using IdleColors.room_order.constructor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,9 +23,17 @@ namespace IdleColors.room_order
         [SerializeField] private RectTransform _buttonContainer;
         [SerializeField] private GameObject[] _pufferPositions;
         private int buttonIndex;
+        private int coins;
 
         public void OrderImage()
         {
+            if (coins != 0)
+            {
+                var coinTextPos = _imageContainer.transform.position;
+                GameManager.Instance.AddCoins(coins,
+                    new Vector3(coinTextPos.x + 8, coinTextPos.y, coinTextPos.z + 8));
+            }
+
             GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
             var idx = clickedButton.name.Split("#")[0];
             StartCoroutine(InstantiateImage(int.Parse(idx)));
@@ -51,6 +61,8 @@ namespace IdleColors.room_order
                     newButton.name = $"{buttonIndex}#{texture.name.Substring(0, 1)}";
                     var sp = newButton.GetComponentInChildren<UnityEngine.UI.Image>();
                     sp.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                    newButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
+                        "" + CalculateCoinsForImage(texture);
                 }
                 catch (Exception e)
                 {
@@ -76,8 +88,28 @@ namespace IdleColors.room_order
             GenerateNewimageRaster(textures[index]);
         }
 
+        private int CalculateCoinsForImage(Texture2D image)
+        {
+            int coins = 0;
+            for (int z = 0; z < image.height; z++)
+            {
+                for (int x = 0; x < image.width; x++)
+                {
+                    var color = image.GetPixel(x, z);
+
+                    if (color.r != 0 || color.g != 0 || color.b != 0)
+                    {
+                        coins += OrderPanelController.CoinValues[GameManager.Instance.GetIndexForColor(color) + 1] / 10;
+                    }
+                }
+            }
+
+            return coins;
+        }
+
         void GenerateNewimageRaster(Texture2D image)
         {
+            coins = 0;
             for (int z = 0; z < image.height; z++)
             {
                 for (int x = 0; x < image.width; x++)
@@ -93,6 +125,7 @@ namespace IdleColors.room_order
                             parentPosition.z + z);
 
                         var colorIndex = GameManager.Instance.GetIndexForColor(pixelColor);
+                        coins += OrderPanelController.CoinValues[colorIndex + 1] / 10;
 
                         var tmpPufferPos = _pufferPositions[colorIndex].transform.position;
                         var tmpCubePos = cube.transform.position;
@@ -115,6 +148,7 @@ namespace IdleColors.room_order
                 }
             }
 
+            // den constructor nicht gleich los schicken ... damit nicht noch fallende blöcke schon getriggert werden
             ConstructorController.instance.StartCounter();
         }
     }

@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using IdleColors.hud.coin;
 using IdleColors.room_collect.collector;
 using IdleColors.room_mixing.haxler;
 using IdleColors.room_mixing.mixer;
 using IdleColors.room_mixing.puffer;
 using IdleColors.ScriptableObjects;
+using TMPro;
 using UnityEngine;
-using System.Security.Cryptography;
-using System.Text;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
@@ -29,6 +30,7 @@ namespace IdleColors.Globals
         private readonly string GAMEID = "5774375";
         public bool AdsRewardedLoaded { private set; get; }
         [SerializeField] public bool ImageOrderInProcess;
+        [SerializeField] private GameObject _floatingCoinsPrefab;
 
         public int coins;
         private static readonly string encryptionKey = "nunabeR23!987654"; // 16, 24 oder 32 Zeichen
@@ -208,7 +210,7 @@ namespace IdleColors.Globals
                 LogError("Exception: " + condition + "\n" + stackTrace);
         }
 
-        public void AddCoins(int pCoins)
+        public void AddCoins(int pCoins, Vector3 pos = default)
         {
             if (pCoins > 0)
             {
@@ -217,6 +219,12 @@ namespace IdleColors.Globals
                 if (!_coinAudioSource.isPlaying)
                 {
                     _coinAudioSource.Play();
+                }
+
+                if (pos != Vector3.zero)
+                {
+                    var floatingText = Instantiate(_floatingCoinsPrefab, pos, Quaternion.identity);
+                    floatingText.GetComponentInChildren<TextMeshProUGUI>().text = "" + pCoins;
                 }
 
                 EventManager.CoinsAdded.Invoke();
