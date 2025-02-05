@@ -79,6 +79,10 @@ MonoBehaviour:
     m_Key: "all_max\t"
     m_Metadata:
       m_Items: []
+  - m_Id: 28584626454884352
+    m_Key: missing_color
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

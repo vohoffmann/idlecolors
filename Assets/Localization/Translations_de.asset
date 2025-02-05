@@ -85,6 +85,10 @@ MonoBehaviour:
     m_Localized: Alles maximiert
     m_Metadata:
       m_Items: []
+  - m_Id: 28584626454884352
+    m_Localized: Farbe fehlt
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

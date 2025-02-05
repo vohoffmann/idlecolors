@@ -19,9 +19,9 @@ namespace IdleColors.room_order.constructor.states
         {
             ReachLocation();
 
-            if (Owner.holdConstructor) 
+            if (Owner.holdConstructor)
                 return;
-            
+
             if (Owner.targets.Count != 0)
             {
                 for (var i = 0; i < Owner.targets.Count; i++)
@@ -38,8 +38,11 @@ namespace IdleColors.room_order.constructor.states
                     Owner.targets.Remove(TargetInfo);
 
                     Owner.ChangeState(new MoveToPuffer(Owner));
-                    break;
+                    Owner._missingColorText.SetActive(false);
+                    return;
                 }
+
+                Owner._missingColorText.SetActive(true);
             }
         }
     }

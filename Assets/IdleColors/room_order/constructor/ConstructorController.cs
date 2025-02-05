@@ -20,6 +20,7 @@ namespace IdleColors.room_order.constructor
         public Vector3 cubeTarget;
         public int targetIndex;
         public bool holdConstructor = true;
+        public GameObject _missingColorText;
 
         private void Awake()
         {
@@ -27,6 +28,8 @@ namespace IdleColors.room_order.constructor
             {
                 instance = this;
             }
+
+            _missingColorText.SetActive(false);
 
             ChangeState(new Idle(this));
         }
