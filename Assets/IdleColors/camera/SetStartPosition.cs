@@ -6,7 +6,7 @@ namespace IdleColors.camera
     {
         private void Awake()
         {
-            transform.position = new Vector3(-260, 24, -2.5f);
+            transform.position = new Vector3(-260, 19, -2.5f);
         }
     }
 }

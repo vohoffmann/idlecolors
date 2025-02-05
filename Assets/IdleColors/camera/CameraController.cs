@@ -10,7 +10,7 @@ namespace IdleColors.camera
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] public GameObject[] rooms;
+        [SerializeField] public GameObject[] _roomPositions;
         [SerializeField] private CollectorMenuController collectorMenu;
         [SerializeField] private HaxlerMenuController haxlerMenu;
         [SerializeField] private PufferMenuController pufferMenu;
@@ -24,7 +24,7 @@ namespace IdleColors.camera
         [SerializeField] private GameObject _lockedTarget;
         private int _currentSelection;
         private bool _isMoving;
-        private float _smoothTime = 1f;
+        private readonly float _smoothTime = .5f;
         private Vector3 _velocity = Vector3.zero;
         private Vector3 _targetPos;
 
@@ -40,7 +40,7 @@ namespace IdleColors.camera
         private void Start()
         {
             _camera.gameObject.SetActive(true);
-            setTarget(rooms[0]);
+            setTarget(_roomPositions[0]);
             _isMoving = true;
         }
 
@@ -109,7 +109,7 @@ namespace IdleColors.camera
             pufferMenu.gameObject.SetActive(false);
             droneMenu.SetActive(false);
 
-            setTarget(rooms[_currentSelection]);
+            setTarget(_roomPositions[_currentSelection]);
         }
 
         public void MoveCamUp()
@@ -132,15 +132,13 @@ namespace IdleColors.camera
             if (_lockedTarget) UnsetLockedTarget();
 
             // set to last ( oder) room
-            _currentSelection = rooms.Length - 1;
+            _currentSelection = _roomPositions.Length - 1;
 
-            setTarget(rooms[_currentSelection]);
+            setTarget(_roomPositions[_currentSelection]);
 
             _isMoving = true;
 
             _orderImagePanel.SetActive(true);
-            
-            // TODO: close button on orderimagepanel 
         }
 
         // true = down
@@ -148,7 +146,7 @@ namespace IdleColors.camera
         {
             if (down)
             {
-                if (_currentSelection == rooms.Length - 1)
+                if (_currentSelection == _roomPositions.Length - 1)
                 {
                     return;
                 }
@@ -165,12 +163,12 @@ namespace IdleColors.camera
                 _currentSelection--;
             }
 
-            setTarget(rooms[_currentSelection]);
+            setTarget(_roomPositions[_currentSelection]);
 
             _isMoving = true;
         }
 
-        void Update()
+        void FixedUpdate()
         {
             if (!_isMoving)
             {
@@ -186,10 +184,10 @@ namespace IdleColors.camera
                 {
                     setTarget(_lockedTarget);
                 }
-                else if (Vector3.Distance(_targetPos, _camera.transform.position) < 1)
+                else if (Vector3.Distance(_targetPos, _camera.transform.position) < .1f)
                 {
                     _isMoving = false;
-                    _smoothTime = 0.5f;
+                    // _smoothTime = 1f;
                 }
 
                 _camera.transform.position =
