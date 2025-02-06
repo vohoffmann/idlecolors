@@ -21,6 +21,7 @@ namespace IdleColors.room_order.constructor
         public int targetIndex;
         public bool holdConstructor = true;
         public GameObject _missingColorText;
+        public GameObject _missingColorImage;
 
         private void Awake()
         {

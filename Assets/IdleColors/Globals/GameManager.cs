@@ -281,6 +281,8 @@ namespace IdleColors.Globals
             so_pufferLevelBlue.value = 1;
 
             so_DroneSpeed.value = 1;
+            
+            FinalColorCounts = new int[8];
 
             TakeNewValues();
         }

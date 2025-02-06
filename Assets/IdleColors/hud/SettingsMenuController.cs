@@ -56,7 +56,7 @@ namespace IdleColors.hud
             }
             else
             {
-                mixer.SetFloat(musicVolume, -40f);
+                mixer.SetFloat(musicVolume, -20f);
             }
 
             if (PlayerPrefs.HasKey(sfxVolume))
@@ -74,6 +74,10 @@ namespace IdleColors.hud
                 var lightSliderValue = PlayerPrefs.GetFloat(lightIntensity);
                 lightSlider.value = lightSliderValue;
                 CameraController.Instance.SetLightIntensity(lightSliderValue);
+            }
+            else
+            {
+                CameraController.Instance.SetLightIntensity(1.5f);
             }
         }
 

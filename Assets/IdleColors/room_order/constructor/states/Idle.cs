@@ -1,4 +1,5 @@
 ﻿using IdleColors.Globals;
+using TMPro;
 using UnityEngine;
 
 namespace IdleColors.room_order.constructor.states
@@ -22,6 +23,8 @@ namespace IdleColors.room_order.constructor.states
             if (Owner.holdConstructor)
                 return;
 
+            var missingColor = Color.black;
+            
             if (Owner.targets.Count != 0)
             {
                 for (var i = 0; i < Owner.targets.Count; i++)
@@ -29,19 +32,23 @@ namespace IdleColors.room_order.constructor.states
                     var TargetInfo = Owner.targets[i];
 
                     // check if the color is in puffer 
-                    if (GameManager.Instance.FinalColorCounts[TargetInfo.colorIndex + 1] == 0)
+                    var colorIdx = TargetInfo.colorIndex + 1;
+                    if (GameManager.Instance.FinalColorCounts[colorIdx] == 0)
+                    {
+                        missingColor = GameManager.Instance.GetColorForIndex(colorIdx);
                         continue;
+                    }
 
-                    Owner.targetIndex = TargetInfo.colorIndex + 1;
+                    Owner.targetIndex = colorIdx;
                     Owner.target = TargetInfo.pufferPosition;
                     Owner.cubeTarget = TargetInfo.cubePosition;
                     Owner.targets.Remove(TargetInfo);
-
-                    Owner.ChangeState(new MoveToPuffer(Owner));
                     Owner._missingColorText.SetActive(false);
+                    Owner.ChangeState(new MoveToPuffer(Owner));
                     return;
                 }
 
+                Owner._missingColorText.GetComponentInChildren<TextMeshProUGUI>().color = missingColor;
                 Owner._missingColorText.SetActive(true);
             }
         }

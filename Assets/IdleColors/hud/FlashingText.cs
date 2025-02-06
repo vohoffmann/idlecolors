@@ -7,18 +7,13 @@ namespace IdleColors.hud
     {
         private float _alpha;
         private bool _up;
-        private Color _color;
-
-        private void Awake()
-        {
-            _color = GetComponent<TextMeshProUGUI>().color;
-        }
 
         private void OnEnable()
         {
             InvokeRepeating(nameof(Flash), 2, 5);
             _alpha = 0f;
-            GetComponent<TextMeshProUGUI>().color = new Color(_color.r, _color.g, _color.b, _alpha);
+            var color = GetComponent<TextMeshProUGUI>().color;
+            GetComponent<TextMeshProUGUI>().color = new Color(color.r, color.g, color.b, _alpha);
         }
 
         private void OnDisable()
@@ -46,8 +41,8 @@ namespace IdleColors.hud
             {
                 _alpha -= Time.deltaTime * .5f;
             }
-            
-            GetComponent<TextMeshProUGUI>().color = new Color(_color.r, _color.g, _color.b, _alpha);
+            var color = GetComponent<TextMeshProUGUI>().color;
+            GetComponent<TextMeshProUGUI>().color = new Color(color.r, color.g, color.b, _alpha);
         }
     }
 }
