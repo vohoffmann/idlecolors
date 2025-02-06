@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using IdleColors.Globals;
 using IdleColors.room_mixing.mixer;
 using IdleColors.room_mixing.puffer;
@@ -40,7 +41,45 @@ namespace IdleColors.hud
 
         private int _red, _green, _blue;
         private readonly Queue<int> _orders = new();
+        private Image _image;
         private const int APO = 24;
+
+        private void Awake()
+        {
+            _image = GetComponent<Image>();
+        }
+
+        private void OnEnable()
+        {
+            EventManager.FlashOrderMenu += Flash;
+        }
+
+
+        private void OnDisable()
+        {
+            EventManager.FlashOrderMenu -= Flash;
+        }
+        
+        private void Flash()
+        {
+            // das obere menu flaschen
+            if (_image != null)
+            {
+                _image.color = Color.white;
+            }
+        }
+
+        private void Update()
+        {
+            var color = _image.color;
+            if (color.r > .23f)
+            {
+                color.r -= Time.deltaTime;
+                color.g -= Time.deltaTime;
+                color.b -= Time.deltaTime;
+                _image.color = color;
+            }
+        }
 
         private void Start()
         {

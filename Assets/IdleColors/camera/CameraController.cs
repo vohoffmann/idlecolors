@@ -139,6 +139,8 @@ namespace IdleColors.camera
 
         public void SetCamToOrderroom()
         {
+            if (_lockedTarget) UnsetLockedTarget();
+            
             _currentSelection = _roomPositions.Length - 1;
             setTarget(_roomPositions[_currentSelection]);
             _isMoving = true;

@@ -8,5 +8,6 @@ namespace IdleColors.Globals
         public static Action<GameObject> CupStored;
         public static Action SetBoxPosition;
         public static Action CoinsAdded;
+        public static Action FlashOrderMenu;
     }
 }
