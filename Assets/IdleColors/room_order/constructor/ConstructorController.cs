@@ -31,6 +31,7 @@ namespace IdleColors.room_order.constructor
             }
 
             _missingColorText.SetActive(false);
+            _missingColorImage.SetActive(false);
 
             ChangeState(new Idle(this));
         }

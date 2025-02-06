@@ -264,7 +264,7 @@ namespace IdleColors.Globals
             so_speedLevelBlue.value = 2;
             so_unloadSpeedBlue.value = 1;
 
-            so_haxlerMineralsRed.value = 0;
+            so_haxlerMineralsRed.value = 3;
             so_haxlerMineralsGreen.value = 0;
             so_haxlerMineralsBlue.value = 0;
 
@@ -272,7 +272,7 @@ namespace IdleColors.Globals
             so_haxlerSpeedGreen.value = 1;
             so_haxlerSpeedBlue.value = 1;
 
-            so_pufferMineralsRed.value = 0;
+            so_pufferMineralsRed.value = 20;
             so_pufferMineralsGreen.value = 0;
             so_pufferMineralsBlue.value = 0;
 

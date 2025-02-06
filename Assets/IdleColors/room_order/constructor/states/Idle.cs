@@ -43,12 +43,14 @@ namespace IdleColors.room_order.constructor.states
                     Owner.target = TargetInfo.pufferPosition;
                     Owner.cubeTarget = TargetInfo.cubePosition;
                     Owner.targets.Remove(TargetInfo);
+                    Owner._missingColorImage.SetActive(false);
                     Owner._missingColorText.SetActive(false);
                     Owner.ChangeState(new MoveToPuffer(Owner));
                     return;
                 }
 
                 Owner._missingColorText.GetComponentInChildren<TextMeshProUGUI>().color = missingColor;
+                    Owner._missingColorImage.SetActive(true);
                 Owner._missingColorText.SetActive(true);
             }
         }
