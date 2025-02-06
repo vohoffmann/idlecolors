@@ -12,48 +12,9 @@ using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Outline : MonoBehaviour
+public class OutlineFlash : MonoBehaviour
 {
     private static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
-
-    public enum Mode
-    {
-        OutlineAll,
-        OutlineVisible,
-        OutlineHidden,
-        OutlineAndSilhouette,
-        SilhouetteOnly
-    }
-
-    public Mode OutlineMode
-    {
-        get { return outlineMode; }
-        set
-        {
-            outlineMode = value;
-            needsUpdate = true;
-        }
-    }
-
-    public Color OutlineColor
-    {
-        get { return outlineColor; }
-        set
-        {
-            outlineColor = value;
-            needsUpdate = true;
-        }
-    }
-
-    public float OutlineWidth
-    {
-        get { return outlineWidth; }
-        set
-        {
-            outlineWidth = value;
-            needsUpdate = true;
-        }
-    }
 
     [Serializable]
     private class ListVector3
@@ -61,11 +22,8 @@ public class Outline : MonoBehaviour
         public List<Vector3> data;
     }
 
-    [SerializeField] private Mode outlineMode;
-
-    [SerializeField] private Color outlineColor = Color.green;
-
-    [SerializeField, Range(0f, 10f)] private float outlineWidth = 2f;
+    private readonly Color outlineColor = Color.green;
+    private readonly float outlineWidth = 2f;
 
     [Header("Optional")]
     [SerializeField, Tooltip(
@@ -159,7 +117,7 @@ public class Outline : MonoBehaviour
         if (!_up && _alpha > 0)
         {
             _alpha -= Time.deltaTime * _speed;
-            
+
             needsUpdate = true;
         }
 

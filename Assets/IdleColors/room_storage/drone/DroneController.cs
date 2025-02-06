@@ -24,7 +24,7 @@ namespace IdleColors.room_storage.drone
         [SerializeField] private GameObject[] _dronePropeller;
 
         [SerializeField] private SO_Int _droneSpeed;
-        [SerializeField] private ParticleSystem _coinPartikel;
+        // [SerializeField] private ParticleSystem _coinPartikel;
 
         [SerializeField] private GameObject _noMoreUpdatesButtonText;
         [SerializeField] private TextMeshProUGUI _speedStatusText;
@@ -43,7 +43,7 @@ namespace IdleColors.room_storage.drone
         public Vector3 destinationPufferPos;
         private Vector3 _velocity = Vector3.zero;
         public Vector3 idlePosition;
-        private float accelerationFactor = 0f;
+        private float accelerationFactor;
         private float _propellerSpeed = 800f;
         public const string STATE_IDLE = "Idle";
         public const string STATE_MOVETOCUP = "MoveToBox";
@@ -171,7 +171,7 @@ namespace IdleColors.room_storage.drone
             GameManager.Instance.AddCoins(OrderPanelController.CoinValues[_colorIndex], coinTextPos);
             GameManager.Instance.FinalColorCounts[_colorIndex] += 10;
 
-            _coinPartikel.Play();
+            // _coinPartikel.Play();
             SetDroneColor(0);
             ChangeState(new MoveToIdlePosition(this));
         }

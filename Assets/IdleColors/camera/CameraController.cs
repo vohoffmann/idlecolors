@@ -132,13 +132,16 @@ namespace IdleColors.camera
             if (_lockedTarget) UnsetLockedTarget();
 
             // set to last ( oder) room
-            _currentSelection = _roomPositions.Length - 1;
-
-            setTarget(_roomPositions[_currentSelection]);
-
-            _isMoving = true;
+            SetCamToOrderroom();
 
             _orderImagePanel.SetActive(true);
+        }
+
+        public void SetCamToOrderroom()
+        {
+            _currentSelection = _roomPositions.Length - 1;
+            setTarget(_roomPositions[_currentSelection]);
+            _isMoving = true;
         }
 
         // true = down

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 341b058cd7dee4f5cba5cc59a513619e
-timeCreated: 1520575773
+guid: 4e76d4023d7e0411297c670f878973e2
+timeCreated: 1520575782
 licenseType: Store
 ShaderImporter:
   externalObjects: {}
@@ -13,5 +13,5 @@ AssetOrigin:
   productId: 115488
   packageName: Quick Outline
   packageVersion: 1.1
-  assetPath: Assets/QuickOutline/Resources/Shaders/OutlineMask.shader
+  assetPath: Assets/external_imports/OutlineFlash/Resources/Shaders/OutlineFill.shader
   uploadId: 485303

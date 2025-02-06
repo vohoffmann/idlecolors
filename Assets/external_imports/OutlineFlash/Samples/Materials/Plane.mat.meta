@@ -1,9 +1,10 @@
 fileFormatVersion: 2
-guid: 5933bfd39d7a5b843a0ed821f85bca19
-timeCreated: 1522619008
+guid: f58cf65ea995c4b45be95713bdea8134
+timeCreated: 1522540975
 licenseType: Store
-TextScriptImporter:
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -12,5 +13,5 @@ AssetOrigin:
   productId: 115488
   packageName: Quick Outline
   packageVersion: 1.1
-  assetPath: Assets/QuickOutline/Readme.txt
+  assetPath: Assets/external_imports/OutlineFlash/Samples/Materials/Plane.mat
   uploadId: 485303
