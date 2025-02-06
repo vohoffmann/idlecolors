@@ -1,6 +1,7 @@
 ﻿using IdleColors.Globals;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace IdleColors.room_order.constructor.states
 {
@@ -24,7 +25,7 @@ namespace IdleColors.room_order.constructor.states
                 return;
 
             var missingColor = Color.black;
-            
+
             if (Owner.targets.Count != 0)
             {
                 for (var i = 0; i < Owner.targets.Count; i++)
@@ -50,7 +51,8 @@ namespace IdleColors.room_order.constructor.states
                 }
 
                 Owner._missingColorText.GetComponentInChildren<TextMeshProUGUI>().color = missingColor;
-                    Owner._missingColorImage.SetActive(true);
+                Owner._missingColorImage.GetComponentInChildren<Image>().color = missingColor;
+                Owner._missingColorImage.SetActive(true);
                 Owner._missingColorText.SetActive(true);
             }
         }

@@ -10,7 +10,7 @@ namespace IdleColors.hud
 
         private void OnEnable()
         {
-            InvokeRepeating(nameof(Flash), 2, 5);
+            InvokeRepeating(nameof(Flash), 2, 3);
             _alpha = 0f;
             var color = GetComponent<TextMeshProUGUI>().color;
             GetComponent<TextMeshProUGUI>().color = new Color(color.r, color.g, color.b, _alpha);
