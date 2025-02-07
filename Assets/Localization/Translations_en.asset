@@ -93,6 +93,14 @@ MonoBehaviour:
     m_Localized: credits
     m_Metadata:
       m_Items: []
+  - m_Id: 29344867742294016
+    m_Localized: claim reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29392104564367360
+    m_Localized: mute coin sound
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

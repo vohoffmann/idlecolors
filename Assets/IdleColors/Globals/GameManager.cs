@@ -29,10 +29,12 @@ namespace IdleColors.Globals
         public const string REWARDED_ANDROID = "Rewarded_Android";
         private readonly string GAMEID = "5774375";
         public bool AdsRewardedLoaded { private set; get; }
-        [SerializeField] public bool ImageOrderInProcess;
+        public bool ImageOrderInProcess;
+        public int ImageOrderRewards;
         [SerializeField] private GameObject _floatingCoinsPrefab;
 
         public int coins;
+        private bool _playCoinSound = true;
         private static readonly string encryptionKey = "nunabeR23!987654"; // 16, 24 oder 32 Zeichen
 
         // index 0 is dummy !!!
@@ -210,13 +212,20 @@ namespace IdleColors.Globals
                 LogError("Exception: " + condition + "\n" + stackTrace);
         }
 
+        public void ToggleCoinSound()
+        {
+            _playCoinSound = !_playCoinSound;
+            PlayerPrefs.SetInt("CoinSound", _playCoinSound ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+
         public void AddCoins(int pCoins, Vector3 pos = default)
         {
             if (pCoins > 0)
             {
                 coins += pCoins * _coinMultiplier;
                 _coinController.TriggerScaling();
-                if (!_coinAudioSource.isPlaying)
+                if (!_coinAudioSource.isPlaying && _playCoinSound)
                 {
                     _coinAudioSource.Play();
                 }
@@ -281,7 +290,7 @@ namespace IdleColors.Globals
             so_pufferLevelBlue.value = 1;
 
             so_DroneSpeed.value = 1;
-            
+
             FinalColorCounts = new int[8];
 
             TakeNewValues();
@@ -300,6 +309,11 @@ namespace IdleColors.Globals
             RedPufferController.TakeInitValues();
             GreenPufferController.TakeInitValues();
             BluePufferController.TakeInitValues();
+
+            if (PlayerPrefs.HasKey("CoinSound"))
+            {
+                _playCoinSound = PlayerPrefs.GetInt("CoinSound", 1) == 1 ? true : false;
+            }
 
             ReadyToSave = true;
             AddCoins(0); // to update GUI

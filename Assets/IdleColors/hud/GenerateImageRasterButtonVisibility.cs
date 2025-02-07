@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IdleColors.hud
 {
-    public class OderImageButtonVisibility : MonoBehaviour
+    public class GenerateImageRasterButtonVisibility : MonoBehaviour
     {
         private void OnEnable()
         {

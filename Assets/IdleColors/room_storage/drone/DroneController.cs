@@ -113,14 +113,15 @@ namespace IdleColors.room_storage.drone
 
             if (_currentState is not Idle && distance > .01f)
             {
+                var droneSpeedFactor = (1.7f - _droneSpeed.value * .1f);
                 accelerationFactor =
-                    Mathf.Clamp01(accelerationFactor + Time.deltaTime / (2 - (_droneSpeed.value * .1f)));
+                    Mathf.Clamp01(accelerationFactor + Time.deltaTime / droneSpeedFactor);
 
                 transform.position =
                     Vector3.SmoothDamp(transform.position,
                         targetPos,
                         ref _velocity,
-                        (2 - (_droneSpeed.value * .1f)) / accelerationFactor);
+                        droneSpeedFactor / accelerationFactor);
                 var factor = ((distance / 50f) * accelerationFactor);
                 audioSource.pitch = 1f + factor;
                 _propellerSpeed = 800f + factor * 1000;
