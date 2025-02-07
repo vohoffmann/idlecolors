@@ -16,7 +16,8 @@ namespace IdleColors.hud
                 var idxString = button.name.Split("#")[1];
                 var idx = int.Parse(idxString);
 
-                button.gameObject.SetActive(visibilityLevel >= idx);
+                button.gameObject.GetComponents<UnityEngine.UI.Button>()[0].interactable = visibilityLevel >= idx;
+                button.gameObject.transform.GetChild(2).gameObject.SetActive(visibilityLevel < idx);
             }
         }
     }
