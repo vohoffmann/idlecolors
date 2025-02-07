@@ -83,6 +83,10 @@ MonoBehaviour:
     m_Key: missing_color
     m_Metadata:
       m_Items: []
+  - m_Id: 29123198308151296
+    m_Key: show-crediz
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

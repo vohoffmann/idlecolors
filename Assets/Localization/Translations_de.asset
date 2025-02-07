@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6415353737216
-    m_Localized: speichern und beenden
+    m_Localized: Speichern und Spiel beenden
     m_Metadata:
       m_Items: []
   - m_Id: 14518803591168
@@ -87,6 +87,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 28584626454884352
     m_Localized: Farbe fehlt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29123198308151296
+    m_Localized: Mitwirkende
     m_Metadata:
       m_Items: []
   references:

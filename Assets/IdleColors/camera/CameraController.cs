@@ -1,3 +1,4 @@
+using IdleColors.Globals;
 using IdleColors.hud;
 using IdleColors.room_collect.collector;
 using IdleColors.room_mixing.haxler;
@@ -144,6 +145,8 @@ namespace IdleColors.camera
             _currentSelection = _roomPositions.Length - 1;
             setTarget(_roomPositions[_currentSelection]);
             _isMoving = true;
+            
+            EventManager.FlashOrderMenu.Invoke();
         }
 
         // true = down

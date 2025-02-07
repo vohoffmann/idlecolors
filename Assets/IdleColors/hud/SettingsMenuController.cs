@@ -29,6 +29,7 @@ namespace IdleColors.hud
         private readonly string sfxVolume = "sfx_volume";
         private readonly string lightIntensity = "lightIntensity";
         private int _playListIdx = 0;
+        [SerializeField] private GameObject _creditsCanvas;
 
         private void Awake()
         {
@@ -175,6 +176,16 @@ namespace IdleColors.hud
             inGamePanel.SetActive(true);
             startMenu.SetActive(false);
             Time.timeScale = 1;
+        }
+
+        public void showCredits()
+        {
+            _creditsCanvas.SetActive(true);
+        }
+
+        public void hideCredits()
+        {
+            _creditsCanvas.SetActive(false);
         }
     }
 }
