@@ -7,6 +7,7 @@
 //
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -98,6 +99,12 @@ public class OutlineFlash : MonoBehaviour
 
     private void OnBecameVisible()
     {
+        StartCoroutine(DelayedAction());
+    }
+
+    IEnumerator DelayedAction()
+    {
+        yield return new WaitForSeconds(1f);
         _up = true;
     }
 
