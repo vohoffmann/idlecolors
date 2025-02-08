@@ -131,7 +131,9 @@ namespace IdleColors.room_storage
                     return;
                 }
 
-                // TODO: kiste steht am endgültigem platz ... kann also abgeholt werden
+                var pos = transform.localPosition;
+
+                transform.localPosition = new Vector3(7f, pos.y, pos.z);
                 _needUpdate = false;
                 EventManager.CupStored?.Invoke(gameObject);
             }
