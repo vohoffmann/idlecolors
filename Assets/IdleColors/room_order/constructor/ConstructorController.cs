@@ -22,6 +22,7 @@ namespace IdleColors.room_order.constructor
         public bool holdConstructor = true;
         public GameObject _missingColorText;
         public GameObject _missingColorImage;
+        public AudioSource audioSource;
 
         private void Awake()
         {
@@ -30,10 +31,23 @@ namespace IdleColors.room_order.constructor
                 instance = this;
             }
 
+            audioSource = GetComponent<AudioSource>();
+            audioSource.volume = 0;
+            
             _missingColorText.SetActive(false);
             _missingColorImage.SetActive(false);
 
             ChangeState(new Idle(this));
+        }
+
+        private void OnBecameVisible()
+        {
+            audioSource.volume = 1f;
+        }
+
+        private void OnBecameInvisible()
+        {
+            audioSource.volume = 0;
         }
 
         private void Update()

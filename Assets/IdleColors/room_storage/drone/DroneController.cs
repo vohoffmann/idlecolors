@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using IdleColors.camera;
 using IdleColors.Globals;
@@ -89,11 +90,19 @@ namespace IdleColors.room_storage.drone
 
         private void OnBecameVisible()
         {
-            audioSource.volume = 1;
+            StartCoroutine(AktivateSound());
+        }
+
+        IEnumerator AktivateSound()
+        {
+            yield return new WaitForSeconds(2f);
+            if(gameObject.GetComponent<Renderer>().isVisible)
+                audioSource.volume = 1;
         }
 
         private void OnBecameInvisible()
         {
+            StopCoroutine(AktivateSound());
             audioSource.volume = 0;
         }
 

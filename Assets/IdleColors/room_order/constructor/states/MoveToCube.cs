@@ -9,6 +9,7 @@
         public override void Enter()
         {
             Owner.target = Owner.cubeTarget;
+            Owner.audioSource.Play();
         }
 
         public override void Update()

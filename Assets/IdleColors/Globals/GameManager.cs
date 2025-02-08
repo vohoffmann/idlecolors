@@ -215,8 +215,8 @@ namespace IdleColors.Globals
         public void ToggleCoinSound()
         {
             _playCoinSound = !_playCoinSound;
-            PlayerPrefs.SetInt("CoinSound", _playCoinSound ? 1 : 0);
-            PlayerPrefs.Save();
+            // PlayerPrefs.SetInt("CoinSound", _playCoinSound ? 1 : 0);
+            // PlayerPrefs.Save();
         }
 
         public void AddCoins(int pCoins, Vector3 pos = default)
@@ -310,10 +310,10 @@ namespace IdleColors.Globals
             GreenPufferController.TakeInitValues();
             BluePufferController.TakeInitValues();
 
-            if (PlayerPrefs.HasKey("CoinSound"))
-            {
-                _playCoinSound = PlayerPrefs.GetInt("CoinSound", 1) == 1 ? true : false;
-            }
+            // if (PlayerPrefs.HasKey("CoinSound"))
+            // {
+            //     _playCoinSound = PlayerPrefs.GetInt("CoinSound", 1) == 1 ? true : false;
+            // }
 
             ReadyToSave = true;
             AddCoins(0); // to update GUI
@@ -506,7 +506,7 @@ namespace IdleColors.Globals
                         return;
                     }
 
-                    Debug.Log("Advertisement is completely initialized");
+                    // Debug.Log("Advertisement is completely initialized");
                 }
                 else
                 {

@@ -1,4 +1,5 @@
-﻿using IdleColors.Globals;
+﻿using System;
+using IdleColors.Globals;
 using IdleColors.room_mixing.pipeball;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace IdleColors.room_storage
     public class CupController : MonoBehaviour
     {
         private int _amount;
+
         // private int _coins;
         public int _colorIndex;
         private bool _loadingPositionReached;
@@ -16,6 +18,12 @@ namespace IdleColors.room_storage
         private bool _needUpdate = true;
         [SerializeField] private GameObject _cupLid;
         private bool _empty = false;
+        private AudioSource audioSource;
+
+        private void Awake()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
 
         private void OnEnable()
         {
@@ -43,6 +51,8 @@ namespace IdleColors.room_storage
             // erstes triggerevent
             if (_amount == 0)
             {
+                audioSource.volume = other.gameObject.GetComponent<Renderer>().isVisible ? 1f : 0;
+
                 _colorIndex = script._colorIndex;
                 _targetZPos = 6 + (1 - _colorIndex) * 3;
 
@@ -57,7 +67,11 @@ namespace IdleColors.room_storage
                 //     _coins += 20;
             }
 
+            audioSource.Play();
+            audioSource.pitch += .1f;
+
             _amount++;
+
             if (_amount == 5)
             {
                 _amount = 0;
@@ -82,7 +96,7 @@ namespace IdleColors.room_storage
                 {
                     transform.Translate(-1 * Time.deltaTime, 0, 0);
                 }
-                
+
                 return;
             }
 

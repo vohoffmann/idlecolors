@@ -98,7 +98,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 29392104564367360
-    m_Localized: mute coin sound
+    m_Localized: play coin sound
     m_Metadata:
       m_Items: []
   references:

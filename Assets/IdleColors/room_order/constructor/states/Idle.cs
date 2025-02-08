@@ -15,11 +15,16 @@ namespace IdleColors.room_order.constructor.states
         {
             var pos = Owner.idlePosition.transform.position;
             Owner.target = new Vector3(pos.x, -29.8f, pos.z);
+            Owner.audioSource.Play();
         }
 
         public override void Update()
         {
-            ReachLocation();
+            if (ReachLocation())
+            {
+                Owner.audioSource.Stop();
+            }
+            
 
             if (Owner.holdConstructor)
                 return;

@@ -10,6 +10,7 @@ namespace IdleColors.room_order.constructor.states
 
         public override void Enter()
         {
+            Owner.audioSource.Play();
         }
 
         public override void Update()

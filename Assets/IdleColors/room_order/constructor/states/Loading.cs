@@ -14,6 +14,7 @@ namespace IdleColors.room_order.constructor.states
         public override void Enter()
         {
             down = true;
+            Owner.audioSource.Stop();
         }
 
         public override void Update()
