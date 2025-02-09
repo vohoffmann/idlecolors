@@ -23,26 +23,26 @@ namespace IdleColors.room_order.constructor.states
             if (down && Owner._kopf.transform.localPosition.y > -11.0f)
             {
                 Owner._kopf.transform.position = new Vector3(kopfPosition.x,
-                    kopfPosition.y - Time.deltaTime * Owner.Speed, kopfPosition.z);
+                    kopfPosition.y - Time.fixedDeltaTime * Owner.Speed, kopfPosition.z);
                 return;
             }
-            
+
             down = false;
 
             if (Owner._kopf.transform.localPosition.y < -1.5f)
             {
                 Owner._kopf.transform.position = new Vector3(kopfPosition.x,
-                    kopfPosition.y + Time.deltaTime * Owner.Speed, kopfPosition.z);
+                    kopfPosition.y + Time.fixedDeltaTime * Owner.Speed, kopfPosition.z);
                 return;
             }
 
-            
+
             Owner.ChangeState(new Idle(Owner));
         }
 
         public override void Exit()
         {
-            if(Owner.targets.Count == 0)
+            if (Owner.targets.Count == 0)
             {
                 GameManager.Instance.ImageOrderInProcess = false;
                 Owner.holdConstructor = true;

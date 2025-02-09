@@ -33,7 +33,7 @@ namespace IdleColors.room_order.constructor.states
             if (distance > .01f)
             {
                 accelerationFactor =
-                    Mathf.Clamp01(accelerationFactor + Time.deltaTime / (2 - Owner.Speed * .1f));
+                    Mathf.Clamp01(accelerationFactor + Time.fixedDeltaTime / (2 - Owner.Speed * .1f));
 
                 Owner.transform.position =
                     Vector3.SmoothDamp(Owner.transform.position,

@@ -1,6 +1,4 @@
-﻿using IdleColors.Globals;
-
-namespace IdleColors.room_order.constructor.states
+﻿namespace IdleColors.room_order.constructor.states
 {
     public class MoveToPuffer : State
     {

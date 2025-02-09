@@ -20,7 +20,7 @@ namespace IdleColors.room_order.constructor
         public Vector3 cubeTarget;
         public int targetIndex;
         public bool holdConstructor = true;
-        public GameObject _missingColorText;
+        // public GameObject _missingColorText;
         public GameObject _missingColorImage;
         public AudioSource audioSource;
 
@@ -34,7 +34,7 @@ namespace IdleColors.room_order.constructor
             audioSource = GetComponent<AudioSource>();
             audioSource.volume = 0;
             
-            _missingColorText.SetActive(false);
+            // _missingColorText.SetActive(false);
             _missingColorImage.SetActive(false);
 
             ChangeState(new Idle(this));
@@ -42,7 +42,7 @@ namespace IdleColors.room_order.constructor
 
         private void OnBecameVisible()
         {
-            audioSource.volume = 1f;
+            audioSource.volume = .4f;
         }
 
         private void OnBecameInvisible()
@@ -50,7 +50,7 @@ namespace IdleColors.room_order.constructor
             audioSource.volume = 0;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             _armX.transform.position =
                 new Vector3(transform.position.x, _armX.transform.position.y, _armX.transform.position.z);
