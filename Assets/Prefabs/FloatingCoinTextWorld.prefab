@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 6355399195443034589}
   - component: {fileID: 6136035873711365854}
   m_Layer: 3
-  m_Name: FloatingCoins
+  m_Name: FloatingCoinTextWorld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

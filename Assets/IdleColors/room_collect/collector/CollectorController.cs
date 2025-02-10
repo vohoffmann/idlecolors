@@ -52,6 +52,7 @@ namespace IdleColors.room_collect.collector
         [SerializeField] private Slider slider;
         [SerializeField] private GameObject _bodyCam;
         [SerializeField] private ParticleSystem _coinPartikel;
+        [SerializeField] private Transform _tmpMineralsContainer;
 
 
         private void Awake()
@@ -246,10 +247,11 @@ namespace IdleColors.room_collect.collector
                 // _audioSource.PlayOneShot(_dropMineral);
                 _coinPartikel.Play();
 
-                Instantiate(_collectedMineralBP,
+                var tmpCube = Instantiate(_collectedMineralBP,
                     _dustFinSpawnPosition.transform.position,
                     _dustFinSpawnPosition.transform.rotation);
 
+                tmpCube.transform.SetParent(_tmpMineralsContainer, true);
 
                 if (_collectedMinerals == 0)
                 {

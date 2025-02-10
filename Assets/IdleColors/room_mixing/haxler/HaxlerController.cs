@@ -26,6 +26,8 @@ namespace IdleColors.room_mixing.haxler
         private bool crushing;
         private bool pufferFull;
         public SO_Int _minerals;
+
+        [SerializeField] private Transform _tmpMineralsContainer;
         // private  Stopwatch stopwatch = new();
 
         private void Awake()
@@ -116,10 +118,15 @@ namespace IdleColors.room_mixing.haxler
 
                 var position = chrushedSpawnPoint.transform.position;
                 var rotation = chrushedSpawnPoint.transform.rotation;
-                Instantiate(chrushedMineralBP, new Vector3(position.x, position.y, position.z), rotation);
-                Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + .5f, position.z), rotation);
-                Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + 1f, position.z), rotation);
-                Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + 1.5f, position.z), rotation);
+                var mp_1 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y, position.z), rotation);
+                var mp_2 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + .5f, position.z), rotation);
+                var mp_3 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + 1f, position.z), rotation);
+                var mp_4 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + 1.5f, position.z), rotation);
+                
+                mp_1.transform.SetParent(_tmpMineralsContainer, true);
+                mp_2.transform.SetParent(_tmpMineralsContainer, true);
+                mp_3.transform.SetParent(_tmpMineralsContainer, true);
+                mp_4.transform.SetParent(_tmpMineralsContainer, true);
             }
         }
 
