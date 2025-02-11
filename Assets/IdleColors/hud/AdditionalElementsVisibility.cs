@@ -8,17 +8,22 @@ namespace IdleColors.hud
         [SerializeField] private GameObject _OrderImageButton;
         [SerializeField] private GameObject _ClaimImageRewardsButton;
         [SerializeField] private GameObject _OrderImageCamView;
-        
+        [SerializeField] private GameObject _OrderImageStatsView;
+
         private void OnEnable()
         {
             InvokeRepeating(nameof(CheckVisibilities), 0, 1);
         }
-        
+
         private void CheckVisibilities()
         {
             _OrderImageButton.SetActive(!GameManager.Instance.ImageOrderInProcess);
-            _ClaimImageRewardsButton.SetActive(!GameManager.Instance.ImageOrderInProcess && GameManager.Instance.ImageOrderRewards != 0);
-            _OrderImageCamView.SetActive(GameManager.Instance.ImageOrderInProcess || GameManager.Instance.ImageOrderRewards != 0);
+            _ClaimImageRewardsButton.SetActive(!GameManager.Instance.ImageOrderInProcess &&
+                                               GameManager.Instance.ImageOrderRewards != 0);
+            _OrderImageCamView.SetActive(GameManager.Instance.ImageOrderInProcess ||
+                                         GameManager.Instance.ImageOrderRewards != 0);
+            _OrderImageStatsView.SetActive(GameManager.Instance.ImageOrderInProcess ||
+                                           GameManager.Instance.ImageOrderRewards != 0);
         }
     }
 }
