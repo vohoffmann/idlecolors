@@ -93,7 +93,7 @@ namespace IdleColors.hud
 
 
             _playListIdx++;
-            if (_playListIdx >= _songs.Length)
+            if (_playListIdx >= _songs.Length - 1)
             {
                 _playListIdx = 0;
             }

@@ -1,0 +1,15 @@
+App-Name: IdleColors
+Paketname: com.vohoff.idlecolors
+Datum: 10. Februar 2025
+
+2️⃣ Datenschutz & Sicherheit
+Unsere App hält sich an die Datenschutzbestimmungen von Google Play:
+✅ Keine Speicherung sensibler Nutzerdaten
+✅ Keine Weitergabe von Daten an Dritte
+✅ Verschlüsselte Datenübertragung (HTTPS, AES-Verschlüsselung)
+✅ Möglichkeit, Berechtigungen in den App-Einstellungen zu deaktivieren
+
+📌 Kontakt für Datenschutzfragen:
+Firma: Volker Hoffmann
+E-Mail: vohoff@gmail.com
+Website: vh4u.uber.space/datenschutzhinweis.html

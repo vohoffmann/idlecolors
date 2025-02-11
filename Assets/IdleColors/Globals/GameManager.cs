@@ -31,7 +31,10 @@ namespace IdleColors.Globals
         public bool AdsRewardedLoaded { private set; get; }
         public bool ImageOrderInProcess;
         public int ImageOrderRewards;
-        [SerializeField] private GameObject _floatingCoinsPrefab;
+        [SerializeField] private Transform _tmpFloatingtextContainer;
+        [SerializeField] private Transform _floatingCoinsUIPosition;
+        [SerializeField] private GameObject _floatingCoinsWorldPrefab;
+        [SerializeField] private GameObject _floatingCoinsUIPrefab;
 
         public int coins;
         private bool _playCoinSound = true;
@@ -219,7 +222,7 @@ namespace IdleColors.Globals
             // PlayerPrefs.Save();
         }
 
-        public void AddCoins(int pCoins, Vector3 pos = default)
+        public void AddCoins(int pCoins, Vector3 pos = default, GameObject parent = null)
         {
             if (pCoins > 0)
             {
@@ -232,7 +235,17 @@ namespace IdleColors.Globals
 
                 if (pos != Vector3.zero)
                 {
-                    var floatingText = Instantiate(_floatingCoinsPrefab, pos, Quaternion.identity);
+                    GameObject floatingText;
+                    if (parent == null)
+                    {
+                        floatingText = Instantiate(_floatingCoinsWorldPrefab, pos, Quaternion.identity);
+                        floatingText.transform.SetParent(_tmpFloatingtextContainer, true);
+                    }
+                    else
+                    {
+                        floatingText = Instantiate(_floatingCoinsUIPrefab, _floatingCoinsUIPosition, false);
+                    }
+
                     floatingText.GetComponentInChildren<TextMeshProUGUI>().text = "" + pCoins;
                 }
 
