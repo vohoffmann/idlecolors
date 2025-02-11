@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using IdleColors.room_order.constructor.states;
+using TMPro;
 using UnityEngine;
 
 namespace IdleColors.room_order.constructor
@@ -16,11 +17,12 @@ namespace IdleColors.room_order.constructor
         [SerializeField] private GameObject _armX;
         [SerializeField] private GameObject _armZ;
         public List<TargetMetaData> targets = new();
+        public int[] imageColors = new int[8];
+        public TextMeshProUGUI _imageColorStats;
         public Vector3 target;
         public Vector3 cubeTarget;
         public int targetIndex;
         public bool holdConstructor = true;
-        // public GameObject _missingColorText;
         public GameObject _missingColorImage;
         public AudioSource audioSource;
 
@@ -33,7 +35,7 @@ namespace IdleColors.room_order.constructor
 
             audioSource = GetComponent<AudioSource>();
             audioSource.volume = 0;
-            
+
             // _missingColorText.SetActive(false);
             _missingColorImage.SetActive(false);
 
@@ -69,6 +71,14 @@ namespace IdleColors.room_order.constructor
         {
             yield return new WaitForSeconds(3f);
             holdConstructor = false;
+        }
+        
+        public void UpdateStatText()
+        {
+            string text = "";
+            foreach (int idx in imageColors)
+                text += "" + idx + "\n";
+            _imageColorStats.text = text;
         }
     }
 }

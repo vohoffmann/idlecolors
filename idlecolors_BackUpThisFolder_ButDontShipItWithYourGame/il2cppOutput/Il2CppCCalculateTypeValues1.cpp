@@ -4404,7 +4404,7 @@ struct U3CEmptyCleanerU3Ed__41_tF8A526EB495299E4D293C7F8CC534937F1A70FFE  : publ
 	RuntimeObject* ___U3CU3E2__current;
 	CollectorController_tB84F4104B454A891D2FD9EB7856FA774D5370794* ___U3CU3E4__this;
 };
-struct U3CCountDownU3Ed__18_t6164C7993E8BAF395A4F2163BB414EC9E68FC388  : public RuntimeObject
+struct U3CCountDownU3Ed__20_t7A76D861169077613C5A288B69AC3AE3E87E7546  : public RuntimeObject
 {
 	int32_t ___U3CU3E1__state;
 	RuntimeObject* ___U3CU3E2__current;
@@ -25983,6 +25983,8 @@ struct ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7  : public
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ____armX;
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ____armZ;
 	List_1_t6382F5A760846CE3630F7C0282293C2288CA96F8* ___targets;
+	Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* ___imageColors;
+	TextMeshProUGUI_t101091AF4B578BB534C92E9D1EEAF0611636D957* ____imageColorStats;
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___target;
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___cubeTarget;
 	int32_t ___targetIndex;
@@ -35689,7 +35691,7 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize8243 = { sizeof(OrderImagePa
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8244;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize8244 = { sizeof(PufferCount_t2C70B00B36CE99A22039D95EE348C8878FC9CEAE), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8245;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize8245 = { sizeof(U3CCountDownU3Ed__18_t6164C7993E8BAF395A4F2163BB414EC9E68FC388), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize8245 = { sizeof(U3CCountDownU3Ed__20_t7A76D861169077613C5A288B69AC3AE3E87E7546), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8246;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize8246 = { sizeof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7), -1, sizeof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize8247;

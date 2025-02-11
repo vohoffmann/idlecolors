@@ -2934,7 +2934,7 @@ struct U3CEmptyCleanerU3Ed__41_tF8A526EB495299E4D293C7F8CC534937F1A70FFE  : publ
 	RuntimeObject* ___U3CU3E2__current;
 	CollectorController_tB84F4104B454A891D2FD9EB7856FA774D5370794* ___U3CU3E4__this;
 };
-struct U3CCountDownU3Ed__18_t6164C7993E8BAF395A4F2163BB414EC9E68FC388  : public RuntimeObject
+struct U3CCountDownU3Ed__20_t7A76D861169077613C5A288B69AC3AE3E87E7546  : public RuntimeObject
 {
 	int32_t ___U3CU3E1__state;
 	RuntimeObject* ___U3CU3E2__current;
@@ -16944,6 +16944,8 @@ struct ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7  : public
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ____armX;
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ____armZ;
 	List_1_t6382F5A760846CE3630F7C0282293C2288CA96F8* ___targets;
+	Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* ___imageColors;
+	TextMeshProUGUI_t101091AF4B578BB534C92E9D1EEAF0611636D957* ____imageColorStats;
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___target;
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___cubeTarget;
 	int32_t ___targetIndex;
@@ -23793,10 +23795,10 @@ IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8244[2] =
 	static_cast<int32_t>(offsetof(PufferCount_t2C70B00B36CE99A22039D95EE348C8878FC9CEAE, ___colorIndex)),static_cast<int32_t>(offsetof(PufferCount_t2C70B00B36CE99A22039D95EE348C8878FC9CEAE, ___count)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8245[3] = 
 {
-	static_cast<int32_t>(offsetof(U3CCountDownU3Ed__18_t6164C7993E8BAF395A4F2163BB414EC9E68FC388, ___U3CU3E1__state)),static_cast<int32_t>(offsetof(U3CCountDownU3Ed__18_t6164C7993E8BAF395A4F2163BB414EC9E68FC388, ___U3CU3E2__current)),static_cast<int32_t>(offsetof(U3CCountDownU3Ed__18_t6164C7993E8BAF395A4F2163BB414EC9E68FC388, ___U3CU3E4__this)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8246[13] = 
+	static_cast<int32_t>(offsetof(U3CCountDownU3Ed__20_t7A76D861169077613C5A288B69AC3AE3E87E7546, ___U3CU3E1__state)),static_cast<int32_t>(offsetof(U3CCountDownU3Ed__20_t7A76D861169077613C5A288B69AC3AE3E87E7546, ___U3CU3E2__current)),static_cast<int32_t>(offsetof(U3CCountDownU3Ed__20_t7A76D861169077613C5A288B69AC3AE3E87E7546, ___U3CU3E4__this)),};
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8246[15] = 
 {
-	static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7_StaticFields, ___instance)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___Speed)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___idlePosition)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____kopf)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____armX)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____armZ)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___targets)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___target)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___cubeTarget)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___targetIndex)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___holdConstructor)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____missingColorImage)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___audioSource)),};
+	static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7_StaticFields, ___instance)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___Speed)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___idlePosition)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____kopf)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____armX)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____armZ)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___targets)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___imageColors)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____imageColorStats)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___target)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___cubeTarget)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___targetIndex)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___holdConstructor)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ____missingColorImage)),static_cast<int32_t>(offsetof(ConstructorController_tAEFC19AC60FD40502CAE11C99DDD4621E46FCBF7, ___audioSource)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8247[1] = 
 {
 	static_cast<int32_t>(offsetof(StateManager_tED5F4DFADD7EC24D681F0C913D89F31BE50B7F68, ____currentState)),};

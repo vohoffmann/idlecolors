@@ -36,6 +36,9 @@ namespace IdleColors.room_order.constructor.states
                 return;
             }
 
+            // Debug.Log($"Owner.targetIndex : {Owner.targetIndex}");
+            Owner.imageColors[Owner.targetIndex - 1] -= 1;
+            Owner.UpdateStatText();
 
             Owner.ChangeState(new Idle(Owner));
         }

@@ -153,6 +153,7 @@ namespace IdleColors.room_order
                         };
 
                         ConstructorController.instance.targets.Add(infos);
+                        ConstructorController.instance.imageColors[colorIndex] += 1;
 
                         pixelColor.a = .01f;
                         cube.GetComponent<Renderer>().material.color = pixelColor;
@@ -162,6 +163,7 @@ namespace IdleColors.room_order
 
             // den constructor nicht gleich los schicken ... damit nicht noch fallende blöcke schon getriggert werden
             ConstructorController.instance.StartCounter();
+            ConstructorController.instance.UpdateStatText();
         }
 
         private int CalculateCoinsForImage(Texture2D image)

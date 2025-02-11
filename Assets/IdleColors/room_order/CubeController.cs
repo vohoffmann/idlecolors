@@ -1,3 +1,4 @@
+using IdleColors.Globals;
 using UnityEngine;
 
 namespace IdleColors.room_order
@@ -8,6 +9,8 @@ namespace IdleColors.room_order
         {
             var color = GetComponent<Renderer>().material.color;
             color.a = 1;
+            // var idx = GameManager.Instance.GetIndexForColor(color);
+            
             GetComponent<Renderer>().material.color = color;
         }
 

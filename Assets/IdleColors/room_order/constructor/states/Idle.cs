@@ -24,7 +24,7 @@ namespace IdleColors.room_order.constructor.states
             {
                 Owner.audioSource.Stop();
             }
-            
+
 
             if (Owner.holdConstructor)
                 return;
