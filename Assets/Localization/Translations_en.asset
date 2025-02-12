@@ -101,6 +101,14 @@ MonoBehaviour:
     m_Localized: play coin sound
     m_Metadata:
       m_Items: []
+  - m_Id: 30735862193025024
+    m_Localized: com.vohoff.idlecolors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30737972297035776
+    m_Localized: com.unity.localization.clientinfo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

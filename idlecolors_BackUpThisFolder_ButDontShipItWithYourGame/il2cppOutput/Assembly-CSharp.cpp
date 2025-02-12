@@ -2386,6 +2386,7 @@ struct AdditionalElementsVisibility_tF4CC2A21E1724CBAB805D17C11D47A2FF128C4EF  :
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ____OrderImageButton;
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ____ClaimImageRewardsButton;
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ____OrderImageCamView;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ____OrderImageStatsView;
 };
 struct AudioSource_t871AC2272F896738252F04EE949AEF5B241D3299  : public AudioBehaviour_t2DC0BEF7B020C952F3D2DA5AAAC88501C7EEB941
 {
@@ -16608,6 +16609,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AdditionalElementsVisibility_CheckVisibi
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* G_B4_0 = NULL;
 	int32_t G_B6_0 = 0;
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* G_B6_1 = NULL;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* G_B8_0 = NULL;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* G_B7_0 = NULL;
+	int32_t G_B9_0 = 0;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* G_B9_1 = NULL;
 	{
 		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_0 = __this->____OrderImageButton;
 		il2cpp_codegen_runtime_class_init_inline(GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5_il2cpp_TypeInfo_var);
@@ -16679,6 +16684,38 @@ IL_0061:
 	{
 		NullCheck(G_B6_1);
 		GameObject_SetActive_m638E92E1E75E519E5B24CF150B08CA8E0CDFAB92(G_B6_1, (bool)G_B6_0, NULL);
+		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_13 = __this->____OrderImageStatsView;
+		il2cpp_codegen_runtime_class_init_inline(GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5_il2cpp_TypeInfo_var);
+		GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5* L_14 = ((GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5_StaticFields*)il2cpp_codegen_static_fields_for(GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5_il2cpp_TypeInfo_var))->___Instance;
+		NullCheck(L_14);
+		bool L_15 = L_14->___ImageOrderInProcess;
+		if (L_15)
+		{
+			G_B8_0 = L_13;
+			goto IL_0087;
+		}
+		G_B7_0 = L_13;
+	}
+	{
+		il2cpp_codegen_runtime_class_init_inline(GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5_il2cpp_TypeInfo_var);
+		GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5* L_16 = ((GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5_StaticFields*)il2cpp_codegen_static_fields_for(GameManager_t287F9CBA85B84FB843DAB43B7533CFD03D7210D5_il2cpp_TypeInfo_var))->___Instance;
+		NullCheck(L_16);
+		int32_t L_17 = L_16->___ImageOrderRewards;
+		G_B9_0 = ((!(((uint32_t)L_17) <= ((uint32_t)0)))? 1 : 0);
+		G_B9_1 = G_B7_0;
+		goto IL_0088;
+	}
+
+IL_0087:
+	{
+		G_B9_0 = 1;
+		G_B9_1 = G_B8_0;
+	}
+
+IL_0088:
+	{
+		NullCheck(G_B9_1);
+		GameObject_SetActive_m638E92E1E75E519E5B24CF150B08CA8E0CDFAB92(G_B9_1, (bool)G_B9_0, NULL);
 		return;
 	}
 }
