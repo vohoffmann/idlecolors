@@ -11,25 +11,25 @@ namespace IdleColors.camera
 {
     public class CameraController : MonoBehaviour
     {
+        [SerializeField] private Camera _camera;
+        [SerializeField] private GameObject droneMenu;
+        [SerializeField] private GameObject _orderImagePanel;
+        [SerializeField] private GameObject _bodyCamView;
+        [SerializeField] private GameObject _InfoView;
         [SerializeField] public GameObject[] _roomPositions;
         [SerializeField] private CollectorMenuController collectorMenu;
         [SerializeField] private HaxlerMenuController haxlerMenu;
         [SerializeField] private PufferMenuController pufferMenu;
-        [SerializeField] private GameObject droneMenu;
-        [SerializeField] private GameObject _orderImagePanel;
-        [SerializeField] private GameObject _bodyCamView;
-        private Light _light;
 
         public static CameraController Instance;
-
         [SerializeField] private GameObject _lockedTarget;
-        private int _currentSelection;
-        private bool _isMoving;
         private readonly float _smoothTime = .5f;
+        private bool _isMoving;
+        private int _currentSelection;
         private Vector3 _velocity = Vector3.zero;
         private Vector3 _targetPos;
+        private Light _light;
 
-        [SerializeField] private Camera _camera;
 
         private void Awake()
         {
@@ -141,11 +141,11 @@ namespace IdleColors.camera
         public void SetCamToOrderroom()
         {
             if (_lockedTarget) UnsetLockedTarget();
-            
+
             _currentSelection = _roomPositions.Length - 1;
             setTarget(_roomPositions[_currentSelection]);
             _isMoving = true;
-            
+
             EventManager.FlashOrderMenu.Invoke();
         }
 
@@ -217,6 +217,12 @@ namespace IdleColors.camera
         public void SetLightIntensity(float value)
         {
             if (_light) _light.intensity = value;
+        }
+
+        public void ShowInfo()
+        {
+            _InfoView.gameObject.SetActive(!_InfoView.gameObject.activeSelf);
+            Time.timeScale = _InfoView.gameObject.activeSelf ? 0 : 1;
         }
     }
 }
