@@ -16,9 +16,10 @@ public class LoadInfo : MonoBehaviour
         var language = Application.systemLanguage.ToString().ToLower();
 
         if (language != "english" && language != "german")
+        {
             language = "english";
+        }
 
-        language = "english";
         var texture = Resources.Load<Sprite>($"{language}_tutorial");
 
         if (texture != null)

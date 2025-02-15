@@ -523,7 +523,7 @@ namespace IdleColors.Globals
                 }
                 else
                 {
-                    Log("Ads not supported");
+                    // Log("Ads not supported");
                 }
             }
             else
