@@ -91,7 +91,6 @@ namespace IdleColors.hud
 
             Debug.Log("Audio End ... try to play next song");
 
-
             _playListIdx++;
             if (_playListIdx >= _songs.Length - 1)
             {

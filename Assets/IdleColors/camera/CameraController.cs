@@ -33,6 +33,7 @@ namespace IdleColors.camera
 
         private void Awake()
         {
+            _camera.allowHDR = false;
             Instance = this;
             _light = _camera.GetComponentInChildren<Light>();
             _bodyCamView.SetActive(false);
