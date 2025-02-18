@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using IdleColors.hud.coin;
@@ -334,13 +335,26 @@ namespace IdleColors.Globals
 
         public void LoadGameData()
         {
-            string encryptedData = PlayerPrefs.GetString(PLAYERDATA, null);
+            string encryptedData;
+
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                encryptedData = WebSaveSystem.LoadData(PLAYERDATA);
+            }
+            else
+            {
+                encryptedData = PlayerPrefs.GetString(PLAYERDATA, null);
+            }
 
             if (string.IsNullOrEmpty(encryptedData))
             {
                 Debug.LogWarning("Keine gespeicherten Daten gefunden. Reset der Daten ...");
                 ResetValues();
                 return;
+            }
+            else
+            {
+                Debug.Log("Daten gefunden");
             }
 
             string json = Decrypt(encryptedData, encryptionKey);
@@ -463,9 +477,17 @@ namespace IdleColors.Globals
 
             string json = JsonUtility.ToJson(data);
             string encryptedData = Encrypt(json, encryptionKey);
-            PlayerPrefs.SetString(PLAYERDATA, encryptedData);
 
-            PlayerPrefs.Save();
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                WebSaveSystem.SaveData(PLAYERDATA, encryptedData);
+            }
+            else
+            {
+                PlayerPrefs.SetString(PLAYERDATA, encryptedData);
+
+                PlayerPrefs.Save();
+            }
         }
 
         public static void Log(string text)
