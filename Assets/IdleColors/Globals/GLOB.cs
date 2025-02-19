@@ -24,5 +24,8 @@ namespace IdleColors.Globals
 
         public const int DRONE_SPEED_MAX = 15;
         public const int DRONE_SPEED_BASE_PRICE = 25;
+
+        public const int CONSTRUCTOR_SPEED_MAX = 20;
+        public const int CONSTRUCTOR_SPEED_BASE_PRICE = 25;
     }
 }

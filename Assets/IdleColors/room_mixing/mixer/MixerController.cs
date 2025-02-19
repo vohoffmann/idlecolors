@@ -10,32 +10,22 @@ namespace IdleColors.room_mixing.mixer
 {
     public class MixerController : MonoBehaviour
     {
-        #region members
-
         [SerializeField] private GameObject _innen;
-
         [SerializeField] private RotateMixer _mixerRotator;
-
         [SerializeField] private GameObject[] _wayPoints;
-
         [SerializeField] private GameObject _pipeBall;
-
-        [SerializeField] private int _red;
-
-        [SerializeField] private int _green;
-
-        [SerializeField] private int _blue;
+        private int _red;
+        private int _green;
+        private int _blue;
 
         private List<GameObject> _pipeBalls;
         private Color color;
         private int _colorIndex;
 
-        [FormerlySerializedAs("mixing")] public bool _mixing;
+        [HideInInspector] public bool _mixing;
 
         private bool _emptiing;
         private int _outgoingPipeBallsAmount = 5;
-
-        #endregion
 
         private void Awake()
         {

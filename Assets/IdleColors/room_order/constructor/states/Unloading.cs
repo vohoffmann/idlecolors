@@ -23,7 +23,7 @@ namespace IdleColors.room_order.constructor.states
             if (down && Owner._kopf.transform.localPosition.y > -11.0f)
             {
                 Owner._kopf.transform.position = new Vector3(kopfPosition.x,
-                    kopfPosition.y - Time.fixedDeltaTime * Owner.Speed, kopfPosition.z);
+                    kopfPosition.y - Time.fixedDeltaTime * (Owner.Speed.value * 0.1f + 18), kopfPosition.z);
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace IdleColors.room_order.constructor.states
             if (Owner._kopf.transform.localPosition.y < -1.5f)
             {
                 Owner._kopf.transform.position = new Vector3(kopfPosition.x,
-                    kopfPosition.y + Time.fixedDeltaTime * Owner.Speed, kopfPosition.z);
+                    kopfPosition.y + Time.fixedDeltaTime * (Owner.Speed.value * 0.1f + 18), kopfPosition.z);
                 return;
             }
 

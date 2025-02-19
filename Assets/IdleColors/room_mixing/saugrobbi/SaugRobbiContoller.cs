@@ -9,7 +9,7 @@ public class SaugRobbiContoller : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
 
-        InvokeRepeating(nameof(startRobbi), 30f, 30f);
+        InvokeRepeating(nameof(startRobbi), 30f, 45f);
     }
 
     private void startRobbi()

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using IdleColors.hud.coin;
@@ -82,6 +81,8 @@ namespace IdleColors.Globals
         public SO_Int so_pufferLevelBlue;
 
         public SO_Int so_DroneSpeed;
+
+        public SO_Int so_ConstructorSpeed;
 
         #endregion
 
@@ -305,6 +306,8 @@ namespace IdleColors.Globals
 
             so_DroneSpeed.value = 1;
 
+            so_ConstructorSpeed.value = 0;
+
             FinalColorCounts = new int[8];
 
             TakeNewValues();
@@ -395,6 +398,8 @@ namespace IdleColors.Globals
 
             so_DroneSpeed.value = data.so_DroneSpeed;
 
+            so_ConstructorSpeed.value = data.so_ConstructorSpeed;
+
             var index = 0;
             foreach (int finalColor in data.finalColorCounts)
             {
@@ -466,6 +471,7 @@ namespace IdleColors.Globals
                 so_pufferLevelGreen = so_pufferLevelGreen.value,
                 so_pufferLevelBlue = so_pufferLevelBlue.value,
                 so_DroneSpeed = so_DroneSpeed.value,
+                so_ConstructorSpeed = so_ConstructorSpeed.value
             };
 
             var index = 0;
@@ -621,6 +627,8 @@ namespace IdleColors.Globals
         public int so_pufferLevelBlue;
 
         public int so_DroneSpeed;
+
+        public int so_ConstructorSpeed;
 
         public int[] finalColorCounts = new int[8];
     }

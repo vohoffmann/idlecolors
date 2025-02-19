@@ -3,6 +3,7 @@ using IdleColors.hud;
 using IdleColors.room_collect.collector;
 using IdleColors.room_mixing.haxler;
 using IdleColors.room_mixing.puffer;
+using IdleColors.room_order.constructor;
 using IdleColors.room_storage.drone;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
@@ -12,7 +13,6 @@ namespace IdleColors.camera
     public class CameraController : MonoBehaviour
     {
         [SerializeField] private Camera _camera;
-        [SerializeField] private GameObject droneMenu;
         [SerializeField] private GameObject _orderImagePanel;
         [SerializeField] private GameObject _bodyCamView;
         [SerializeField] private GameObject _InfoView;
@@ -20,6 +20,8 @@ namespace IdleColors.camera
         [SerializeField] private CollectorMenuController collectorMenu;
         [SerializeField] private HaxlerMenuController haxlerMenu;
         [SerializeField] private PufferMenuController pufferMenu;
+        [SerializeField] private GameObject droneMenu;
+        [SerializeField] private GameObject steeringMenu;
 
         public static CameraController Instance;
         [SerializeField] private GameObject _lockedTarget;
@@ -53,10 +55,6 @@ namespace IdleColors.camera
             collectorScript.SetBodyCam(true);
             _bodyCamView.SetActive(true);
 
-            haxlerMenu.gameObject.SetActive(false);
-            pufferMenu.gameObject.SetActive(false);
-            droneMenu.SetActive(false);
-
             collectorMenu.SetCollector(collectorScript);
         }
 
@@ -64,11 +62,6 @@ namespace IdleColors.camera
         {
             UnsetLockedTarget();
             _lockedTarget = haxlerScript.gameObject;
-
-            collectorMenu.gameObject.SetActive(false);
-            pufferMenu.gameObject.SetActive(false);
-            droneMenu.SetActive(false);
-
             haxlerMenu.SetHaxler(haxlerScript);
         }
 
@@ -76,22 +69,19 @@ namespace IdleColors.camera
         {
             UnsetLockedTarget();
             _lockedTarget = droneScript.gameObject;
-
-            collectorMenu.gameObject.SetActive(false);
-            haxlerMenu.gameObject.SetActive(false);
-            pufferMenu.gameObject.SetActive(false);
         }
 
         public void SetLockedTarget(PufferController pufferScript)
         {
             UnsetLockedTarget();
             _lockedTarget = pufferScript.gameObject;
-
-            collectorMenu.gameObject.SetActive(false);
-            haxlerMenu.gameObject.SetActive(false);
-            droneMenu.SetActive(false);
-
             pufferMenu.setPufferScript(pufferScript);
+        }
+
+        public void SetLockedTarget(ConstructorSteeringController steeringScript)
+        {
+            UnsetLockedTarget();
+            _lockedTarget = steeringScript.gameObject;
         }
 
         public void UnsetLockedTarget()
@@ -110,6 +100,7 @@ namespace IdleColors.camera
             collectorMenu.gameObject.SetActive(false);
             pufferMenu.gameObject.SetActive(false);
             droneMenu.SetActive(false);
+            steeringMenu.SetActive(false);
 
             setTarget(_roomPositions[_currentSelection]);
         }

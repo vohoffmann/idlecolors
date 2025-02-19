@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using IdleColors.room_order.constructor.states;
+using IdleColors.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace IdleColors.room_order.constructor
         public static ConstructorController instance;
 
 
-        public float Speed = 5;
+        public SO_Int Speed;
         public GameObject idlePosition;
         [SerializeField] public GameObject _kopf;
         [SerializeField] private GameObject _armX;
@@ -72,7 +73,7 @@ namespace IdleColors.room_order.constructor
             yield return new WaitForSeconds(3f);
             holdConstructor = false;
         }
-        
+
         public void UpdateStatText()
         {
             string text = "";
