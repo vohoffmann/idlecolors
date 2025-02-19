@@ -1,12 +1,4 @@
-﻿//
-//  Outline.cs
-//  QuickOutline
-//
-//  Created by Chris Nolet on 3/30/18.
-//  Copyright © 2018 Chris Nolet. All rights reserved.
-//
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +16,7 @@ public class OutlineFlash : MonoBehaviour
     }
 
     private readonly Color outlineColor = Color.green;
-    private readonly float outlineWidth = 2f;
+    public float outlineWidth = 2f;
 
     [Header("Optional")]
     [SerializeField, Tooltip(
@@ -105,6 +97,10 @@ public class OutlineFlash : MonoBehaviour
     IEnumerator DelayedAction()
     {
         yield return new WaitForSeconds(1f);
+        _up = true;
+    }
+    public void TriggerFlash()
+    {
         _up = true;
     }
 

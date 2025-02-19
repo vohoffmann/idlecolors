@@ -45,7 +45,7 @@ namespace IdleColors.room_order.constructor
 
         private void OnBecameVisible()
         {
-            audioSource.volume = .4f;
+            audioSource.volume = 1;
         }
 
         private void OnBecameInvisible()

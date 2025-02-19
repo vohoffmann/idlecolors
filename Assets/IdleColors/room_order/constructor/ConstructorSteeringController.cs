@@ -23,6 +23,8 @@ namespace IdleColors.room_order.constructor
         [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
         [SerializeField] private AudioSource _updateSound;
 
+        private OutlineFlash _flash;
+
 
         private void Awake()
         {
@@ -30,8 +32,24 @@ namespace IdleColors.room_order.constructor
             {
                 _speedButton = _speedButtonText.GetComponent<Button>();
             }
+
+            _flash = GetComponent<OutlineFlash>();
+
+            if (_constructorSpeed.value == 0)
+                InvokeRepeating(nameof(Flash), 5, 5);
         }
 
+        private void Flash()
+        {
+            if (_constructorSpeed.value == 0)
+            {
+                _flash.TriggerFlash();
+            }
+            else
+            {
+                CancelInvoke(nameof(Flash));
+            }
+        }
 
         private void OnEnable()
         {

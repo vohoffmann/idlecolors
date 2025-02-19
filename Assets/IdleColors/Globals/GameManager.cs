@@ -338,11 +338,14 @@ namespace IdleColors.Globals
 
         public void LoadGameData()
         {
-            string encryptedData;
+            string encryptedData = "";
 
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
+                // only for webgl to save data
+#if UNITY_WEBGL
                 encryptedData = WebSaveSystem.LoadData(PLAYERDATA);
+#endif
             }
             else
             {
@@ -486,7 +489,10 @@ namespace IdleColors.Globals
 
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
+                // only for webgl to save data
+#if UNITY_WEBGL
                 WebSaveSystem.SaveData(PLAYERDATA, encryptedData);
+#endif
             }
             else
             {

@@ -5,6 +5,7 @@ namespace IdleColors.Globals
 {
     public class WebSaveSystem : MonoBehaviour
     {
+#if UNITY_WEBGL
         [DllImport("__Internal")]
         private static extern void SetLocalStorage(string key, string value);
 
@@ -20,5 +21,6 @@ namespace IdleColors.Globals
         {
             return GetLocalStorage(key);
         }
+#endif
     }
 }
