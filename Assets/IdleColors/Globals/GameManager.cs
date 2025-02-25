@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -184,8 +185,8 @@ namespace IdleColors.Globals
         {
             if (ReadyToSave && !hasFocus)
             {
+                Debug.Log("call to SaveGameData()");
                 SaveGameData();
-                Log("Gamedate saved");
             }
 
             if (!Advertisement.isInitialized)
@@ -197,10 +198,6 @@ namespace IdleColors.Globals
         [RuntimeInitializeOnLoadMethod]
         private static void OnRuntimeMethodLoad()
         {
-            // if (Application.platform == RuntimePlatform.Android)
-            // {
-            //     Debug.developerConsoleVisible = false;
-            // }
             if (Application.platform == RuntimePlatform.WindowsPlayer)
             {
                 Screen.SetResolution(1280, 720, false);
@@ -338,29 +335,28 @@ namespace IdleColors.Globals
 
         public void LoadGameData()
         {
-            string encryptedData = "";
+            Debug.Log("laden ...");
 
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
-                // only for webgl to save data
-#if UNITY_WEBGL
-                encryptedData = WebSaveSystem.LoadData(PLAYERDATA);
-#endif
+                Debug.Log("webgl ...");
+                IndexedDBHandler dbManager = new IndexedDBHandler();
+                dbManager.LoadFromIndexedDB("data");
             }
             else
             {
-                encryptedData = PlayerPrefs.GetString(PLAYERDATA, null);
+                Debug.Log("not webgl ...");
+                HandleGameData(PlayerPrefs.GetString(PLAYERDATA, null));
             }
+        }
 
+        private void HandleGameData(string encryptedData)
+        {
             if (string.IsNullOrEmpty(encryptedData))
             {
-                Debug.LogWarning("Keine gespeicherten Daten gefunden. Reset der Daten ...");
+                Debug.LogWarning("encryptedData empty ... resetting ...");
                 ResetValues();
                 return;
-            }
-            else
-            {
-                Debug.Log("Daten gefunden");
             }
 
             string json = Decrypt(encryptedData, encryptionKey);
@@ -447,6 +443,8 @@ namespace IdleColors.Globals
 
         public void SaveGameData()
         {
+            Debug.Log("speichern ...");
+
             var data = new GameData
             {
                 coins = coins,
@@ -490,9 +488,9 @@ namespace IdleColors.Globals
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
                 // only for webgl to save data
-#if UNITY_WEBGL
-                WebSaveSystem.SaveData(PLAYERDATA, encryptedData);
-#endif
+                Debug.Log("webgl ...");
+                IndexedDBHandler dbManager = new IndexedDBHandler();
+                dbManager.SaveToIndexedDB("data", encryptedData);
             }
             else
             {
