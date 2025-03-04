@@ -272,8 +272,6 @@ namespace IdleColors.hud
             if (showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
             {
                 // Debug.Log("Unity Ads Rewarded Ad Completed");
-
-                // TODO : mit deligate arbeiten ... den ganzen Ads mumpist auslagern und generisch machen, damit das für alles mögliche verwendet werden kann
                 UnlockCollector(false);
             }
         }

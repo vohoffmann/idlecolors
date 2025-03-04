@@ -36,7 +36,6 @@ namespace IdleColors.room_order
             }
         }
 
-
         private void Awake()
         {
             textures = Resources.LoadAll<Texture2D>("ProductionModels");
@@ -50,7 +49,7 @@ namespace IdleColors.room_order
 
                     // set name ... first is index for the imageArray ... 2nd is to indicate if displaying or not
                     newButton.name = $"{buttonIndex}#{texture.name.Substring(0, 1)}";
-                    var sp = newButton.GetComponentInChildren<UnityEngine.UI.Image>();
+                    var sp = newButton.GetComponentInChildren<Image>();
                     sp.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
                     newButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
                         "" + CalculateCoinsForImage(texture);
@@ -64,6 +63,15 @@ namespace IdleColors.room_order
             }
         }
 
+        private void OnEnable()
+        {
+            EventManager.GenerateImageRasterFromData += GenerateImageRasterFromData;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.GenerateImageRasterFromData -= GenerateImageRasterFromData;
+        }
 
         public void OrderImage()
         {
@@ -105,7 +113,7 @@ namespace IdleColors.room_order
 
                 yield return null;
             }
-            
+
             cleaning = false;
         }
 
@@ -117,6 +125,32 @@ namespace IdleColors.room_order
             }
 
             GenerateNewimageRaster(textures[index]);
+        }
+
+        public void GenerateImageRasterFromData()
+        {
+            var data = ConstructorController.instance.targets;
+
+            foreach (TargetMetaData meta in data)
+            {
+                var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
+                var parentPosition = _imageContainer.transform.position;
+                cube.transform.position = meta.cubePosition;
+
+                Rewards += OrderPanelController.CoinValues[meta.colorIndex + 1] / 10;
+
+                ConstructorController.instance.imageColors[meta.colorIndex] += 1;
+                ConstructorController.instance.jobDone = false;
+
+                var color = GameManager.Instance.GetColorForIndex(meta.colorIndex + 1);
+                color.a = meta.done ? 1 : .01f;
+                cube.GetComponent<Renderer>().material.color = color;
+            }
+
+            // den constructor nicht gleich los schicken ... damit nicht noch fallende blöcke schon getriggert werden
+            ConstructorController.instance.StartCounter();
+            ConstructorController.instance.UpdateStatText();
+            GameManager.Instance.ImageOrderInProcess = true;
         }
 
         void GenerateNewimageRaster(Texture2D image)
@@ -149,11 +183,13 @@ namespace IdleColors.room_order
                         {
                             pufferPosition = pufferTargetPos,
                             cubePosition = cupeTargetPos,
-                            colorIndex = colorIndex
+                            colorIndex = colorIndex,
+                            done = false
                         };
 
                         ConstructorController.instance.targets.Add(infos);
                         ConstructorController.instance.imageColors[colorIndex] += 1;
+                        ConstructorController.instance.jobDone = false;
 
                         pixelColor.a = .01f;
                         cube.GetComponent<Renderer>().material.color = pixelColor;

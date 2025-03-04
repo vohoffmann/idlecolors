@@ -11,7 +11,6 @@ namespace IdleColors.room_order.constructor
     {
         public static ConstructorController instance;
 
-
         public SO_Int Speed;
         public GameObject idlePosition;
         [SerializeField] public GameObject _kopf;
@@ -26,6 +25,7 @@ namespace IdleColors.room_order.constructor
         public bool holdConstructor = true;
         public GameObject _missingColorImage;
         public AudioSource audioSource;
+        public bool jobDone;
 
         private void Awake()
         {

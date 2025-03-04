@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -8,6 +7,7 @@ using IdleColors.room_collect.collector;
 using IdleColors.room_mixing.haxler;
 using IdleColors.room_mixing.mixer;
 using IdleColors.room_mixing.puffer;
+using IdleColors.room_order.constructor;
 using IdleColors.ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -406,6 +406,10 @@ namespace IdleColors.Globals
                 index++;
             }
 
+            ConstructorController.instance.targets = data.imageData;
+
+            EventManager.GenerateImageRasterFromData.Invoke();
+
             TakeNewValues();
         }
 
@@ -481,6 +485,8 @@ namespace IdleColors.Globals
                 data.finalColorCounts[index] = finalColor;
                 index++;
             }
+
+            data.imageData = ConstructorController.instance.targets;
 
             string json = JsonUtility.ToJson(data);
             string encryptedData = Encrypt(json, encryptionKey);
@@ -596,6 +602,7 @@ namespace IdleColors.Globals
         #endregion
     }
 
+    [Serializable]
     class GameData
     {
         public int coins;
@@ -635,5 +642,7 @@ namespace IdleColors.Globals
         public int so_ConstructorSpeed;
 
         public int[] finalColorCounts = new int[8];
+
+        public List<TargetMetaData> imageData = new List<TargetMetaData>();
     }
 }

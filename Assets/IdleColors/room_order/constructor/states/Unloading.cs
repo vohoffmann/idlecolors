@@ -43,13 +43,13 @@ namespace IdleColors.room_order.constructor.states
             Owner.ChangeState(new Idle(Owner));
         }
 
-        public override void Exit()
-        {
-            if (Owner.targets.Count == 0)
-            {
-                GameManager.Instance.ImageOrderInProcess = false;
-                Owner.holdConstructor = true;
-            }
-        }
+        // public override void Exit()
+        // {
+        //     if (Owner.jobDone)
+        //     {
+        //         GameManager.Instance.ImageOrderInProcess = false;
+        //         Owner.holdConstructor = true;
+        //     }
+        // }
     }
 }
