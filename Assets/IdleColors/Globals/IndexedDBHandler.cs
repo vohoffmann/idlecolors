@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class IndexedDBHandler : MonoBehaviour
 {
+#if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void SaveData(string key, string value);
 
@@ -12,16 +12,13 @@ public class IndexedDBHandler : MonoBehaviour
 
     public void SaveToIndexedDB(string key, string value)
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
         SaveData(key + "", value + "");
-#endif
     }
 
     public string LoadFromIndexedDB(string key)
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
         LoadData(key + "");
-#endif
         return "";
     }
+#endif
 }

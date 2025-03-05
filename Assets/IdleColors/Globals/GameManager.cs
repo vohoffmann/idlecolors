@@ -339,9 +339,11 @@ namespace IdleColors.Globals
 
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
+#if UNITY_WEBGL && !UNITY_EDITOR
                 Debug.Log("webgl ...");
                 IndexedDBHandler dbManager = new IndexedDBHandler();
                 dbManager.LoadFromIndexedDB("data");
+#endif
             }
             else
             {
@@ -406,6 +408,7 @@ namespace IdleColors.Globals
                 index++;
             }
 
+            ConstructorController.instance.targets = new();
             ConstructorController.instance.targets = data.imageData;
 
             EventManager.GenerateImageRasterFromData.Invoke();
@@ -493,10 +496,11 @@ namespace IdleColors.Globals
 
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
-                // only for webgl to save data
+#if UNITY_WEBGL && !UNITY_EDITOR
                 Debug.Log("webgl ...");
                 IndexedDBHandler dbManager = new IndexedDBHandler();
                 dbManager.SaveToIndexedDB("data", encryptedData);
+#endif
             }
             else
             {

@@ -17,7 +17,7 @@ namespace IdleColors.room_order.constructor
         [SerializeField] private GameObject _armX;
         [SerializeField] private GameObject _armZ;
         public List<TargetMetaData> targets = new();
-        public int[] imageColors = new int[8];
+        public int[] imageColors = new int[7];
         public TextMeshProUGUI _imageColorStats;
         public Vector3 target;
         public Vector3 cubeTarget;
