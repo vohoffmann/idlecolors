@@ -129,7 +129,7 @@ namespace IdleColors.room_order
 
         public void GenerateImageRasterFromData()
         {
-            // ConstructorController.instance.imageColors = new int[7];
+            ConstructorController.instance.imageColors = new int[7];
             var data = ConstructorController.instance.targets;
 
             foreach (TargetMetaData meta in data)

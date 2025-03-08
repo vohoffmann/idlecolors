@@ -409,9 +409,12 @@ namespace IdleColors.Globals
             }
 
             ConstructorController.instance.targets = new();
-            ConstructorController.instance.targets = data.imageData;
 
-            EventManager.GenerateImageRasterFromData.Invoke();
+            if (data.imageData.Count != 0)
+            {
+                ConstructorController.instance.targets = data.imageData;
+                EventManager.GenerateImageRasterFromData.Invoke();
+            }
 
             TakeNewValues();
         }
