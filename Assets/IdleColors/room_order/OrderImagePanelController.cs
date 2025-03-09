@@ -91,6 +91,8 @@ namespace IdleColors.room_order
                     new Vector3(coinTextPos.x + 8, coinTextPos.y, coinTextPos.z + 8));
                 Rewards = 0;
             }
+            ConstructorController.instance.targets = new();
+            ConstructorController.instance.imageColors = new int[7];
 
             cleaning = true;
             StartCoroutine(CleanImagePlate());
