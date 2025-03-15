@@ -91,6 +91,7 @@ namespace IdleColors.room_order
                     new Vector3(coinTextPos.x + 8, coinTextPos.y, coinTextPos.z + 8));
                 Rewards = 0;
             }
+
             ConstructorController.instance.targets = new();
             ConstructorController.instance.imageColors = new int[7];
 
@@ -142,7 +143,7 @@ namespace IdleColors.room_order
 
                 Rewards += OrderPanelController.CoinValues[meta.colorIndex + 1] / 10;
 
-                ConstructorController.instance.imageColors[meta.colorIndex] += 1;
+                ConstructorController.instance.imageColors[meta.colorIndex] += meta.done ? 0 : 1;
                 ConstructorController.instance.jobDone = false;
 
                 var color = GameManager.Instance.GetColorForIndex(meta.colorIndex + 1);
