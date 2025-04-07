@@ -16,42 +16,42 @@ namespace IdleColors.room_storage.drone
     {
         #region members
 
-        public readonly Queue<GameObject> cupsToLift = new();
-        [SerializeField] private Animator _animator;
-        [SerializeField] private GameObject _droneBody;
-        [SerializeField] private GameObject[] _destinationPositions;
-        [SerializeField] private GameObject _droneMenu;
+        public readonly          Queue<GameObject> cupsToLift = new();
+        [SerializeField] private Animator          _animator;
+        [SerializeField] private GameObject        _droneBody;
+        [SerializeField] private GameObject[]      _destinationPositions;
+        [SerializeField] private GameObject        _droneMenu;
 
         [SerializeField] private GameObject[] _dronePropeller;
 
         [SerializeField] private SO_Int _droneSpeed;
         // [SerializeField] private ParticleSystem _coinPartikel;
 
-        [SerializeField] private GameObject _noMoreUpdatesButtonText;
+        [SerializeField] private GameObject      _noMoreUpdatesButtonText;
         [SerializeField] private TextMeshProUGUI _speedStatusText;
 
         [SerializeField] private GameObject _speedButtonCanvas;
 
-        private Button _speedButton;
-        [SerializeField] private Text _speedButtonText;
+        private                  Button          _speedButton;
+        [SerializeField] private Text            _speedButtonText;
         [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
-        [SerializeField] private AudioSource _updateSound;
-        private Color _color;
-        private int _colorIndex;
-        public AudioSource audioSource;
-        public Vector3 targetPos;
-        public GameObject cup;
-        public Vector3 destinationPufferPos;
-        private Vector3 _velocity = Vector3.zero;
-        public Vector3 idlePosition;
-        private float accelerationFactor;
-        private float _propellerSpeed = 800f;
-        public const string STATE_IDLE = "Idle";
-        public const string STATE_MOVETOCUP = "MoveToBox";
-        public const string STATE_LIFTBOX = "LiftBox";
-        public const string STATE_MOVETODESTINATION = "MoveToDestination";
-        public const string STATE_UNLOADING = "Unloading";
-        public const string STATE_MOVETOIDLEPOSITION = "MoveToIdlePosition";
+        [SerializeField] private AudioSource     _updateSound;
+        private                  Color           _color;
+        private                  int             _colorIndex;
+        public                   AudioSource     audioSource;
+        public                   Vector3         targetPos;
+        public                   GameObject      cup;
+        public                   Vector3         destinationPufferPos;
+        private                  Vector3         _velocity = Vector3.zero;
+        public                   Vector3         idlePosition;
+        private                  float           accelerationFactor;
+        private                  float           _propellerSpeed          = 800f;
+        public const             string          STATE_IDLE               = "Idle";
+        public const             string          STATE_MOVETOCUP          = "MoveToBox";
+        public const             string          STATE_LIFTBOX            = "LiftBox";
+        public const             string          STATE_MOVETODESTINATION  = "MoveToDestination";
+        public const             string          STATE_UNLOADING          = "Unloading";
+        public const             string          STATE_MOVETOIDLEPOSITION = "MoveToIdlePosition";
 
         #endregion
 
@@ -78,13 +78,13 @@ namespace IdleColors.room_storage.drone
         {
             EventManager.CupStored += HandleStoredBoxes;
             _droneMenu.SetActive(false);
-            audioSource.volume = 0;
+            audioSource.volume      =  0;
             EventManager.CoinsAdded += updateMenuView;
         }
 
         private void OnDisable()
         {
-            EventManager.CupStored -= HandleStoredBoxes;
+            EventManager.CupStored  -= HandleStoredBoxes;
             EventManager.CoinsAdded -= updateMenuView;
         }
 
@@ -96,7 +96,7 @@ namespace IdleColors.room_storage.drone
         IEnumerator AktivateSound()
         {
             yield return new WaitForSeconds(2f);
-            if(gameObject.GetComponent<Renderer>().isVisible)
+            if (gameObject.GetComponent<Renderer>().isVisible)
                 audioSource.volume = 1;
         }
 
@@ -133,14 +133,14 @@ namespace IdleColors.room_storage.drone
                         droneSpeedFactor / accelerationFactor);
                 var factor = ((distance / 50f) * accelerationFactor);
                 audioSource.pitch = 1f + factor;
-                _propellerSpeed = 800f + factor * 1000;
+                _propellerSpeed   = 800f + factor * 1000;
 
                 // aus der methode raus ... bis drohne am ziel ist und dann die update des aktuellen states aufrufen
                 return;
             }
 
             accelerationFactor = 0f;
-            _propellerSpeed = 800f;
+            _propellerSpeed    = 800f;
 
             // Update-Methode des aktuellen Zustands ausführen
             _currentState?.Update();
@@ -188,7 +188,7 @@ namespace IdleColors.room_storage.drone
 
         public void DetermineTargetPosition(int colorIndex)
         {
-            _colorIndex = colorIndex;
+            _colorIndex          = colorIndex;
             destinationPufferPos = _destinationPositions[colorIndex - 1].transform.position;
         }
 

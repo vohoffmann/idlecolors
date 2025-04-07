@@ -12,32 +12,32 @@ namespace IdleColors.camera
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] private Camera _camera;
-        [SerializeField] private GameObject _orderImagePanel;
-        [SerializeField] private GameObject _bodyCamView;
-        [SerializeField] private GameObject _InfoView;
-        [SerializeField] public GameObject[] _roomPositions;
+        [SerializeField] private Camera                  _camera;
+        [SerializeField] private GameObject              _orderImagePanel;
+        [SerializeField] private GameObject              _bodyCamView;
+        [SerializeField] private GameObject              _InfoView;
+        [SerializeField] public  GameObject[]            _roomPositions;
         [SerializeField] private CollectorMenuController collectorMenu;
-        [SerializeField] private HaxlerMenuController haxlerMenu;
-        [SerializeField] private PufferMenuController pufferMenu;
-        [SerializeField] private GameObject droneMenu;
-        [SerializeField] private GameObject steeringMenu;
+        [SerializeField] private HaxlerMenuController    haxlerMenu;
+        [SerializeField] private PufferMenuController    pufferMenu;
+        [SerializeField] private GameObject              droneMenu;
+        [SerializeField] private GameObject              steeringMenu;
 
-        public static CameraController Instance;
-        [SerializeField] private GameObject _lockedTarget;
-        private readonly float _smoothTime = .5f;
-        private bool _isMoving;
-        private int _currentSelection;
-        private Vector3 _velocity = Vector3.zero;
-        private Vector3 _targetPos;
-        private Light _light;
+        public static            CameraController Instance;
+        [SerializeField] private GameObject       _lockedTarget;
+        private readonly         float            _smoothTime = .5f;
+        private                  bool             _isMoving;
+        private                  int              _currentSelection;
+        private                  Vector3          _velocity = Vector3.zero;
+        private                  Vector3          _targetPos;
+        private                  Light            _light;
 
 
         private void Awake()
         {
             _camera.allowHDR = false;
-            Instance = this;
-            _light = _camera.GetComponentInChildren<Light>();
+            Instance         = this;
+            _light           = _camera.GetComponentInChildren<Light>();
             _bodyCamView.SetActive(false);
         }
 

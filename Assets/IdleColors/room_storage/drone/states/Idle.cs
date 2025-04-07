@@ -14,7 +14,7 @@ namespace IdleColors.room_storage.drone.states
             Owner.SetAnimation(DroneController.STATE_IDLE);
             Owner.SetDroneColor(0);
             Owner.idlePosition = Owner.transform.position;
-            Owner.targetPos = Owner.transform.position;
+            Owner.targetPos    = Owner.transform.position;
         }
 
         public override void Update()

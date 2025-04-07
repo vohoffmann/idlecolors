@@ -17,6 +17,6 @@ public class Clock : MonoBehaviour
     {
         seconds.transform.localRotation = Quaternion.Euler(0, 90, (360 / 60) * DateTime.Now.Second);
         minutes.transform.localRotation = Quaternion.Euler(0, 90, (360 / 60) * DateTime.Now.Minute);
-        hours.transform.localRotation = Quaternion.Euler(0, 90, (360 / 12) * (DateTime.Now.Hour % 12));
+        hours.transform.localRotation   = Quaternion.Euler(0, 90, (360 / 12) * (DateTime.Now.Hour % 12));
     }
 }

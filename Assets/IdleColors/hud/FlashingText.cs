@@ -6,7 +6,7 @@ namespace IdleColors.hud
     public class FlashingText : MonoBehaviour
     {
         private float _alpha;
-        private bool _up;
+        private bool  _up;
 
         private void OnEnable()
         {
@@ -41,6 +41,7 @@ namespace IdleColors.hud
             {
                 _alpha -= Time.deltaTime * .5f;
             }
+
             var color = GetComponent<TextMeshProUGUI>().color;
             GetComponent<TextMeshProUGUI>().color = new Color(color.r, color.g, color.b, _alpha);
         }

@@ -19,6 +19,7 @@ namespace IdleColors.camera
                 _cam = Camera.main;
                 return;
             }
+
             transform.eulerAngles = _cam.transform.eulerAngles;
         }
     }

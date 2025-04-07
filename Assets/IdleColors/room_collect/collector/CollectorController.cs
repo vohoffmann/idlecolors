@@ -16,54 +16,54 @@ namespace IdleColors.room_collect.collector
 {
     public class CollectorController : MonoBehaviour, IPointerClickHandler
     {
-        public int costFactor;
-        private int _collectedMinerals;
-        private int _mineralsAvailable;
-        private bool _animate;
-        private bool _active;
-        private bool _returning;
-        private bool _scaleDirection;
-        private bool _draining;
-        private bool _emptiing;
-        private float _yVelocity;
-        private float _xVelocity;
-        private float _sliderValue;
-        private string _targetName;
-        private GameObject _target;
-        private NavMeshAgent _agent;
-        private AudioSource _audioSource;
-        [SerializeField] private GameObject _collectorTrail;
-        [SerializeField] private GameObject _innerCube;
-        [SerializeField] private GameObject _dustFinSpawnPosition;
-        [SerializeField] private GameObject _beltToSpace;
-        [SerializeField] private GameObject _collectedMineralBP;
-        [SerializeField] private SO_Bool _unlocked;
-        [SerializeField] private SO_Int _capacity;
-        [SerializeField] private SO_Int _speedLevel;
-        [SerializeField] private SO_Int _unloadSpeed;
-        [SerializeField] private AudioClip[] _clickClips;
+        public                   int          costFactor;
+        private                  int          _collectedMinerals;
+        private                  int          _mineralsAvailable;
+        private                  bool         _animate;
+        private                  bool         _active;
+        private                  bool         _returning;
+        private                  bool         _scaleDirection;
+        private                  bool         _draining;
+        private                  bool         _emptiing;
+        private                  float        _yVelocity;
+        private                  float        _xVelocity;
+        private                  float        _sliderValue;
+        private                  string       _targetName;
+        private                  GameObject   _target;
+        private                  NavMeshAgent _agent;
+        private                  AudioSource  _audioSource;
+        [SerializeField] private GameObject   _collectorTrail;
+        [SerializeField] private GameObject   _innerCube;
+        [SerializeField] private GameObject   _dustFinSpawnPosition;
+        [SerializeField] private GameObject   _beltToSpace;
+        [SerializeField] private GameObject   _collectedMineralBP;
+        [SerializeField] private SO_Bool      _unlocked;
+        [SerializeField] private SO_Int       _capacity;
+        [SerializeField] private SO_Int       _speedLevel;
+        [SerializeField] private SO_Int       _unloadSpeed;
+        [SerializeField] private AudioClip[]  _clickClips;
 
         [SerializeField] private AudioClip[] _updateClips;
 
         // [SerializeField] private AudioClip _dropMineral;
-        [SerializeField] private AudioClip _takeMineral;
-        [SerializeField] private HaxlerController haxlerController;
+        [SerializeField] private AudioClip         _takeMineral;
+        [SerializeField] private HaxlerController  haxlerController;
         [SerializeField] private MineralController mineralController;
-        [SerializeField] private Slider slider;
-        [SerializeField] private GameObject _bodyCam;
-        [SerializeField] private ParticleSystem _coinPartikel;
-        [SerializeField] private Transform _tmpMineralsContainer;
+        [SerializeField] private Slider            slider;
+        [SerializeField] private GameObject        _bodyCam;
+        [SerializeField] private ParticleSystem    _coinPartikel;
+        [SerializeField] private Transform         _tmpMineralsContainer;
 
 
         private void Awake()
         {
             _unlocked.value = false;
-            _agent = GetComponent<NavMeshAgent>();
+            _agent          = GetComponent<NavMeshAgent>();
 
             var localScale = transform.localScale;
             localScale.y += Random.value;
 
-            _audioSource = GetComponent<AudioSource>();
+            _audioSource        = GetComponent<AudioSource>();
             _audioSource.volume = 0;
         }
 
@@ -102,7 +102,7 @@ namespace IdleColors.room_collect.collector
 
                 if (_sliderValue > 99)
                 {
-                    _emptiing = false;
+                    _emptiing    = false;
                     slider.value = 0;
                     slider.gameObject.SetActive(false);
                 }
@@ -122,9 +122,9 @@ namespace IdleColors.room_collect.collector
                     (_collectedMinerals != 0 && _mineralsAvailable == 0))
                )
             {
-                _active = true;
-                _returning = true;
-                _target = _beltToSpace;
+                _active     = true;
+                _returning  = true;
+                _target     = _beltToSpace;
                 _targetName = _beltToSpace.name;
                 _agent.SetDestination(_target.transform.position);
             }
@@ -142,8 +142,8 @@ namespace IdleColors.room_collect.collector
             if (minerals != null &&
                 minerals.Count != 0)
             {
-                var closestDist = 0.0f;
-                GameObject closestGO = null;
+                var        closestDist = 0.0f;
+                GameObject closestGO   = null;
 
                 foreach (var speckOfDust in minerals)
                 {
@@ -161,21 +161,21 @@ namespace IdleColors.room_collect.collector
                         closestGO == null)
                     {
                         closestDist = dist;
-                        closestGO = speckOfDust;
+                        closestGO   = speckOfDust;
                         continue;
                     }
 
                     if (dist < closestDist)
                     {
                         closestDist = dist;
-                        closestGO = speckOfDust;
+                        closestGO   = speckOfDust;
                     }
                 }
 
                 if (closestGO != null)
                 {
-                    _active = true;
-                    _target = closestGO;
+                    _active     = true;
+                    _target     = closestGO;
                     _targetName = closestGO.name;
                     if (!_agent.isActiveAndEnabled)
                     {
@@ -208,11 +208,11 @@ namespace IdleColors.room_collect.collector
                 else
                 {
                     _collectedMinerals++;
-                    _target = null;
+                    _target     = null;
                     _targetName = null;
                     other.gameObject.SetActive(false);
                     other.gameObject.GetComponent<MineralHandler>().dead = true;
-                    _active = false;
+                    _active                                              = false;
                     _audioSource.PlayOneShot(_takeMineral);
                 }
             }
@@ -220,7 +220,7 @@ namespace IdleColors.room_collect.collector
 
         public IEnumerator EmptyCleaner()
         {
-            _emptiing = true;
+            _emptiing    = true;
             _sliderValue = 0f;
             slider.gameObject.SetActive(true);
 
@@ -259,7 +259,7 @@ namespace IdleColors.room_collect.collector
                     break;
                 }
 
-                _emptiing = true;
+                _emptiing    = true;
                 _sliderValue = 0f;
                 slider.gameObject.SetActive(true);
             }
@@ -281,7 +281,7 @@ namespace IdleColors.room_collect.collector
         {
             GameManager.Instance.SubCoins(costFactor * GLOB.COLLECTOR_SPEED_BASE_PRICE *
                                           _speedLevel.value);
-            _agent.speed += .5f;
+            _agent.speed      += .5f;
             _speedLevel.value += 1;
             PlayUpdateSound();
         }
@@ -314,12 +314,12 @@ namespace IdleColors.room_collect.collector
 
         private void reset()
         {
-            _target = null;
-            _targetName = null;
-            _returning = false;
-            _draining = false;
+            _target            = null;
+            _targetName        = null;
+            _returning         = false;
+            _draining          = false;
             _collectedMinerals = 0;
-            _active = false;
+            _active            = false;
         }
 
         private void checkTarget()
@@ -332,9 +332,9 @@ namespace IdleColors.room_collect.collector
             var go = GameObject.Find(_targetName);
             if (null == go)
             {
-                _target = null;
+                _target     = null;
                 _targetName = null;
-                _active = false;
+                _active     = false;
                 _agent.SetDestination(transform.position);
                 return;
             }
@@ -344,9 +344,9 @@ namespace IdleColors.room_collect.collector
             {
                 if (_target.GetComponent<MineralHandler>().dead)
                 {
-                    _target = null;
+                    _target     = null;
                     _targetName = null;
-                    _active = false;
+                    _active     = false;
                     _agent.SetDestination(transform.position);
                     return;
                 }

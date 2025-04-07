@@ -7,7 +7,7 @@ namespace IdleColors.room_order.constructor
     {
         public Vector3 pufferPosition;
         public Vector3 cubePosition;
-        public int colorIndex;
-        public bool done;
+        public int     colorIndex;
+        public bool    done;
     }
 }

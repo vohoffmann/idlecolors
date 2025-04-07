@@ -7,17 +7,17 @@ namespace IdleColors.room_mixing.pipeball
     {
         [HideInInspector] public GameObject[] wayPoints;
 
-        public int _colorIndex;
-        public bool active;
-        private int _step;
-        private const int Speed = 5;
+        public        int  _colorIndex;
+        public        bool active;
+        private       int  _step;
+        private const int  Speed = 5;
 
         private void FixedUpdate()
         {
             if (!active)
                 return;
 
-            var pos = transform.position;
+            var pos       = transform.position;
             var targetPos = wayPoints[_step].transform.position;
             var deltaTime = Speed * Time.fixedDeltaTime;
 
@@ -62,9 +62,9 @@ namespace IdleColors.room_mixing.pipeball
 
         public void Reset()
         {
-            active = false;
+            active             = false;
             transform.position = wayPoints[0].transform.position;
-            _step = 1;
+            _step              = 1;
         }
     }
 }

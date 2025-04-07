@@ -11,12 +11,12 @@ namespace IdleColors.hud
     {
         private PufferController _pufferScript;
 
-        [SerializeField] private GameObject _capacityButtonCanvas;
+        [SerializeField] private GameObject      _capacityButtonCanvas;
         [SerializeField] private TextMeshProUGUI _statusText;
-        private Button _capacityButton;
-        [SerializeField] private Text _capacityText;
+        private                  Button          _capacityButton;
+        [SerializeField] private Text            _capacityText;
 
-        [SerializeField] private GameObject _noMoreUpdatesLabelText;
+        [SerializeField] private GameObject      _noMoreUpdatesLabelText;
         [SerializeField] private TextMeshProUGUI _capacityInfoText;
 
         public void setPufferScript(PufferController pufferScript)
@@ -40,7 +40,7 @@ namespace IdleColors.hud
             {
                 _capacityButtonCanvas.SetActive(true);
                 var from = _pufferScript.GetLevel() * 24;
-                var to = (_pufferScript.GetLevel() + 1) * 24;
+                var to   = (_pufferScript.GetLevel() + 1) * 24;
                 _statusText.text = $"{from} -> {to}";
                 // _capacityText.text = "" + _pufferScript.costFactor * _pufferScript.GetLevel() *
                 //     GLOB.PUFFER_CAPACITY_BASE_PRICE;

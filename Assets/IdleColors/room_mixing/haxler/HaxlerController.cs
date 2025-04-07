@@ -11,29 +11,29 @@ namespace IdleColors.room_mixing.haxler
 {
     public class HaxlerController : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private AudioClip _upgradeSound;
-        [SerializeField] private AudioClip _dropInSound;
-        [SerializeField] private Slider slider;
-        [SerializeField] private TextMeshProUGUI mineralsAmountText;
-        [SerializeField] private SO_Int _speedLevel;
-        [SerializeField] private GameObject chrushedSpawnPoint;
-        [SerializeField] private GameObject chrushedMineralBP;
-        private AudioSource _audioSource;
-        private MoveHaxlerHammer[] hammerScripts;
-        public float costFactor;
-        private float sliderValue;
-        private float startTime;
-        private bool crushing;
-        private bool pufferFull;
-        public SO_Int _minerals;
+        [SerializeField] private AudioClip          _upgradeSound;
+        [SerializeField] private AudioClip          _dropInSound;
+        [SerializeField] private Slider             slider;
+        [SerializeField] private TextMeshProUGUI    mineralsAmountText;
+        [SerializeField] private SO_Int             _speedLevel;
+        [SerializeField] private GameObject         chrushedSpawnPoint;
+        [SerializeField] private GameObject         chrushedMineralBP;
+        private                  AudioSource        _audioSource;
+        private                  MoveHaxlerHammer[] hammerScripts;
+        public                   float              costFactor;
+        private                  float              sliderValue;
+        private                  float              startTime;
+        private                  bool               crushing;
+        private                  bool               pufferFull;
+        public                   SO_Int             _minerals;
 
         [SerializeField] private Transform _tmpMineralsContainer;
         // private  Stopwatch stopwatch = new();
 
         private void Awake()
         {
-            hammerScripts = GetComponentsInChildren<MoveHaxlerHammer>();
-            _audioSource = GetComponent<AudioSource>();
+            hammerScripts       = GetComponentsInChildren<MoveHaxlerHammer>();
+            _audioSource        = GetComponent<AudioSource>();
             _audioSource.volume = 0;
         }
 
@@ -94,7 +94,7 @@ namespace IdleColors.room_mixing.haxler
             }
 
             // slider animieren
-            sliderValue = Mathf.Lerp(0, 100, (Time.time - startTime) / (20 - _speedLevel.value));
+            sliderValue  = Mathf.Lerp(0, 100, (Time.time - startTime) / (20 - _speedLevel.value));
             slider.value = sliderValue;
 
             // wenn slider 'voll' material auswerfen und crushingmode deaktivieren
@@ -119,10 +119,13 @@ namespace IdleColors.room_mixing.haxler
                 var position = chrushedSpawnPoint.transform.position;
                 var rotation = chrushedSpawnPoint.transform.rotation;
                 var mp_1 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y, position.z), rotation);
-                var mp_2 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + .5f, position.z), rotation);
-                var mp_3 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + 1f, position.z), rotation);
-                var mp_4 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + 1.5f, position.z), rotation);
-                
+                var mp_2 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + .5f, position.z),
+                    rotation);
+                var mp_3 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + 1f, position.z),
+                    rotation);
+                var mp_4 = Instantiate(chrushedMineralBP, new Vector3(position.x, position.y + 1.5f, position.z),
+                    rotation);
+
                 mp_1.transform.SetParent(_tmpMineralsContainer, true);
                 mp_2.transform.SetParent(_tmpMineralsContainer, true);
                 mp_3.transform.SetParent(_tmpMineralsContainer, true);
@@ -162,8 +165,8 @@ namespace IdleColors.room_mixing.haxler
 
         public void UpgradeSpeed()
         {
-            
-            GameManager.Instance.SubCoins(Mathf.RoundToInt(GLOB.HAXLER_SPEED_BASE_PRICE * Mathf.Pow(costFactor, _speedLevel.value - 1)));
+            GameManager.Instance.SubCoins(
+                Mathf.RoundToInt(GLOB.HAXLER_SPEED_BASE_PRICE * Mathf.Pow(costFactor, _speedLevel.value - 1)));
             // GameManager.Instance.SubCoins(costFactor * GLOB.HAXLER_SPEED_BASE_PRICE * _speedLevel.value);
             _speedLevel.value += 1;
 

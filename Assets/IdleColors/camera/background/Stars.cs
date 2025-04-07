@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
-namespace IdleColors.background
+namespace IdleColors.camera.background
 {
     public class Stars : MonoBehaviour
     {
-        private MeshRenderer starRenderer;
+        private MeshRenderer _starRenderer;
 
         void Awake()
         {
-            starRenderer = GetComponent<MeshRenderer>();
+            _starRenderer = GetComponent<MeshRenderer>();
         }
 
         private void Update()
         {
-            var mat = starRenderer.material;
+            var mat = _starRenderer.material;
 
             var offset = mat.mainTextureOffset;
 

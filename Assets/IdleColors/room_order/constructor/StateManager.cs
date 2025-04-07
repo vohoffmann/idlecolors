@@ -10,7 +10,7 @@ namespace IdleColors.room_order.constructor
         public void ChangeState(State newState)
         {
             _currentState?.Exit();
-            
+
             _currentState = newState;
             _currentState.Enter();
         }

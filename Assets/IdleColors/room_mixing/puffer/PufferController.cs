@@ -15,26 +15,26 @@ namespace IdleColors.room_mixing.puffer
     public class PufferController : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private HaxlerController haxlerControler;
-        [SerializeField] private SO_Int _level;
-        [SerializeField] private GameObject _amountIndicator;
-        [SerializeField] private SO_Int _minerals;
-        [SerializeField] public TextMeshProUGUI mineralsAmountText;
-        [SerializeField] private GameObject _pipeBall;
-        [SerializeField] private GameObject[] _wayPoints;
-        private float _amountIndicator_Y;
-        private float _pufferFillIndicatorStep;
-        private int _pufferMaxValue;
-        public float costFactor;
-        private AudioSource _audioSource;
-        [SerializeField] private AudioClip _upgradeSound;
-        [SerializeField] private AudioClip _dropInSound;
-        private int _reservedMinerals;
-        private List<GameObject> _pipeBalls;
+        [SerializeField] private SO_Int           _level;
+        [SerializeField] private GameObject       _amountIndicator;
+        [SerializeField] private SO_Int           _minerals;
+        [SerializeField] public  TextMeshProUGUI  mineralsAmountText;
+        [SerializeField] private GameObject       _pipeBall;
+        [SerializeField] private GameObject[]     _wayPoints;
+        private                  float            _amountIndicator_Y;
+        private                  float            _pufferFillIndicatorStep;
+        private                  int              _pufferMaxValue;
+        public                   float            costFactor;
+        private                  AudioSource      _audioSource;
+        [SerializeField] private AudioClip        _upgradeSound;
+        [SerializeField] private AudioClip        _dropInSound;
+        private                  int              _reservedMinerals;
+        private                  List<GameObject> _pipeBalls;
 
 
         private void Awake()
         {
-            _audioSource = GetComponent<AudioSource>();
+            _audioSource        = GetComponent<AudioSource>();
             _audioSource.volume = 0;
 
             _amountIndicator_Y = _amountIndicator.transform.position.y;
@@ -64,7 +64,7 @@ namespace IdleColors.room_mixing.puffer
 
         public void TakeInitValues()
         {
-            _pufferMaxValue = 24 * _level.value;
+            _pufferMaxValue          = 24 * _level.value;
             _pufferFillIndicatorStep = 5.76f / _pufferMaxValue;
 
             SetDisplay();

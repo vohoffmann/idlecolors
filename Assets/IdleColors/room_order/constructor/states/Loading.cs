@@ -28,7 +28,7 @@ namespace IdleColors.room_order.constructor.states
             }
 
             down = false;
-            
+
             if (Owner._kopf.transform.localPosition.y < -1.5f)
             {
                 Owner._kopf.transform.position = new Vector3(kopfPosition.x,

@@ -17,6 +17,5 @@ namespace IdleColors.helper
             WaitDictionary[seconds] = new WaitForSeconds(seconds);
             return WaitDictionary[seconds];
         }
-
     }
 }

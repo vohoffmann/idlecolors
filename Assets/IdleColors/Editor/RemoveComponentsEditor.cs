@@ -34,8 +34,8 @@ namespace IdleColors.Editor
             }
 
             // Suche alle GameObjects in der Szene
-            GameObject[] allObjects = FindObjectsOfType<GameObject>();
-            int removedCount = 0;
+            GameObject[] allObjects   = FindObjectsOfType<GameObject>();
+            int          removedCount = 0;
 
             foreach (GameObject obj in allObjects)
             {

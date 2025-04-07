@@ -18,20 +18,22 @@ namespace IdleColors.Globals
 
         #region members
 
-        public GameObject cupBp;
-        public Text coinsText;
-        private readonly int _coinMultiplier = 1;
-        public const string REWARDED_ANDROID = "Rewarded_Android";
-        private readonly string GAMEID = "5774375";
-        public bool AdsRewardedLoaded { private set; get; }
-        public bool ImageOrderInProcess;
-        public int ImageOrderRewards;
-        [SerializeField] private Transform _tmpFloatingtextContainer;
-        [SerializeField] private Transform _floatingCoinsUIPosition;
+        public           GameObject cupBp;
+        public           Text       coinsText;
+        private readonly int        _coinMultiplier  = 1;
+        public const     string     REWARDED_ANDROID = "Rewarded_Android";
+        private readonly string     GAMEID           = "5774375";
+        public           bool       AdsRewardedLoaded { private set; get; }
+        public static    bool       MenuBlocked       { get;         set; }
+
+        public                   bool       ImageOrderInProcess;
+        public                   int        ImageOrderRewards;
+        [SerializeField] private Transform  _tmpFloatingtextContainer;
+        [SerializeField] private Transform  _floatingCoinsUIPosition;
         [SerializeField] private GameObject _floatingCoinsWorldPrefab;
         [SerializeField] private GameObject _floatingCoinsUIPrefab;
 
-        public int coins;
+        public  int  coins;
         private bool _playCoinSound = true;
 
         // index 0 is dummy !!!
@@ -44,19 +46,19 @@ namespace IdleColors.Globals
         #region SOs
 
         public SO_Bool so_unlockedRed;
-        public SO_Int so_capacityRed;
-        public SO_Int so_speedLevelRed;
-        public SO_Int so_unloadSpeedRed;
+        public SO_Int  so_capacityRed;
+        public SO_Int  so_speedLevelRed;
+        public SO_Int  so_unloadSpeedRed;
 
         public SO_Bool so_unlockedGreen;
-        public SO_Int so_capacityGreen;
-        public SO_Int so_speedLevelGreen;
-        public SO_Int so_unloadSpeedGreen;
+        public SO_Int  so_capacityGreen;
+        public SO_Int  so_speedLevelGreen;
+        public SO_Int  so_unloadSpeedGreen;
 
         public SO_Bool so_unlockedBlue;
-        public SO_Int so_capacityBlue;
-        public SO_Int so_speedLevelBlue;
-        public SO_Int so_unloadSpeedBlue;
+        public SO_Int  so_capacityBlue;
+        public SO_Int  so_speedLevelBlue;
+        public SO_Int  so_unloadSpeedBlue;
 
         public SO_Int so_haxlerMineralsRed;
         public SO_Int so_haxlerMineralsGreen;
@@ -186,7 +188,7 @@ namespace IdleColors.Globals
         }
 
         private void HandleException(string condition, string stackTrace,
-            LogType type)
+            LogType                         type)
         {
             if (type == LogType.Exception)
                 // Handle the exception here
@@ -235,8 +237,8 @@ namespace IdleColors.Globals
 
         public void SubCoins(int pCoins)
         {
-            coins -= pCoins;
-            coinsText.text = "" + coins;
+            coins          -= pCoins;
+            coinsText.text =  "" + coins;
             // _coinController.TriggerScaling();
         }
 
@@ -249,36 +251,36 @@ namespace IdleColors.Globals
         {
             coins = 200;
 
-            so_unlockedRed.value = true;
-            so_capacityRed.value = 1;
-            so_speedLevelRed.value = 2;
+            so_unlockedRed.value    = true;
+            so_capacityRed.value    = 1;
+            so_speedLevelRed.value  = 2;
             so_unloadSpeedRed.value = 1;
 
-            so_unlockedGreen.value = false;
-            so_capacityGreen.value = 1;
-            so_speedLevelGreen.value = 2;
+            so_unlockedGreen.value    = false;
+            so_capacityGreen.value    = 1;
+            so_speedLevelGreen.value  = 2;
             so_unloadSpeedGreen.value = 1;
 
-            so_unlockedBlue.value = false;
-            so_capacityBlue.value = 1;
-            so_speedLevelBlue.value = 2;
+            so_unlockedBlue.value    = false;
+            so_capacityBlue.value    = 1;
+            so_speedLevelBlue.value  = 2;
             so_unloadSpeedBlue.value = 1;
 
-            so_haxlerMineralsRed.value = 3;
+            so_haxlerMineralsRed.value   = 3;
             so_haxlerMineralsGreen.value = 0;
-            so_haxlerMineralsBlue.value = 0;
+            so_haxlerMineralsBlue.value  = 0;
 
-            so_haxlerSpeedRed.value = 1;
+            so_haxlerSpeedRed.value   = 1;
             so_haxlerSpeedGreen.value = 1;
-            so_haxlerSpeedBlue.value = 1;
+            so_haxlerSpeedBlue.value  = 1;
 
-            so_pufferMineralsRed.value = 20;
+            so_pufferMineralsRed.value   = 20;
             so_pufferMineralsGreen.value = 0;
-            so_pufferMineralsBlue.value = 0;
+            so_pufferMineralsBlue.value  = 0;
 
-            so_pufferLevelRed.value = 1;
+            so_pufferLevelRed.value   = 1;
             so_pufferLevelGreen.value = 1;
-            so_pufferLevelBlue.value = 1;
+            so_pufferLevelBlue.value  = 1;
 
             so_DroneSpeed.value = 1;
 

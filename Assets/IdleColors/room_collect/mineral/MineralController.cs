@@ -7,8 +7,8 @@ namespace IdleColors.mineral
 {
     public class MineralController : MonoBehaviour
     {
-        public GameObject mineralBP;
-        private bool _invocationTriggered;
+        public  GameObject mineralBP;
+        private bool       _invocationTriggered;
 
         public List<GameObject> minerals;
 
@@ -22,7 +22,7 @@ namespace IdleColors.mineral
             var mineralSpawnParent = transform.transform;
             GameObject mineral = Instantiate(
                 mineralBP,
-                mineralSpawnParent, 
+                mineralSpawnParent,
                 true);
             mineral.transform.position = mineralSpawnParent.position;
             // mineral.name = "" + mineral.GetInstanceID();

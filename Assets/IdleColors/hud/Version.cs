@@ -12,6 +12,4 @@ public class Version : MonoBehaviour
             text.text = "v " + Application.version;
         }
     }
-
-
 }

@@ -30,7 +30,7 @@ namespace IdleColors.room_order.constructor.states
 
             var missingColor = Color.black;
 
-            var items = Owner.targets.Count;
+            var items     = Owner.targets.Count;
             var doneItems = 0;
             if (!Owner.jobDone)
             {
@@ -45,9 +45,9 @@ namespace IdleColors.room_order.constructor.states
 
                         if (items == doneItems)
                         {
-                            Owner.jobDone = true;
+                            Owner.jobDone                            = true;
                             GameManager.Instance.ImageOrderInProcess = false;
-                            Owner.holdConstructor = true;
+                            Owner.holdConstructor                    = true;
                             return;
                         }
 
@@ -63,8 +63,8 @@ namespace IdleColors.room_order.constructor.states
                     }
 
                     Owner.targetIndex = colorIdx;
-                    Owner.target = TargetInfo.pufferPosition;
-                    Owner.cubeTarget = TargetInfo.cubePosition;
+                    Owner.target      = TargetInfo.pufferPosition;
+                    Owner.cubeTarget  = TargetInfo.cubePosition;
 
                     //Owner.targets.Remove(TargetInfo);
                     Owner.targets[i].done = true;

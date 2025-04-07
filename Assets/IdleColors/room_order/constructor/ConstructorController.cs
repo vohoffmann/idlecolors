@@ -11,21 +11,21 @@ namespace IdleColors.room_order.constructor
     {
         public static ConstructorController instance;
 
-        public SO_Int Speed;
-        public GameObject idlePosition;
-        [SerializeField] public GameObject _kopf;
-        [SerializeField] private GameObject _armX;
-        [SerializeField] private GameObject _armZ;
-        public List<TargetMetaData> targets = new();
-        public int[] imageColors = new int[7];
-        public TextMeshProUGUI _imageColorStats;
-        public Vector3 target;
-        public Vector3 cubeTarget;
-        public int targetIndex;
-        public bool holdConstructor = true;
-        public GameObject _missingColorImage;
-        public AudioSource audioSource;
-        public bool jobDone;
+        public                   SO_Int               Speed;
+        public                   GameObject           idlePosition;
+        [SerializeField] public  GameObject           _kopf;
+        [SerializeField] private GameObject           _armX;
+        [SerializeField] private GameObject           _armZ;
+        public                   List<TargetMetaData> targets     = new();
+        public                   int[]                imageColors = new int[7];
+        public                   TextMeshProUGUI      _imageColorStats;
+        public                   Vector3              target;
+        public                   Vector3              cubeTarget;
+        public                   int                  targetIndex;
+        public                   bool                 holdConstructor = true;
+        public                   GameObject           _missingColorImage;
+        public                   AudioSource          audioSource;
+        public                   bool                 jobDone;
 
         private void Awake()
         {
@@ -34,7 +34,7 @@ namespace IdleColors.room_order.constructor
                 instance = this;
             }
 
-            audioSource = GetComponent<AudioSource>();
+            audioSource        = GetComponent<AudioSource>();
             audioSource.volume = 0;
 
             // _missingColorText.SetActive(false);

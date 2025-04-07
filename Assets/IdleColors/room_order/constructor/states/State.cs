@@ -5,9 +5,9 @@ namespace IdleColors.room_order.constructor.states
     public abstract class State
     {
         protected readonly ConstructorController Owner;
-        private float accelerationFactor = 0f;
-        private Vector3 _velocity = Vector3.zero;
-        private readonly float _baseSpeed = 17.6f;
+        private            float                 accelerationFactor = 0f;
+        private            Vector3               _velocity          = Vector3.zero;
+        private readonly   float                 _baseSpeed         = 17.6f;
 
         protected State(ConstructorController owner)
         {

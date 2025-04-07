@@ -5,11 +5,11 @@ namespace IdleColors.hud
     [ExecuteAlways]
     public class ScaleButton : MonoBehaviour
     {
-        public Vector3 fromScale = new Vector3(1f, 1f, 1f);
-        public Vector3 toScale = new Vector3(1.2f, 1.2f, 1f);
-        public float scaleSpeed = 3f;
+        public  Vector3       fromScale  = new Vector3(1f, 1f, 1f);
+        public  Vector3       toScale    = new Vector3(1.2f, 1.2f, 1f);
+        public  float         scaleSpeed = 3f;
         private RectTransform rectTransform;
-        bool isScaling = true;
+        bool                  isScaling = true;
 
         void Start()
         {
@@ -31,7 +31,7 @@ namespace IdleColors.hud
                 if (Vector3.Distance(rectTransform.localScale, toScale) < 0.01f)
                 {
                     rectTransform.localScale = toScale;
-                    isScaling = false;
+                    isScaling                = false;
                 }
             }
             else
@@ -42,7 +42,7 @@ namespace IdleColors.hud
                 if (Vector3.Distance(rectTransform.localScale, fromScale) < 0.01f)
                 {
                     rectTransform.localScale = fromScale;
-                    isScaling = true;
+                    isScaling                = true;
                 }
             }
         }

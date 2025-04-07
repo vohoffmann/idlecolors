@@ -11,12 +11,12 @@ namespace IdleColors.hud
     {
         private HaxlerController _haxlerScript;
 
-        [SerializeField] private GameObject _speedButtonCanvas;
-        private Button _speedButton;
-        [SerializeField] private Text _speedButtonText;
+        [SerializeField] private GameObject      _speedButtonCanvas;
+        private                  Button          _speedButton;
+        [SerializeField] private Text            _speedButtonText;
         [SerializeField] private TextMeshProUGUI _statusText;
 
-        [SerializeField] private GameObject _noMoreUpdatesLabelText;
+        [SerializeField] private GameObject      _noMoreUpdatesLabelText;
         [SerializeField] private TextMeshProUGUI _speedInfoText;
 
         public void SetHaxler(HaxlerController haxlerScript)
@@ -40,7 +40,7 @@ namespace IdleColors.hud
             {
                 _speedButtonCanvas.SetActive(true);
                 var from = 20 - _haxlerScript.GetSpeedLevel();
-                var to = 20 - (_haxlerScript.GetSpeedLevel() + 1);
+                var to   = 20 - (_haxlerScript.GetSpeedLevel() + 1);
 
                 _statusText.text = $"{from} -> {to} seconds";
                 // _speedButtonText.text = "" + _haxlerScript.costFactor * _haxlerScript.GetSpeedLevel() *

@@ -14,31 +14,31 @@ namespace IdleColors.room_order
 {
     public class OrderImagePanelController : MonoBehaviour
     {
-        private Texture2D[] textures;
-        private bool imageDeleted;
-        [SerializeField] private GameObject _cubePrefab;
-        [SerializeField] private GameObject _imageContainer;
-        [SerializeField] private GameObject _productionOrderPanel;
-        [SerializeField] private GameObject _buttonPrefab;
+        private                  Texture2D[]   textures;
+        private                  bool          imageDeleted;
+        [SerializeField] private GameObject    _cubePrefab;
+        [SerializeField] private GameObject    _imageContainer;
+        [SerializeField] private GameObject    _productionOrderPanel;
+        [SerializeField] private GameObject    _buttonPrefab;
         [SerializeField] private RectTransform _buttonContainer;
-        [SerializeField] private GameObject[] _pufferPositions;
-        private int buttonIndex;
-        private int rewards;
-        private bool cleaning;
+        [SerializeField] private GameObject[]  _pufferPositions;
+        private                  int           buttonIndex;
+        private                  int           rewards;
+        private                  bool          cleaning;
 
         public int Rewards
         {
             get => rewards;
             set
             {
-                rewards = value;
+                rewards                                = value;
                 GameManager.Instance.ImageOrderRewards = rewards;
             }
         }
 
         private void Awake()
         {
-            textures = Resources.LoadAll<Texture2D>("ProductionModels");
+            textures    = Resources.LoadAll<Texture2D>("ProductionModels");
             buttonIndex = 0;
             foreach (Texture2D texture in textures)
             {
@@ -76,7 +76,7 @@ namespace IdleColors.room_order
         public void OrderImage()
         {
             GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
-            var idx = clickedButton.name.Split("#")[0];
+            var        idx           = clickedButton.name.Split("#")[0];
             ClaimRewards(int.Parse(idx));
             ClosePanel();
             GameManager.Instance.ImageOrderInProcess = true;
@@ -92,7 +92,7 @@ namespace IdleColors.room_order
                 Rewards = 0;
             }
 
-            ConstructorController.instance.targets = new();
+            ConstructorController.instance.targets     = new();
             ConstructorController.instance.imageColors = new int[7];
 
             cleaning = true;
@@ -137,17 +137,17 @@ namespace IdleColors.room_order
 
             foreach (TargetMetaData meta in data)
             {
-                var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
+                var cube           = Instantiate(_cubePrefab, _imageContainer.transform, true);
                 var parentPosition = _imageContainer.transform.position;
                 cube.transform.position = meta.cubePosition;
 
                 Rewards += OrderPanelController.CoinValues[meta.colorIndex + 1] / 10;
 
                 ConstructorController.instance.imageColors[meta.colorIndex] += meta.done ? 0 : 1;
-                ConstructorController.instance.jobDone = false;
+                ConstructorController.instance.jobDone                      =  false;
 
                 var color = GameManager.Instance.GetColorForIndex(meta.colorIndex + 1);
-                color.a = meta.done ? 1 : .01f;
+                color.a                                      = meta.done ? 1 : .01f;
                 cube.GetComponent<Renderer>().material.color = color;
             }
 
@@ -160,8 +160,8 @@ namespace IdleColors.room_order
         void GenerateNewimageRaster(Texture2D image)
         {
             ConstructorController.instance.imageColors = new int[7];
-            ConstructorController.instance.targets = new();
-            Rewards = 0;
+            ConstructorController.instance.targets     = new();
+            Rewards                                    = 0;
             for (int z = 0; z < image.height; z++)
             {
                 for (int x = 0; x < image.width; x++)
@@ -169,7 +169,7 @@ namespace IdleColors.room_order
                     Color pixelColor = image.GetPixel(x, z);
                     if (pixelColor.r != 0 || pixelColor.g != 0 || pixelColor.b != 0)
                     {
-                        var cube = Instantiate(_cubePrefab, _imageContainer.transform, true);
+                        var cube           = Instantiate(_cubePrefab, _imageContainer.transform, true);
                         var parentPosition = _imageContainer.transform.position;
                         cube.transform.position = new Vector3(
                             parentPosition.x + x,
@@ -180,24 +180,24 @@ namespace IdleColors.room_order
                         Rewards += OrderPanelController.CoinValues[colorIndex + 1] / 10;
 
                         var tmpPufferPos = _pufferPositions[colorIndex].transform.position;
-                        var tmpCubePos = cube.transform.position;
+                        var tmpCubePos   = cube.transform.position;
 
                         var pufferTargetPos = new Vector3(tmpPufferPos.x, -29.8f, tmpPufferPos.z);
-                        var cupeTargetPos = new Vector3(tmpCubePos.x, -29.8f, tmpCubePos.z);
+                        var cupeTargetPos   = new Vector3(tmpCubePos.x, -29.8f, tmpCubePos.z);
 
                         TargetMetaData infos = new TargetMetaData
                         {
                             pufferPosition = pufferTargetPos,
-                            cubePosition = cupeTargetPos,
-                            colorIndex = colorIndex,
-                            done = false
+                            cubePosition   = cupeTargetPos,
+                            colorIndex     = colorIndex,
+                            done           = false
                         };
 
                         ConstructorController.instance.targets.Add(infos);
                         ConstructorController.instance.imageColors[colorIndex] += 1;
-                        ConstructorController.instance.jobDone = false;
+                        ConstructorController.instance.jobDone                 =  false;
 
-                        pixelColor.a = .01f;
+                        pixelColor.a                                 = .01f;
                         cube.GetComponent<Renderer>().material.color = pixelColor;
                     }
                 }

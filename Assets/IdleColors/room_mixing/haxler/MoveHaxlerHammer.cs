@@ -11,7 +11,7 @@ namespace IdleColors.room_mixing.haxler
         private float targetPosX;
         private float startTime;
         private float duration = 5.0f;
-        private bool direction;
+        private bool  direction;
 
         private void Start()
         {
@@ -32,16 +32,16 @@ namespace IdleColors.room_mixing.haxler
 
         void Update()
         {
-            var pos = transform.localPosition;
-            float x = (float)Math.Round(pos.x, 2);
+            var   pos = transform.localPosition;
+            float x   = (float)Math.Round(pos.x, 2);
 
             if ((x <= _targetx_2 && !direction) ||
                 (x >= _targetx_1 - 0.01 && direction))
             {
                 // if (!direction) parent.PlayHammerSound();
-                direction = !direction;
-                startTime = Time.time;
-                duration = direction ? 4f + Random.Range(1f, 2f) : .5f;
+                direction  = !direction;
+                startTime  = Time.time;
+                duration   = direction ? 4f + Random.Range(1f, 2f) : .5f;
                 targetPosX = direction ? _targetx_1 : _targetx_2;
             }
 

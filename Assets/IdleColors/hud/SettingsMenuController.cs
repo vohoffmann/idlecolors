@@ -4,6 +4,7 @@ using IdleColors.camera;
 using IdleColors.Globals;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
@@ -11,24 +12,24 @@ namespace IdleColors.hud
 {
     public class SettingsMenuController : MonoBehaviour
     {
-        [SerializeField] private Canvas menu;
-        [SerializeField] private GameObject startMenu;
-        [SerializeField] private GameObject inGamePanel;
-        [SerializeField] private GameObject BgButton;
-        [SerializeField] private Slider soundSlider;
-        [SerializeField] private Slider musicSlider;
-        [SerializeField] private Slider lightSlider;
-        [SerializeField] private AudioMixer mixer;
-        [SerializeField] private GameObject _saveHint;
+        [SerializeField] private Canvas      menu;
+        [SerializeField] private GameObject  startMenu;
+        [SerializeField] private GameObject  inGamePanel;
+        [SerializeField] private GameObject  BgButton;
+        [SerializeField] private Slider      soundSlider;
+        [SerializeField] private Slider      musicSlider;
+        [SerializeField] private Slider      lightSlider;
+        [SerializeField] private AudioMixer  mixer;
+        [SerializeField] private GameObject  _saveHint;
         [SerializeField] private AudioClip[] _songs;
         [SerializeField] private AudioSource _audioSource;
 
 
-        private bool _status;
-        public const string musicVolume = "music_volume";
-        private readonly string sfxVolume = "sfx_volume";
-        private readonly string lightIntensity = "lightIntensity";
-        private int _playListIdx = 0;
+        private                  bool       _status;
+        public const             string     musicVolume    = "music_volume";
+        private readonly         string     sfxVolume      = "sfx_volume";
+        private readonly         string     lightIntensity = "lightIntensity";
+        private                  int        _playListIdx   = 0;
         [SerializeField] private GameObject _creditsCanvas;
 
         private void Awake()
@@ -118,12 +119,15 @@ namespace IdleColors.hud
 
         public void OnMouseDown()
         {
+            if (GameManager.MenuBlocked)
+                return;
+
             BgButton.SetActive(!BgButton.activeSelf);
             if (GameManager.Instance.ReadyToSave)
             {
                 Time.timeScale = _status ? 1 : 0;
-                menu.enabled = !_status;
-                _status = !_status;
+                menu.enabled   = !_status;
+                _status        = !_status;
             }
         }
 

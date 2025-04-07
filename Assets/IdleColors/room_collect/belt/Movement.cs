@@ -5,13 +5,13 @@ namespace IdleColors.room_collect.belt
     public class Movement : MonoBehaviour
     {
         private Rigidbody _body;
-        private Vector3 _pos;
-        public float Speed;
+        private Vector3   _pos;
+        public  float     Speed;
 
         public void Awake()
         {
             _body = GetComponent<Rigidbody>();
-            _pos = transform.position;
+            _pos  = transform.position;
         }
 
         public void FixedUpdate()

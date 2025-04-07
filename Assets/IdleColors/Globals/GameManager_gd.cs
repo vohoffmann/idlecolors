@@ -10,8 +10,8 @@ namespace IdleColors.Globals
     // this part halds the logic to save and load gamedata
     public partial class GameManager
     {
-        private const string PLAYERDATA = "playerdata";
-        public bool ReadyToSave { private set; get; }
+        private const           string PLAYERDATA = "playerdata";
+        public                  bool   ReadyToSave { private set; get; }
         private static readonly string encryptionKey = "nunabeR23!987654"; // 16, 24 oder 32 Zeichen
 
         private void OnApplicationFocus(bool hasFocus)
@@ -52,40 +52,40 @@ namespace IdleColors.Globals
             }
 
             string json = Decrypt(encryptedData, encryptionKey);
-            var data = JsonUtility.FromJson<GameData>(json);
+            var    data = JsonUtility.FromJson<GameData>(json);
 
             coins = data.coins;
 
-            so_unlockedRed.value = true;
-            so_capacityRed.value = data.so_capacityRed;
-            so_speedLevelRed.value = data.so_speedLevelRed;
+            so_unlockedRed.value    = true;
+            so_capacityRed.value    = data.so_capacityRed;
+            so_speedLevelRed.value  = data.so_speedLevelRed;
             so_unloadSpeedRed.value = data.so_unloadSpeedRed;
 
-            so_unlockedGreen.value = data.so_unlockedGreen == 1;
-            so_capacityGreen.value = data.so_capacityGreen;
-            so_speedLevelGreen.value = data.so_speedLevelGreen;
+            so_unlockedGreen.value    = data.so_unlockedGreen == 1;
+            so_capacityGreen.value    = data.so_capacityGreen;
+            so_speedLevelGreen.value  = data.so_speedLevelGreen;
             so_unloadSpeedGreen.value = data.so_unloadSpeedGreen;
 
-            so_unlockedBlue.value = data.so_unlockedBlue == 1;
-            so_capacityBlue.value = data.so_capacityBlue;
-            so_speedLevelBlue.value = data.so_speedLevelBlue;
+            so_unlockedBlue.value    = data.so_unlockedBlue == 1;
+            so_capacityBlue.value    = data.so_capacityBlue;
+            so_speedLevelBlue.value  = data.so_speedLevelBlue;
             so_unloadSpeedBlue.value = data.so_unloadSpeedBlue;
 
-            so_haxlerMineralsRed.value = data.so_haxlerMineralsRed;
+            so_haxlerMineralsRed.value   = data.so_haxlerMineralsRed;
             so_haxlerMineralsGreen.value = data.so_haxlerMineralsGreen;
-            so_haxlerMineralsBlue.value = data.so_haxlerMineralsBlue;
+            so_haxlerMineralsBlue.value  = data.so_haxlerMineralsBlue;
 
-            so_haxlerSpeedRed.value = data.so_haxlerSpeedRed;
+            so_haxlerSpeedRed.value   = data.so_haxlerSpeedRed;
             so_haxlerSpeedGreen.value = data.so_haxlerSpeedGreen;
-            so_haxlerSpeedBlue.value = data.so_haxlerSpeedBlue;
+            so_haxlerSpeedBlue.value  = data.so_haxlerSpeedBlue;
 
-            so_pufferMineralsRed.value = data.so_pufferMineralsRed;
+            so_pufferMineralsRed.value   = data.so_pufferMineralsRed;
             so_pufferMineralsGreen.value = data.so_pufferMineralsGreen;
-            so_pufferMineralsBlue.value = data.so_pufferMineralsBlue;
+            so_pufferMineralsBlue.value  = data.so_pufferMineralsBlue;
 
-            so_pufferLevelRed.value = data.so_pufferLevelRed;
+            so_pufferLevelRed.value   = data.so_pufferLevelRed;
             so_pufferLevelGreen.value = data.so_pufferLevelGreen;
-            so_pufferLevelBlue.value = data.so_pufferLevelBlue;
+            so_pufferLevelBlue.value  = data.so_pufferLevelBlue;
 
             so_DroneSpeed.value = data.so_DroneSpeed;
 
@@ -114,11 +114,11 @@ namespace IdleColors.Globals
             using (Aes aes = Aes.Create())
             {
                 aes.Key = Encoding.UTF8.GetBytes(key);
-                aes.IV = new byte[16]; // Initialisierungsvektor mit Nullen (kann randomisiert werden)
+                aes.IV  = new byte[16]; // Initialisierungsvektor mit Nullen (kann randomisiert werden)
 
                 using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
                 {
-                    byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+                    byte[] plainBytes  = Encoding.UTF8.GetBytes(plainText);
                     byte[] cipherBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
                     return Convert.ToBase64String(cipherBytes);
                 }
@@ -130,12 +130,12 @@ namespace IdleColors.Globals
             using (Aes aes = Aes.Create())
             {
                 aes.Key = Encoding.UTF8.GetBytes(key);
-                aes.IV = new byte[16]; // Initialisierungsvektor mit Nullen
+                aes.IV  = new byte[16]; // Initialisierungsvektor mit Nullen
 
                 using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
                 {
                     byte[] cipherBytes = Convert.FromBase64String(cipherText);
-                    byte[] plainBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
+                    byte[] plainBytes  = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
                     return Encoding.UTF8.GetString(plainBytes);
                 }
             }
@@ -147,32 +147,32 @@ namespace IdleColors.Globals
 
             var data = new GameData
             {
-                coins = coins,
-                so_speedLevelRed = so_speedLevelRed.value,
-                so_speedLevelGreen = so_speedLevelGreen.value,
-                so_speedLevelBlue = so_speedLevelBlue.value,
-                so_unloadSpeedRed = so_unloadSpeedRed.value,
-                so_unloadSpeedGreen = so_unloadSpeedGreen.value,
-                so_unloadSpeedBlue = so_unloadSpeedBlue.value,
-                so_unlockedGreen = so_unlockedGreen.value ? 1 : 0,
-                so_unlockedBlue = so_unlockedBlue.value ? 1 : 0,
-                so_capacityRed = so_capacityRed.value,
-                so_capacityGreen = so_capacityGreen.value,
-                so_capacityBlue = so_capacityBlue.value,
-                so_haxlerMineralsRed = so_haxlerMineralsRed.value,
+                coins                  = coins,
+                so_speedLevelRed       = so_speedLevelRed.value,
+                so_speedLevelGreen     = so_speedLevelGreen.value,
+                so_speedLevelBlue      = so_speedLevelBlue.value,
+                so_unloadSpeedRed      = so_unloadSpeedRed.value,
+                so_unloadSpeedGreen    = so_unloadSpeedGreen.value,
+                so_unloadSpeedBlue     = so_unloadSpeedBlue.value,
+                so_unlockedGreen       = so_unlockedGreen.value ? 1 : 0,
+                so_unlockedBlue        = so_unlockedBlue.value ? 1 : 0,
+                so_capacityRed         = so_capacityRed.value,
+                so_capacityGreen       = so_capacityGreen.value,
+                so_capacityBlue        = so_capacityBlue.value,
+                so_haxlerMineralsRed   = so_haxlerMineralsRed.value,
                 so_haxlerMineralsGreen = so_haxlerMineralsGreen.value,
-                so_haxlerMineralsBlue = so_haxlerMineralsBlue.value,
-                so_haxlerSpeedRed = so_haxlerSpeedRed.value,
-                so_haxlerSpeedGreen = so_haxlerSpeedGreen.value,
-                so_haxlerSpeedBlue = so_haxlerSpeedBlue.value,
-                so_pufferMineralsRed = so_pufferMineralsRed.value,
+                so_haxlerMineralsBlue  = so_haxlerMineralsBlue.value,
+                so_haxlerSpeedRed      = so_haxlerSpeedRed.value,
+                so_haxlerSpeedGreen    = so_haxlerSpeedGreen.value,
+                so_haxlerSpeedBlue     = so_haxlerSpeedBlue.value,
+                so_pufferMineralsRed   = so_pufferMineralsRed.value,
                 so_pufferMineralsGreen = so_pufferMineralsGreen.value,
-                so_pufferMineralsBlue = so_pufferMineralsBlue.value,
-                so_pufferLevelRed = so_pufferLevelRed.value,
-                so_pufferLevelGreen = so_pufferLevelGreen.value,
-                so_pufferLevelBlue = so_pufferLevelBlue.value,
-                so_DroneSpeed = so_DroneSpeed.value,
-                so_ConstructorSpeed = so_ConstructorSpeed.value
+                so_pufferMineralsBlue  = so_pufferMineralsBlue.value,
+                so_pufferLevelRed      = so_pufferLevelRed.value,
+                so_pufferLevelGreen    = so_pufferLevelGreen.value,
+                so_pufferLevelBlue     = so_pufferLevelBlue.value,
+                so_DroneSpeed          = so_DroneSpeed.value,
+                so_ConstructorSpeed    = so_ConstructorSpeed.value
             };
 
             var index = 0;
@@ -184,7 +184,7 @@ namespace IdleColors.Globals
 
             data.imageData = ConstructorController.instance.targets;
 
-            string json = JsonUtility.ToJson(data);
+            string json          = JsonUtility.ToJson(data);
             string encryptedData = Encrypt(json, encryptionKey);
 
             if (Application.platform == RuntimePlatform.WebGLPlayer)

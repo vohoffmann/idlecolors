@@ -13,18 +13,19 @@ namespace IdleColors.room_storage.drone.states
         public override void Enter()
         {
             _cup = Owner.cupsToLift.Dequeue();
-            if(!_cup)
+            if (!_cup)
             {
                 // Debug.Log("MoveToCup State ... cup was deleted already ... ");
                 Owner.ChangeState(new MoveToIdlePosition(Owner));
                 return;
             }
+
             _cup.GetComponent<Rigidbody>().mass = 1000f;
-            Owner.cup = _cup;
-            
-            Owner.targetPos = _cup.transform.position;
+            Owner.cup                           = _cup;
+
+            Owner.targetPos   =  _cup.transform.position;
             Owner.targetPos.y += 3.85f;
-            
+
             // Vector3 direction = Owner.targetPos - Owner.transform.position;
             // Owner.transform.rotation = Quaternion.LookRotation(direction);
 

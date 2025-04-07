@@ -15,33 +15,33 @@ namespace IdleColors.hud
         [SerializeField] private PufferController _redPuffer;
         [SerializeField] private PufferController _greenPuffer;
         [SerializeField] private PufferController _bluePuffer;
-        [SerializeField] private MixerController _mixer;
-        [SerializeField] private Button _redButton;
-        [SerializeField] private TextMeshProUGUI _redAvailableOrdersText;
-        [SerializeField] private Button _greenButton;
-        [SerializeField] private TextMeshProUGUI _greenAvailableOrdersText;
-        [SerializeField] private Button _blueButton;
-        [SerializeField] private TextMeshProUGUI _blueAvailableOrdersText;
-        [SerializeField] private Button _yellowButton;
-        [SerializeField] private TextMeshProUGUI _yellowAvailableOrdersText;
-        [SerializeField] private Button _pinkButton;
-        [SerializeField] private TextMeshProUGUI _pinkAvailableOrdersText;
-        [SerializeField] private Button _cyanButton;
-        [SerializeField] private TextMeshProUGUI _cyanAvailableOrdersText;
-        [SerializeField] private Button _whiteButton;
-        [SerializeField] private TextMeshProUGUI _whiteAvailableOrdersText;
-        [SerializeField] private GameObject _orderQueuePanel;
-        [SerializeField] private Sprite _sprite;
-        [SerializeField] private ParticleSystem _particleSystem;
+        [SerializeField] private MixerController  _mixer;
+        [SerializeField] private Button           _redButton;
+        [SerializeField] private TextMeshProUGUI  _redAvailableOrdersText;
+        [SerializeField] private Button           _greenButton;
+        [SerializeField] private TextMeshProUGUI  _greenAvailableOrdersText;
+        [SerializeField] private Button           _blueButton;
+        [SerializeField] private TextMeshProUGUI  _blueAvailableOrdersText;
+        [SerializeField] private Button           _yellowButton;
+        [SerializeField] private TextMeshProUGUI  _yellowAvailableOrdersText;
+        [SerializeField] private Button           _pinkButton;
+        [SerializeField] private TextMeshProUGUI  _pinkAvailableOrdersText;
+        [SerializeField] private Button           _cyanButton;
+        [SerializeField] private TextMeshProUGUI  _cyanAvailableOrdersText;
+        [SerializeField] private Button           _whiteButton;
+        [SerializeField] private TextMeshProUGUI  _whiteAvailableOrdersText;
+        [SerializeField] private GameObject       _orderQueuePanel;
+        [SerializeField] private Sprite           _sprite;
+        [SerializeField] private ParticleSystem   _particleSystem;
 
         // 1    2    3    4    5     6     7
         // 5   10   30   20   40    50    70
         public static readonly int[] CoinValues = { 0, 50, 100, 150, 200, 300, 350, 500 };
 
-        private int _red, _green, _blue;
+        private          int        _red, _green, _blue;
         private readonly Queue<int> _orders = new();
-        private Image _image;
-        private const int APO = 24;
+        private          Image      _image;
+        private const    int        APO = 24;
 
         private void Awake()
         {
@@ -73,10 +73,10 @@ namespace IdleColors.hud
             var color = _image.color;
             if (color.r > .23f)
             {
-                color.r -= Time.deltaTime;
-                color.g -= Time.deltaTime;
-                color.b -= Time.deltaTime;
-                _image.color = color;
+                color.r      -= Time.deltaTime;
+                color.g      -= Time.deltaTime;
+                color.b      -= Time.deltaTime;
+                _image.color =  color;
             }
         }
 
@@ -87,8 +87,8 @@ namespace IdleColors.hud
 
         public void Order(int color)
         {
-            GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
-            var transformPosition = clickedButton.transform.localPosition;
+            GameObject clickedButton     = EventSystem.current.currentSelectedGameObject;
+            var        transformPosition = clickedButton.transform.localPosition;
 
             var buttonPos = new Vector3(transformPosition.x - 520, transformPosition.y - 565, 0);
             _particleSystem.transform.position = buttonPos;
@@ -101,14 +101,14 @@ namespace IdleColors.hud
             if (_orders.Count > 0 || _mixer._mixing)
             {
                 var newImageObj = new GameObject();
-                var newImage = newImageObj.AddComponent<Image>();
+                var newImage    = newImageObj.AddComponent<Image>();
                 newImage.sprite = _sprite;
                 var rectTransform =
                     newImageObj.GetComponent<RectTransform>();
                 rectTransform.SetParent(_orderQueuePanel.transform);
                 rectTransform.localPosition = Vector3.zero;
-                rectTransform.sizeDelta = Vector2.one * .5f;
-                rectTransform.rotation = Quaternion.identity;
+                rectTransform.sizeDelta     = Vector2.one * .5f;
+                rectTransform.rotation      = Quaternion.identity;
 
                 var rgb = GameManager.RGB.GetValueOrDefault(color);
                 newImage.color = new Color(rgb[0] ? 1 : 0, rgb[1] ? 1 : 0,
@@ -154,17 +154,17 @@ namespace IdleColors.hud
 
         private void UpdateButtonVisibility()
         {
-            _red = _redPuffer.GetAvailableMinerals();
+            _red   = _redPuffer.GetAvailableMinerals();
             _green = _greenPuffer.GetAvailableMinerals();
-            _blue = _bluePuffer.GetAvailableMinerals();
+            _blue  = _bluePuffer.GetAvailableMinerals();
 
             // für jede order amountPerOrder abziehen
             foreach (int color in _orders)
             {
                 var rgb = GameManager.RGB.GetValueOrDefault(color);
-                _red -= rgb[0] ? APO : 0;
+                _red   -= rgb[0] ? APO : 0;
                 _green -= rgb[1] ? APO : 0;
-                _blue -= rgb[2] ? APO : 0;
+                _blue  -= rgb[2] ? APO : 0;
             }
 
             var redButtonInteractable = _red >= APO;

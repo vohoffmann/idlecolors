@@ -21,9 +21,9 @@ namespace IdleColors.Editor
     [CustomEditor(typeof(AutoSaveConfig))]
     public class TarodevAutoSave : UnityEditor.Editor
     {
-        private static AutoSaveConfig _config;
+        private static AutoSaveConfig          _config;
         private static CancellationTokenSource _tokenSource;
-        private static Task _task;
+        private static Task                    _task;
 
         [InitializeOnLoadMethod]
         private static void OnInitialize()
@@ -32,7 +32,7 @@ namespace IdleColors.Editor
             CancelTask();
 
             _tokenSource = new CancellationTokenSource();
-            _task = SaveInterval(_tokenSource.Token);
+            _task        = SaveInterval(_tokenSource.Token);
         }
 
         private static void FetchConfig()
@@ -45,8 +45,10 @@ namespace IdleColors.Editor
 
                 if (path == null)
                 {
-                    AssetDatabase.CreateAsset(CreateInstance<AutoSaveConfig>(), $"Assets/{nameof(AutoSaveConfig)}.asset");
-                    GameManager.Log("A config file has been created at the root of your project.<b> You can move this anywhere you'd like.</b>");
+                    AssetDatabase.CreateAsset(CreateInstance<AutoSaveConfig>(),
+                        $"Assets/{nameof(AutoSaveConfig)}.asset");
+                    GameManager.Log(
+                        "A config file has been created at the root of your project.<b> You can move this anywhere you'd like.</b>");
                     continue;
                 }
 
@@ -58,7 +60,8 @@ namespace IdleColors.Editor
 
         private static string GetConfigPath()
         {
-            var paths = AssetDatabase.FindAssets(nameof(AutoSaveConfig)).Select(AssetDatabase.GUIDToAssetPath).Where(c => c.EndsWith(".asset")).ToList();
+            var paths = AssetDatabase.FindAssets(nameof(AutoSaveConfig)).Select(AssetDatabase.GUIDToAssetPath)
+                .Where(c => c.EndsWith(".asset")).ToList();
             if (paths.Count > 1) Debug.LogWarning("Multiple auto save config assets found. Delete one.");
             return paths.FirstOrDefault();
         }
@@ -77,7 +80,8 @@ namespace IdleColors.Editor
                 await Task.Delay(_config.Frequency * 1000 * 60, token);
                 if (_config == null) FetchConfig();
 
-                if (!_config.Enabled || Application.isPlaying || BuildPipeline.isBuildingPlayer || EditorApplication.isCompiling) continue;
+                if (!_config.Enabled || Application.isPlaying || BuildPipeline.isBuildingPlayer ||
+                    EditorApplication.isCompiling) continue;
                 if (!InternalEditorUtility.isApplicationActive) continue;
 
                 EditorSceneManager.SaveOpenScenes();
@@ -98,7 +102,8 @@ namespace IdleColors.Editor
         {
             DrawDefaultInspector();
             EditorGUILayout.Space();
-            EditorGUILayout.HelpBox("You can move this asset where ever you'd like.\nWith ❤, Tarodev.", MessageType.Info);
+            EditorGUILayout.HelpBox("You can move this asset where ever you'd like.\nWith ❤, Tarodev.",
+                MessageType.Info);
         }
     }
 }

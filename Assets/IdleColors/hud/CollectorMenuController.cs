@@ -13,7 +13,7 @@ namespace IdleColors.hud
     {
         private CollectorController _collectorScript;
 
-        [SerializeField] private GameObject _noMoreUpdatesButtonText;
+        [SerializeField] private GameObject      _noMoreUpdatesButtonText;
         [SerializeField] private TextMeshProUGUI _speedStatusText;
         [SerializeField] private TextMeshProUGUI _capycityInfoText;
         [SerializeField] private TextMeshProUGUI _unloadspeedInfoText;
@@ -21,25 +21,26 @@ namespace IdleColors.hud
         [SerializeField] private GameObject _greenFirst;
 
         [SerializeField] private GameObject _activateButtonCanvas;
-        private Button activateButton;
-        [SerializeField] private Text _activateButtonText;
-        [SerializeField] private Button _unlockbyadsbutton;
-        [SerializeField] private Text _unlockbyadstext;
+        private                  Button     activateButton;
+        [SerializeField] private Text       _activateButtonText;
+        [SerializeField] private Button     _unlockbyadsbutton;
+        [SerializeField] private Text       _unlockbyadstext;
 
-        [SerializeField] private GameObject _speedButtonCanvas;
-        private Button speedButton;
-        [SerializeField] private Text _speedButtonText;
+        [SerializeField] private GameObject      _speedButtonCanvas;
+        private                  Button          speedButton;
+        [SerializeField] private Text            _speedButtonText;
         [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
+        [SerializeField] private Button          _speedbyadsbutton;
 
 
-        [SerializeField] private GameObject _capButtonCanvas;
-        private Button capButton;
-        [SerializeField] private Text _capButtonText;
+        [SerializeField] private GameObject      _capButtonCanvas;
+        private                  Button          capButton;
+        [SerializeField] private Text            _capButtonText;
         [SerializeField] private TextMeshProUGUI _capacityStatusText;
 
-        [SerializeField] private GameObject _unloadSpeedButtonCanvas;
-        private Button unloadSpeedButton;
-        [SerializeField] private Text _unloadSpeedButtonText;
+        [SerializeField] private GameObject      _unloadSpeedButtonCanvas;
+        private                  Button          unloadSpeedButton;
+        [SerializeField] private Text            _unloadSpeedButtonText;
         [SerializeField] private TextMeshProUGUI _unloadSpeedStatusText;
 
         public void SetCollector(CollectorController collectorScript)
@@ -119,16 +120,16 @@ namespace IdleColors.hud
 
         private void UpdateButtonText()
         {
-            // Debug.Log("UpdateButtonText");
+            print("UpdateButtonText");
 
             if (_collectorScript == null)
             {
                 return;
             }
 
-            var coins = GameManager.Instance.GetCoins();
+            var coins      = GameManager.Instance.GetCoins();
             var costFactor = _collectorScript.costFactor;
-            var buttons = false;
+            var buttons    = false;
 
             _greenFirst.SetActive(false);
 
@@ -205,6 +206,15 @@ namespace IdleColors.hud
                     speedButton.interactable = coins >= costFactor * _collectorScript.GetSpeedLevel() *
                         GLOB.COLLECTOR_SPEED_BASE_PRICE;
 
+                    if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                    {
+                        _speedbyadsbutton.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        _speedbyadsbutton.gameObject.SetActive(false);
+                    }
+
                     buttons = true;
                 }
                 else
@@ -222,7 +232,7 @@ namespace IdleColors.hud
                                                   _collectorScript.GetUnloadSpeed() *
                                                   GLOB.COLLECTOR_UNLOADSPEED_BASE_PRICE;
                     var from = Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100;
-                    var to = Mathf.Round(19.5f / (_collectorScript.GetUnloadSpeed() + 1) * 100) / 100;
+                    var to   = Mathf.Round(19.5f / (_collectorScript.GetUnloadSpeed() + 1) * 100) / 100;
                     _unloadSpeedStatusText.text = $"{from:F2} -> {to:F2} sec";
                     unloadSpeedButton.interactable = coins >= costFactor * _collectorScript.GetUnloadSpeed() *
                         GLOB.COLLECTOR_UNLOADSPEED_BASE_PRICE;
@@ -238,7 +248,7 @@ namespace IdleColors.hud
                 if (!buttons)
                 {
                     _noMoreUpdatesButtonText.SetActive(true);
-                    _speedStatusText.text = _collectorScript.GetSpeedLevel().ToString();
+                    _speedStatusText.text  = _collectorScript.GetSpeedLevel().ToString();
                     _capycityInfoText.text = _collectorScript.GetCapacity().ToString();
                     _unloadspeedInfoText.text =
                         "" + Mathf.Round(19.5f / _collectorScript.GetUnloadSpeed() * 100) / 100 + " sec";
@@ -253,7 +263,15 @@ namespace IdleColors.hud
             gameObject.SetActive(false);
         }
 
-        public void ShowAdsToActivate()
+        public enum AdsCallBackType
+        {
+            Activate,
+            Speed
+        }
+
+        private AdsCallBackType _adsCallBackType;
+
+        public void ShowAdsToActivate(int callBackType)
         {
             if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
             {
@@ -261,6 +279,9 @@ namespace IdleColors.hud
             }
 
             Time.timeScale = 0;
+
+            _adsCallBackType        = (AdsCallBackType)callBackType;
+            GameManager.MenuBlocked = true;
 
             Advertisement.Show(GameManager.REWARDED_ANDROID, this);
         }
@@ -272,7 +293,17 @@ namespace IdleColors.hud
             if (showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
             {
                 // Debug.Log("Unity Ads Rewarded Ad Completed");
-                UnlockCollector(false);
+                switch (_adsCallBackType)
+                {
+                    case AdsCallBackType.Activate:
+                        UnlockCollector(false);
+                        break;
+                    case AdsCallBackType.Speed:
+                        UpgradeSpeed();
+                        break;
+                }
+
+                GameManager.MenuBlocked = false;
             }
         }
 

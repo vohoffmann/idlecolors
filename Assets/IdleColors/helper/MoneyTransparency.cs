@@ -6,14 +6,14 @@ namespace IdleColors.helper
 {
     public class MoneyTransparency : MonoBehaviour
     {
-        private Image _image;
+        private Image  _image;
         private Button _button;
-        private bool _transDirection;
-        private float _velocity;
+        private bool   _transDirection;
+        private float  _velocity;
 
         private void Awake()
         {
-            _image = GetComponent<Image>();
+            _image  = GetComponent<Image>();
             _button = GetComponentInChildren<Button>();
         }
 
@@ -31,7 +31,7 @@ namespace IdleColors.helper
 
             if (!_button.interactable)
             {
-                color.a = .3f;
+                color.a      = .3f;
                 _image.color = color;
             }
 

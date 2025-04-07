@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IdleColors.hud.coin
 {
-     [ExecuteAlways]
+    [ExecuteAlways]
     public class CoinController : MonoBehaviour
     {
         private void Update()
@@ -14,7 +14,8 @@ namespace IdleColors.hud.coin
             if (localScale.x > 36)
             {
                 var scaleSpeed = 50 * Time.deltaTime;
-                localScale = new Vector3(localScale.x - scaleSpeed, localScale.y - scaleSpeed, localScale.z - scaleSpeed);
+                localScale = new Vector3(localScale.x - scaleSpeed, localScale.y - scaleSpeed,
+                    localScale.z - scaleSpeed);
                 transform.localScale = localScale;
             }
         }

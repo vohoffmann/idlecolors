@@ -5,7 +5,7 @@ namespace IdleColors.helper
 {
     public class ShowFPS : MonoBehaviour
     {
-        public Text fpsText;
+        public  Text  fpsText;
         private float _deltaTime;
 
         void Update()

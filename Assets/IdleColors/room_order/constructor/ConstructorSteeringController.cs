@@ -11,17 +11,17 @@ namespace IdleColors.room_order.constructor
 {
     public class ConstructorSteeringController : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private GameObject _constructorMenu;
-        [SerializeField] private SO_Int _constructorSpeed;
-        [SerializeField] private GameObject _noMoreUpdatesButtonText;
+        [SerializeField] private GameObject      _constructorMenu;
+        [SerializeField] private SO_Int          _constructorSpeed;
+        [SerializeField] private GameObject      _noMoreUpdatesButtonText;
         [SerializeField] private TextMeshProUGUI _speedStatusText;
 
         [SerializeField] private GameObject _speedButtonCanvas;
 
-        private Button _speedButton;
-        [SerializeField] private Text _speedButtonText;
+        private                  Button          _speedButton;
+        [SerializeField] private Text            _speedButtonText;
         [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
-        [SerializeField] private AudioSource _updateSound;
+        [SerializeField] private AudioSource     _updateSound;
 
         private OutlineFlash _flash;
 

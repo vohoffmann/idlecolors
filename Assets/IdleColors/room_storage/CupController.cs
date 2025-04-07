@@ -10,15 +10,15 @@ namespace IdleColors.room_storage
         private int _amount;
 
         // private int _coins;
-        public int _colorIndex;
-        private bool _loadingPositionReached;
-        private bool _readyToStore;
-        private float _targetZPos;
-        private bool used; // damit nicht die position korrigiert wird, wenn sie schon unterwegs ist 
-        private bool _needUpdate = true;
+        public                   int _colorIndex;
+        private                  bool _loadingPositionReached;
+        private                  bool _readyToStore;
+        private                  float _targetZPos;
+        private                  bool used; // damit nicht die position korrigiert wird, wenn sie schon unterwegs ist 
+        private                  bool _needUpdate = true;
         [SerializeField] private GameObject _cupLid;
-        private bool _empty = false;
-        private AudioSource audioSource;
+        private                  bool _empty = false;
+        private                  AudioSource audioSource;
 
         private void Awake()
         {
@@ -134,16 +134,16 @@ namespace IdleColors.room_storage
                 var pos = transform.localPosition;
 
                 transform.localPosition = new Vector3(7f, pos.y, pos.z);
-                _needUpdate = false;
+                _needUpdate             = false;
                 EventManager.CupStored?.Invoke(gameObject);
             }
         }
 
         public void Dispose()
         {
-            GetComponent<Rigidbody>().mass = .5f;
+            GetComponent<Rigidbody>().mass                  = .5f;
             _cupLid.GetComponent<Renderer>().material.color = Color.white;
-            _empty = true;
+            _empty                                          = true;
         }
 
         private void InstantiatNewBox()

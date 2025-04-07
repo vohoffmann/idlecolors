@@ -13,15 +13,15 @@ namespace IdleColors.room_storage.drone.states
             // GameManager.Log("Entering State : " + this);
             Owner.targetPos = Owner.idlePosition;
             Owner.SetAnimation(DroneController.STATE_MOVETOIDLEPOSITION);
-            
+
             while (Owner.cupsToLift.Count > 0)
             {
                 // if the cup is already destroyed than remove from queue
                 try
                 {
                     var cup = Owner.cupsToLift.Peek();
-                    
-                    if(!cup)
+
+                    if (!cup)
                     {
                         throw new MissingReferenceException("cup was deleted already ");
                     }
@@ -31,14 +31,14 @@ namespace IdleColors.room_storage.drone.states
                     {
                         throw new MissingReferenceException("cup was moved by another already");
                     }
-                    
+
                     Owner.ChangeState(new MoveToCup(Owner));
                     break;
                 }
                 catch (MissingReferenceException e)
                 {
                     Debug.Log("MoveToIdlePosition State : " + e.Message);
-                    
+
                     Owner.cupsToLift.Dequeue();
                 }
             }

@@ -6,7 +6,7 @@ namespace IdleColors.room_order
 {
     public class PufferCount : MonoBehaviour
     {
-        public int colorIndex;
+        public  int             colorIndex;
         private TextMeshProUGUI count;
 
         private void Awake()

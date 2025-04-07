@@ -10,22 +10,22 @@ namespace IdleColors.room_mixing.mixer
 {
     public class MixerController : MonoBehaviour
     {
-        [SerializeField] private GameObject _innen;
-        [SerializeField] private RotateMixer _mixerRotator;
+        [SerializeField] private GameObject   _innen;
+        [SerializeField] private RotateMixer  _mixerRotator;
         [SerializeField] private GameObject[] _wayPoints;
-        [SerializeField] private GameObject _pipeBall;
-        private int _red;
-        private int _green;
-        private int _blue;
+        [SerializeField] private GameObject   _pipeBall;
+        private                  int          _red;
+        private                  int          _green;
+        private                  int          _blue;
 
         private List<GameObject> _pipeBalls;
-        private Color color;
-        private int _colorIndex;
+        private Color            color;
+        private int              _colorIndex;
 
         [HideInInspector] public bool _mixing;
 
         private bool _emptiing;
-        private int _outgoingPipeBallsAmount = 5;
+        private int  _outgoingPipeBallsAmount = 5;
 
         private void Awake()
         {
@@ -43,10 +43,10 @@ namespace IdleColors.room_mixing.mixer
 
         public void InitOrderMixing(int colorIndex, int red, int green, int blue)
         {
-            _mixing = true;
-            _red = red;
-            _green = green;
-            _blue = blue;
+            _mixing     = true;
+            _red        = red;
+            _green      = green;
+            _blue       = blue;
             _colorIndex = colorIndex;
         }
 
@@ -91,7 +91,7 @@ namespace IdleColors.room_mixing.mixer
 
         public void EmptyMixer()
         {
-            _emptiing = true;
+            _emptiing             = true;
             _mixerRotator.enabled = false;
             EventManager.SetBoxPosition.Invoke();
             StartCoroutine(nameof(RemoveMinerals));
@@ -110,7 +110,7 @@ namespace IdleColors.room_mixing.mixer
                     if (!script.active)
                     {
                         script.Activate();
-                        script._colorIndex = _colorIndex;
+                        script._colorIndex                         = _colorIndex;
                         pb.GetComponent<Renderer>().material.color = color;
                         break;
                     }
@@ -119,8 +119,8 @@ namespace IdleColors.room_mixing.mixer
                 loops--;
             }
 
-            _mixing = false;
-            _emptiing = false;
+            _mixing                                        = false;
+            _emptiing                                      = false;
             _innen.GetComponent<Renderer>().material.color = Color.black;
         }
     }
