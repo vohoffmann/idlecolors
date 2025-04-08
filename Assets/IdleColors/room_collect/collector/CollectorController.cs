@@ -277,10 +277,11 @@ namespace IdleColors.room_collect.collector
             return _capacity.value;
         }
 
-        public void UpgradeSpeed()
+        public void UpgradeSpeed(bool subCouns = false)
         {
-            GameManager.Instance.SubCoins(costFactor * GLOB.COLLECTOR_SPEED_BASE_PRICE *
-                                          _speedLevel.value);
+            if (subCouns)
+                GameManager.Instance.SubCoins(costFactor * GLOB.COLLECTOR_SPEED_BASE_PRICE *
+                                              _speedLevel.value);
             _agent.speed      += .5f;
             _speedLevel.value += 1;
             PlayUpdateSound();

@@ -163,11 +163,14 @@ namespace IdleColors.room_mixing.haxler
             return _speedLevel.value;
         }
 
-        public void UpgradeSpeed()
+        public void UpgradeSpeed(bool subCoins = false)
         {
-            GameManager.Instance.SubCoins(
-                Mathf.RoundToInt(GLOB.HAXLER_SPEED_BASE_PRICE * Mathf.Pow(costFactor, _speedLevel.value - 1)));
-            // GameManager.Instance.SubCoins(costFactor * GLOB.HAXLER_SPEED_BASE_PRICE * _speedLevel.value);
+            if (subCoins)
+            {
+                GameManager.Instance.SubCoins(
+                    Mathf.RoundToInt(GLOB.HAXLER_SPEED_BASE_PRICE * Mathf.Pow(costFactor, _speedLevel.value - 1)));
+            }
+
             _speedLevel.value += 1;
 
             _audioSource.PlayOneShot(_upgradeSound);

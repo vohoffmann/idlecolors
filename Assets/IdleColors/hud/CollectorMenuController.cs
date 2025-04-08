@@ -1,4 +1,3 @@
-using System;
 using IdleColors.camera;
 using IdleColors.Globals;
 using IdleColors.room_collect.collector;
@@ -100,9 +99,9 @@ namespace IdleColors.hud
             UpdateButtonText();
         }
 
-        public void UpgradeSpeed()
+        public void UpgradeSpeed(bool subCouns = false)
         {
-            _collectorScript.UpgradeSpeed();
+            _collectorScript.UpgradeSpeed(subCouns);
             UpdateButtonText();
         }
 
@@ -120,8 +119,6 @@ namespace IdleColors.hud
 
         private void UpdateButtonText()
         {
-            print("UpdateButtonText");
-
             if (_collectorScript == null)
             {
                 return;
@@ -302,9 +299,9 @@ namespace IdleColors.hud
                         UpgradeSpeed();
                         break;
                 }
-
-                GameManager.MenuBlocked = false;
             }
+
+            GameManager.MenuBlocked = false;
         }
 
         public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
@@ -316,12 +313,12 @@ namespace IdleColors.hud
 
         public void OnUnityAdsShowStart(string placementId)
         {
-            Debug.Log("Unity Ads Rewarded Ad Started");
+            // Debug.Log("Unity Ads Rewarded Ad Started");
         }
 
         public void OnUnityAdsShowClick(string placementId)
         {
-            Debug.Log("Unity Ads Rewarded Ad Clicked");
+            // Debug.Log("Unity Ads Rewarded Ad Clicked");
         }
     }
 }
