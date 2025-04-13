@@ -2,7 +2,6 @@
 using IdleColors.Globals;
 using IdleColors.room_mixing.haxler;
 using TMPro;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
