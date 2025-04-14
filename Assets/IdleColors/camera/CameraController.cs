@@ -22,6 +22,7 @@ namespace IdleColors.camera
         [SerializeField] private PufferMenuController    pufferMenu;
         [SerializeField] private GameObject              droneMenu;
         [SerializeField] private GameObject              steeringMenu;
+        [SerializeField] private GameObject              ingameMenu;
 
         public static            CameraController Instance;
         [SerializeField] private GameObject       _lockedTarget;
@@ -46,6 +47,19 @@ namespace IdleColors.camera
             _camera.gameObject.SetActive(true);
             setTarget(_roomPositions[0]);
             _isMoving = true;
+
+            ingameMenu.gameObject.SetActive(false);
+
+            DeactivateMenues();
+        }
+
+        private void DeactivateMenues()
+        {
+            collectorMenu.gameObject.SetActive(false);
+            haxlerMenu.gameObject.SetActive(false);
+            pufferMenu.gameObject.SetActive(false);
+            droneMenu.SetActive(false);
+            steeringMenu.SetActive(false);
         }
 
         public void SetLockedTarget(CollectorController collectorScript)
@@ -96,11 +110,7 @@ namespace IdleColors.camera
             _lockedTarget = null;
             _bodyCamView.SetActive(false);
 
-            haxlerMenu.gameObject.SetActive(false);
-            collectorMenu.gameObject.SetActive(false);
-            pufferMenu.gameObject.SetActive(false);
-            droneMenu.SetActive(false);
-            steeringMenu.SetActive(false);
+            DeactivateMenues();
 
             setTarget(_roomPositions[_currentSelection]);
         }
