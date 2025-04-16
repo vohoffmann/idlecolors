@@ -7,15 +7,14 @@ using IdleColors.room_storage.drone.states;
 using IdleColors.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace IdleColors.room_storage.drone
 {
-    public class DroneController : StateMachine, IPointerClickHandler
+    public class DroneController : StateMachine, IPointerClickHandler, IUnityAdsShowListener
     {
-        #region members
-
         public readonly          Queue<GameObject> cupsToLift = new();
         [SerializeField] private Animator          _animator;
         [SerializeField] private GameObject        _droneBody;
@@ -35,6 +34,7 @@ namespace IdleColors.room_storage.drone
         private                  Button          _speedButton;
         [SerializeField] private Text            _speedButtonText;
         [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
+        [SerializeField] private Button          _speedbyadsbutton;
         [SerializeField] private AudioSource     _updateSound;
         private                  Color           _color;
         private                  int             _colorIndex;
@@ -52,8 +52,6 @@ namespace IdleColors.room_storage.drone
         public const             string          STATE_MOVETODESTINATION  = "MoveToDestination";
         public const             string          STATE_UNLOADING          = "Unloading";
         public const             string          STATE_MOVETOIDLEPOSITION = "MoveToIdlePosition";
-
-        #endregion
 
         private void Awake()
         {
@@ -215,6 +213,14 @@ namespace IdleColors.room_storage.drone
                     "" + upgradeCost;
                 _speedButton.interactable = GameManager.Instance.GetCoins() >=
                                             upgradeCost;
+                if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                {
+                    _speedbyadsbutton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _speedbyadsbutton.gameObject.SetActive(false);
+                }
             }
             else
             {
@@ -224,12 +230,30 @@ namespace IdleColors.room_storage.drone
             }
         }
 
-        public void UpdateSpeed()
+        public void ShowAdsToUpgradeSpeed()
+        {
+            if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            {
+                return;
+            }
+
+            Time.timeScale = 0;
+
+            GameManager.MenuBlocked = true;
+
+            Advertisement.Show(GameManager.REWARDED_ANDROID, this);
+        }
+
+        public void UpdateSpeed(bool subCoins = false)
         {
             if (_droneSpeed.value < GLOB.DRONE_SPEED_MAX)
             {
-                GameManager.Instance.SubCoins(
-                    Mathf.RoundToInt(GLOB.DRONE_SPEED_BASE_PRICE * Mathf.Pow(1.5f, _droneSpeed.value - 1)));
+                if (subCoins)
+                {
+                    GameManager.Instance.SubCoins(
+                        Mathf.RoundToInt(GLOB.DRONE_SPEED_BASE_PRICE * Mathf.Pow(1.5f, _droneSpeed.value - 1)));
+                }
+
                 _droneSpeed.value += 1;
                 _updateSound.Play();
                 updateMenuView();
@@ -240,6 +264,35 @@ namespace IdleColors.room_storage.drone
         {
             CameraController.Instance.UnsetLockedTarget();
             _droneMenu.SetActive(false);
+        }
+
+        public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
+        {
+            Time.timeScale = 1;
+
+            if (showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+            {
+                UpdateSpeed();
+            }
+
+            GameManager.MenuBlocked = false;
+        }
+
+        public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
+        {
+            Time.timeScale = 1;
+
+            Debug.Log($"Error showing Ad Unit {placementId}: {error.ToString()} - {message}");
+        }
+
+        public void OnUnityAdsShowStart(string placementId)
+        {
+            // Debug.Log("Unity Ads Rewarded Ad Started");
+        }
+
+        public void OnUnityAdsShowClick(string placementId)
+        {
+            // Debug.Log("Unity Ads Rewarded Ad Clicked");
         }
     }
 }
