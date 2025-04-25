@@ -314,7 +314,6 @@ namespace IdleColors.Globals
             AddCoins(0); // to update GUI
         }
 
-
         public static void Log(string text)
         {
             print("--LOG--------------------------");

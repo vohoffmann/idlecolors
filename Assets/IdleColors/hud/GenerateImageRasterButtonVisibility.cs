@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace IdleColors.hud
 {
+    /*
+     * geht alle buttons in der orderimage ansicht durch und setzt die sichbarkeit abhänig davon,
+     * ob die farben bereits zur verfügung stehen
+     */
     public class GenerateImageRasterButtonVisibility : MonoBehaviour
     {
         private void OnEnable()

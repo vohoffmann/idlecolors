@@ -1,3 +1,4 @@
+using System;
 using IdleColors.Globals;
 using IdleColors.hud;
 using IdleColors.room_collect.collector;
@@ -6,6 +7,7 @@ using IdleColors.room_mixing.puffer;
 using IdleColors.room_order.constructor;
 using IdleColors.room_storage.drone;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Vector3 = UnityEngine.Vector3;
 
 namespace IdleColors.camera
@@ -223,6 +225,16 @@ namespace IdleColors.camera
 
         public void ShowInfo()
         {
+            try
+            {
+                GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
+                clickedButton.gameObject.transform.GetComponent<ScaleButton>().enabled = false;
+            }
+            catch (Exception e)
+            {
+                // nix
+            }
+
             _InfoView.gameObject.SetActive(!_InfoView.gameObject.activeSelf);
             Time.timeScale = _InfoView.gameObject.activeSelf ? 0 : 1;
         }

@@ -48,7 +48,9 @@ namespace IdleColors.room_order
                     newButton.GetComponent<Button>().onClick.AddListener(OrderImage);
 
                     // set name ... first is index for the imageArray ... 2nd is to indicate if displaying or not
-                    newButton.name = $"{buttonIndex}#{texture.name.Substring(0, 1)}";
+                    int level = determineImageLevel(texture);
+
+                    newButton.name = $"{buttonIndex}#{level}";
                     var sp = newButton.GetComponentInChildren<Image>();
                     sp.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
                     newButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
@@ -61,6 +63,32 @@ namespace IdleColors.room_order
 
                 buttonIndex++;
             }
+        }
+
+        private int determineImageLevel(Texture2D texture)
+        {
+            int ret = 1;
+            for (int z = 0; z < texture.height; z++)
+            {
+                for (int x = 0; x < texture.width; x++)
+                {
+                    Color pixelColor = texture.GetPixel(x, z);
+                    if (pixelColor.r == 1 || pixelColor.g == 1 || pixelColor.b == 1)
+                    {
+                        if (pixelColor.b != 0)
+                        {
+                            return 3;
+                        }
+
+                        if (pixelColor.g != 0)
+                        {
+                            ret = 2;
+                        }
+                    }
+                }
+            }
+
+            return ret;
         }
 
         private void OnEnable()
@@ -157,17 +185,17 @@ namespace IdleColors.room_order
             GameManager.Instance.ImageOrderInProcess = true;
         }
 
-        void GenerateNewimageRaster(Texture2D image)
+        void GenerateNewimageRaster(Texture2D texture2D)
         {
             ConstructorController.instance.imageColors = new int[7];
             ConstructorController.instance.targets     = new();
             Rewards                                    = 0;
-            for (int z = 0; z < image.height; z++)
+            for (int z = 0; z < texture2D.height; z++)
             {
-                for (int x = 0; x < image.width; x++)
+                for (int x = 0; x < texture2D.width; x++)
                 {
-                    Color pixelColor = image.GetPixel(x, z);
-                    if (pixelColor.r != 0 || pixelColor.g != 0 || pixelColor.b != 0)
+                    Color pixelColor = texture2D.GetPixel(x, z);
+                    if (pixelColor.r == 1 || pixelColor.g == 1 || pixelColor.b == 1)
                     {
                         var cube           = Instantiate(_cubePrefab, _imageContainer.transform, true);
                         var parentPosition = _imageContainer.transform.position;
@@ -217,7 +245,7 @@ namespace IdleColors.room_order
                 {
                     var color = image.GetPixel(x, z);
 
-                    if (color.r != 0 || color.g != 0 || color.b != 0)
+                    if (color.r == 1 || color.g == 1 || color.b == 1)
                     {
                         coins += OrderPanelController.CoinValues[GameManager.Instance.GetIndexForColor(color) + 1] / 10;
                     }
