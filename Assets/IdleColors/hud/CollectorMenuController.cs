@@ -36,11 +36,13 @@ namespace IdleColors.hud
         private                  Button          capButton;
         [SerializeField] private Text            _capButtonText;
         [SerializeField] private TextMeshProUGUI _capacityStatusText;
+        [SerializeField] private Button          _capacitybyadsbutton;
 
         [SerializeField] private GameObject      _unloadSpeedButtonCanvas;
         private                  Button          unloadSpeedButton;
         [SerializeField] private Text            _unloadSpeedButtonText;
         [SerializeField] private TextMeshProUGUI _unloadSpeedStatusText;
+        [SerializeField] private Button          _unloadSpeedbyadsbutton;
 
         public void SetCollector(CollectorController collectorScript)
         {
@@ -105,15 +107,15 @@ namespace IdleColors.hud
             UpdateButtonText();
         }
 
-        public void UpgradeCap()
+        public void UpgradeCapacity(bool subCoins = false)
         {
-            _collectorScript.UpgradeCapacity();
+            _collectorScript.UpgradeCapacity(subCoins);
             UpdateButtonText();
         }
 
-        public void UpgradeUnloadSpeed()
+        public void UpgradeUnloadSpeed(bool subCoins = false)
         {
-            _collectorScript.UpgradeUnloadSpeed();
+            _collectorScript.UpgradeUnloadSpeed(subCoins);
             UpdateButtonText();
         }
 
@@ -206,10 +208,14 @@ namespace IdleColors.hud
                     if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
                     {
                         _speedbyadsbutton.gameObject.SetActive(true);
+                        _capacitybyadsbutton.gameObject.SetActive(true);
+                        _unloadSpeedbyadsbutton.gameObject.SetActive(true);
                     }
                     else
                     {
                         _speedbyadsbutton.gameObject.SetActive(false);
+                        _capacitybyadsbutton.gameObject.SetActive(false);
+                        _unloadSpeedbyadsbutton.gameObject.SetActive(false);
                     }
 
                     buttons = true;
@@ -263,7 +269,9 @@ namespace IdleColors.hud
         public enum AdsCallBackType
         {
             Activate,
-            Speed
+            Speed,
+            Capacity,
+            UnloadSpeed,
         }
 
         private AdsCallBackType _adsCallBackType;
@@ -298,6 +306,12 @@ namespace IdleColors.hud
                     case AdsCallBackType.Speed:
                         UpgradeSpeed();
                         break;
+                    case AdsCallBackType.Capacity:
+                        UpgradeCapacity();
+                        break;
+                    case AdsCallBackType.UnloadSpeed:
+                        UpgradeUnloadSpeed();
+                        break;
                 }
             }
 
@@ -318,6 +332,7 @@ namespace IdleColors.hud
 
         public void OnUnityAdsShowClick(string placementId)
         {
+            GameManager.Log("peter");
             // Debug.Log("Unity Ads Rewarded Ad Clicked");
         }
     }

@@ -149,10 +149,14 @@ namespace IdleColors.room_mixing.puffer
             CameraController.Instance.SetLockedTarget(this);
         }
 
-        public void UpgradeCapacity()
+        public void UpgradeCapacity(bool subCoins = false)
         {
-            GameManager.Instance.SubCoins(
-                Mathf.RoundToInt(GLOB.PUFFER_CAPACITY_BASE_PRICE * Mathf.Pow(costFactor, GetLevel() - 1)));
+            if (subCoins)
+            {
+                GameManager.Instance.SubCoins(
+                    Mathf.RoundToInt(GLOB.PUFFER_CAPACITY_BASE_PRICE * Mathf.Pow(costFactor, GetLevel() - 1)));
+            }
+
             _level.value += 1;
             haxlerControler.SetPufferFilled(false);
             _audioSource.PlayOneShot(_upgradeSound);

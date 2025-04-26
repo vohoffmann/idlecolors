@@ -3,11 +3,12 @@ using IdleColors.Globals;
 using IdleColors.room_mixing.puffer;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
 namespace IdleColors.hud
 {
-    public class PufferMenuController : MonoBehaviour
+    public class PufferMenuController : MonoBehaviour, IUnityAdsShowListener
     {
         private PufferController _pufferScript;
 
@@ -15,6 +16,7 @@ namespace IdleColors.hud
         [SerializeField] private TextMeshProUGUI _statusText;
         private                  Button          _capacityButton;
         [SerializeField] private Text            _capacityText;
+        [SerializeField] private Button          _speedbyadsbutton;
 
         [SerializeField] private GameObject      _noMoreUpdatesLabelText;
         [SerializeField] private TextMeshProUGUI _capacityInfoText;
@@ -48,6 +50,14 @@ namespace IdleColors.hud
                 _capacityText.text = "" + Mathf.RoundToInt(GLOB.PUFFER_CAPACITY_BASE_PRICE *
                                                            Mathf.Pow(_pufferScript.costFactor,
                                                                _pufferScript.GetLevel() - 1));
+                if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                {
+                    _speedbyadsbutton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _speedbyadsbutton.gameObject.SetActive(false);
+                }
             }
             else
             {
@@ -71,9 +81,9 @@ namespace IdleColors.hud
                     _pufferScript.GetLevel() - 1));
         }
 
-        public void UpgradeCapacity()
+        public void UpgradeCapacity(bool subCoins = false)
         {
-            _pufferScript.UpgradeCapacity();
+            _pufferScript.UpgradeCapacity(subCoins);
             UpdateButtonText();
         }
 
@@ -82,6 +92,49 @@ namespace IdleColors.hud
             _pufferScript = null;
             CameraController.Instance.UnsetLockedTarget();
             gameObject.SetActive(false);
+        }
+
+        public void ShowAdsToUpgradeCapacity()
+        {
+            if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            {
+                return;
+            }
+
+            Time.timeScale = 0;
+
+            GameManager.MenuBlocked = true;
+
+            Advertisement.Show(GameManager.REWARDED_ANDROID, this);
+        }
+
+        public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
+        {
+            Time.timeScale = 1;
+
+            if (showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+            {
+                UpgradeCapacity();
+            }
+
+            GameManager.MenuBlocked = false;
+        }
+
+        public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
+        {
+            Time.timeScale = 1;
+
+            Debug.Log($"Error showing Ad Unit {placementId}: {error.ToString()} - {message}");
+        }
+
+        public void OnUnityAdsShowStart(string placementId)
+        {
+            // Debug.Log("Unity Ads Rewarded Ad Started");
+        }
+
+        public void OnUnityAdsShowClick(string placementId)
+        {
+            // Debug.Log("Unity Ads Rewarded Ad Clicked");
         }
     }
 }

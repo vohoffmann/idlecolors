@@ -172,7 +172,6 @@ namespace IdleColors.room_mixing.haxler
             }
 
             _speedLevel.value += 1;
-
             _audioSource.PlayOneShot(_upgradeSound);
         }
     }

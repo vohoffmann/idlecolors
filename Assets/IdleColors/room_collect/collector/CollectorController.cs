@@ -265,9 +265,13 @@ namespace IdleColors.room_collect.collector
             }
         }
 
-        public void UpgradeCapacity()
+        public void UpgradeCapacity(bool subCoins = false)
         {
-            GameManager.Instance.SubCoins(costFactor * GLOB.COLLECTOR_CAPACITY_BASE_PRICE * _capacity.value);
+            if (subCoins)
+            {
+                GameManager.Instance.SubCoins(costFactor * GLOB.COLLECTOR_CAPACITY_BASE_PRICE * _capacity.value);
+            }
+
             _capacity.value++;
             PlayUpdateSound();
         }
@@ -292,9 +296,13 @@ namespace IdleColors.room_collect.collector
             return _speedLevel.value;
         }
 
-        public void UpgradeUnloadSpeed()
+        public void UpgradeUnloadSpeed(bool subCoins = false)
         {
-            GameManager.Instance.SubCoins(costFactor * GLOB.COLLECTOR_UNLOADSPEED_BASE_PRICE * _unloadSpeed.value);
+            if (subCoins)
+            {
+                GameManager.Instance.SubCoins(costFactor * GLOB.COLLECTOR_UNLOADSPEED_BASE_PRICE * _unloadSpeed.value);
+            }
+
             _unloadSpeed.value++;
             PlayUpdateSound();
         }

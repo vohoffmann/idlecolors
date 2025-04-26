@@ -4,12 +4,13 @@ using IdleColors.Globals;
 using IdleColors.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace IdleColors.room_order.constructor
 {
-    public class ConstructorSteeringController : MonoBehaviour, IPointerClickHandler
+    public class ConstructorSteeringController : MonoBehaviour, IPointerClickHandler, IUnityAdsShowListener
     {
         [SerializeField] private GameObject      _constructorMenu;
         [SerializeField] private SO_Int          _constructorSpeed;
@@ -21,6 +22,7 @@ namespace IdleColors.room_order.constructor
         private                  Button          _speedButton;
         [SerializeField] private Text            _speedButtonText;
         [SerializeField] private TextMeshProUGUI _speedUpdateInfoText;
+        [SerializeField] private Button          _speedbyadsbutton;
         [SerializeField] private AudioSource     _updateSound;
 
         private OutlineFlash _flash;
@@ -90,6 +92,14 @@ namespace IdleColors.room_order.constructor
                     "" + upgradeCost;
                 _speedButton.interactable = GameManager.Instance.GetCoins() >=
                                             upgradeCost;
+                if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                {
+                    _speedbyadsbutton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _speedbyadsbutton.gameObject.SetActive(false);
+                }
             }
             else
             {
@@ -99,16 +109,63 @@ namespace IdleColors.room_order.constructor
             }
         }
 
-        public void UpdateSpeed()
+        public void UpdateSpeed(bool subCoins = false)
         {
             if (_constructorSpeed.value < GLOB.CONSTRUCTOR_SPEED_MAX)
             {
-                GameManager.Instance.SubCoins(
-                    Mathf.RoundToInt(GLOB.CONSTRUCTOR_SPEED_BASE_PRICE * Mathf.Pow(1.5f, _constructorSpeed.value)));
+                if (subCoins)
+                {
+                    GameManager.Instance.SubCoins(
+                        Mathf.RoundToInt(GLOB.CONSTRUCTOR_SPEED_BASE_PRICE * Mathf.Pow(1.5f, _constructorSpeed.value)));
+                }
+
                 _constructorSpeed.value += 1;
                 _updateSound.Play();
                 updateMenuView();
             }
+        }
+
+        public void ShowAdsToUpgradeSpeed()
+        {
+            if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            {
+                return;
+            }
+
+            Time.timeScale = 0;
+
+            GameManager.MenuBlocked = true;
+
+            Advertisement.Show(GameManager.REWARDED_ANDROID, this);
+        }
+
+        public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
+        {
+            Time.timeScale = 1;
+
+            if (showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+            {
+                UpdateSpeed();
+            }
+
+            GameManager.MenuBlocked = false;
+        }
+
+        public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
+        {
+            Time.timeScale = 1;
+
+            Debug.Log($"Error showing Ad Unit {placementId}: {error.ToString()} - {message}");
+        }
+
+        public void OnUnityAdsShowStart(string placementId)
+        {
+            // Debug.Log("Unity Ads Rewarded Ad Started");
+        }
+
+        public void OnUnityAdsShowClick(string placementId)
+        {
+            // Debug.Log("Unity Ads Rewarded Ad Clicked");
         }
     }
 }
