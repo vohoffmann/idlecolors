@@ -213,7 +213,7 @@ namespace IdleColors.room_storage.drone
                     "" + upgradeCost;
                 _speedButton.interactable = GameManager.Instance.GetCoins() >=
                                             upgradeCost;
-                if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                if (Advertisement.isInitialized)
                 {
                     _speedbyadsbutton.gameObject.SetActive(true);
                 }
@@ -232,7 +232,7 @@ namespace IdleColors.room_storage.drone
 
         public void ShowAdsToUpgradeSpeed()
         {
-            if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            if (!Advertisement.isInitialized)
             {
                 return;
             }
@@ -276,6 +276,7 @@ namespace IdleColors.room_storage.drone
             }
 
             GameManager.MenuBlocked = false;
+            GameManager.Instance.LoadRewardedAd();
         }
 
         public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)

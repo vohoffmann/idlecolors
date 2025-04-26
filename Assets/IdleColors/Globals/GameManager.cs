@@ -22,9 +22,10 @@ namespace IdleColors.Globals
         public           Text       coinsText;
         private readonly int        _coinMultiplier  = 1;
         public const     string     REWARDED_ANDROID = "Rewarded_Android";
-        private readonly string     GAMEID           = "5774375";
-        public           bool       AdsRewardedLoaded { private set; get; }
-        public static    bool       MenuBlocked       { get;         set; }
+
+        private readonly string GAMEID = "5774375";
+
+        public static bool MenuBlocked { get; set; }
 
         public                   bool       ImageOrderInProcess;
         public                   int        ImageOrderRewards;
@@ -358,18 +359,13 @@ namespace IdleColors.Globals
                         return;
                     }
 
-                    if (!AdsRewardedLoaded)
-                    {
-                        Debug.Log("try Load Rewarded Ads ...");
-                        LoadRewardedAd();
-                        return;
-                    }
+                    LoadRewardedAd();
 
-                    // Debug.Log("Advertisement is completely initialized");
+                    Debug.Log("Advertisement is completely initialized");
                 }
                 else
                 {
-                    // Log("Ads not supported");
+                    Log("Ads not supported");
                 }
             }
             else
@@ -389,7 +385,7 @@ namespace IdleColors.Globals
             Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
         }
 
-        private void LoadRewardedAd()
+        public void LoadRewardedAd()
         {
             // IMPORTANT! Only load content AFTER initialization 
             Debug.Log("Loading Rewarded Ad ...");
@@ -399,7 +395,6 @@ namespace IdleColors.Globals
         public void OnUnityAdsAdLoaded(string adUnitId)
         {
             Debug.Log("Ad Loaded: " + adUnitId);
-            AdsRewardedLoaded = true;
         }
 
         public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)

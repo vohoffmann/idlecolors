@@ -50,7 +50,7 @@ namespace IdleColors.hud
                 _speedButtonText.text = "" + Mathf.RoundToInt(GLOB.HAXLER_SPEED_BASE_PRICE *
                                                               Mathf.Pow(_haxlerScript.costFactor,
                                                                   _haxlerScript.GetSpeedLevel() - 1));
-                if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                if (Advertisement.isInitialized)
                 {
                     _speedbyadsbutton.gameObject.SetActive(true);
                 }
@@ -96,7 +96,7 @@ namespace IdleColors.hud
 
         public void ShowAdsToUpgradeSpeed()
         {
-            if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            if (!Advertisement.isInitialized)
             {
                 return;
             }
@@ -118,6 +118,7 @@ namespace IdleColors.hud
             }
 
             GameManager.MenuBlocked = false;
+            GameManager.Instance.LoadRewardedAd();
         }
 
         public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)

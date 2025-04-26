@@ -50,7 +50,7 @@ namespace IdleColors.hud
                 _capacityText.text = "" + Mathf.RoundToInt(GLOB.PUFFER_CAPACITY_BASE_PRICE *
                                                            Mathf.Pow(_pufferScript.costFactor,
                                                                _pufferScript.GetLevel() - 1));
-                if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                if (Advertisement.isInitialized)
                 {
                     _speedbyadsbutton.gameObject.SetActive(true);
                 }
@@ -96,7 +96,7 @@ namespace IdleColors.hud
 
         public void ShowAdsToUpgradeCapacity()
         {
-            if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            if (!Advertisement.isInitialized)
             {
                 return;
             }
@@ -118,6 +118,7 @@ namespace IdleColors.hud
             }
 
             GameManager.MenuBlocked = false;
+            GameManager.Instance.LoadRewardedAd();
         }
 
         public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)

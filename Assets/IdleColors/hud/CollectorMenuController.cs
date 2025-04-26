@@ -156,7 +156,7 @@ namespace IdleColors.hud
                                                _collectorScript.costFactor;
                     activateButton.interactable = coins >= GLOB.COLLECTOR_UNLOCK * costFactor;
 
-                    if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                    if (Advertisement.isInitialized)
                     {
                         _unlockbyadsbutton.gameObject.SetActive(true);
                         _unlockbyadstext.gameObject.SetActive(true);
@@ -205,7 +205,7 @@ namespace IdleColors.hud
                     speedButton.interactable = coins >= costFactor * _collectorScript.GetSpeedLevel() *
                         GLOB.COLLECTOR_SPEED_BASE_PRICE;
 
-                    if (Advertisement.isInitialized && GameManager.Instance.AdsRewardedLoaded)
+                    if (Advertisement.isInitialized)
                     {
                         _speedbyadsbutton.gameObject.SetActive(true);
                         _capacitybyadsbutton.gameObject.SetActive(true);
@@ -278,7 +278,7 @@ namespace IdleColors.hud
 
         public void ShowAdsToActivate(int callBackType)
         {
-            if (!Advertisement.isInitialized || !GameManager.Instance.AdsRewardedLoaded)
+            if (!Advertisement.isInitialized)
             {
                 return;
             }
@@ -316,6 +316,7 @@ namespace IdleColors.hud
             }
 
             GameManager.MenuBlocked = false;
+            GameManager.Instance.LoadRewardedAd();
         }
 
         public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
