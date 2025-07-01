@@ -8,6 +8,7 @@ using IdleColors.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace IdleColors.Globals
@@ -41,6 +42,8 @@ namespace IdleColors.Globals
         public int[] FinalColorCounts = new int[8];
 
         [SerializeField] private AudioSource _coinAudioSource;
+
+        [SerializeField] private EventSystem _eventSystem;
 
         #endregion
 

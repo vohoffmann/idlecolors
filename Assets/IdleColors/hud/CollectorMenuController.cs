@@ -333,7 +333,6 @@ namespace IdleColors.hud
 
         public void OnUnityAdsShowClick(string placementId)
         {
-            GameManager.Log("peter");
             // Debug.Log("Unity Ads Rewarded Ad Clicked");
         }
     }

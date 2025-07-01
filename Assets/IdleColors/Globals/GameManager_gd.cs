@@ -25,8 +25,6 @@ namespace IdleColors.Globals
 
         public void LoadGameData()
         {
-            Debug.Log("laden ...");
-
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -37,7 +35,6 @@ namespace IdleColors.Globals
             }
             else
             {
-                Debug.Log("not webgl ...");
                 HandleGameData(PlayerPrefs.GetString(PLAYERDATA, null));
             }
         }
@@ -143,8 +140,6 @@ namespace IdleColors.Globals
 
         public void SaveGameData()
         {
-            Debug.Log("speichern ...");
-
             var data = new GameData
             {
                 coins                  = coins,
