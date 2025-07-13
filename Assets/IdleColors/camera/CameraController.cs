@@ -184,7 +184,7 @@ namespace IdleColors.camera
         {
             if (!_isMoving)
             {
-                if (_lockedTarget != null)
+                if (null != _lockedTarget)
                 {
                     setTarget(_lockedTarget);
                     _isMoving = true;

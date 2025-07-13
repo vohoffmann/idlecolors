@@ -160,7 +160,7 @@ namespace IdleColors.Globals
 
             coinsText.text = "" + coins;
 
-            InvokeRepeating(nameof(InitializeAds), 1, 5);
+            InvokeRepeating(nameof(InitializeAds), 0, 5);
         }
 
         private void Start()
